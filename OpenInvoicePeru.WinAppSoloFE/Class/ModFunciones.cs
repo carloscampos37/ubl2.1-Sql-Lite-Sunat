@@ -15,7 +15,7 @@ namespace OpenInvoicePeru.Class
             return Dato.Substring(0, caracteres);
         }
 
-        public string Izquierda(string Dato, int caracteres)
+                public string Izquierda(string Dato, int caracteres)
         {
             if (caracteres > Dato.Length)
                 caracteres = Dato.Length;

@@ -6,23 +6,28 @@ namespace OpenInvoicePeru.WinApp
 {
     public static class Program
     {
+        public static string CarpetaXml => "./XML";
+        public static string CarpetaCdr => "./CDR";
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static void Main()
+        static void Main()
         {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
             try
             {
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-
-                Application.Run(new FrmEnviosSunat());
+                if (!Directory.Exists(CarpetaXml))
+                    Directory.CreateDirectory(CarpetaXml);
+                if (!Directory.Exists(CarpetaCdr))
+                    Directory.CreateDirectory(CarpetaCdr);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message + ex.InnerException?.Message, Application.ProductName);
             }
+            Application.Run(new FrmEnviosDocumentosFE());
         }
     }
 }

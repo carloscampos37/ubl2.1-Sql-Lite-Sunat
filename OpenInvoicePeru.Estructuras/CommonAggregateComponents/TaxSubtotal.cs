@@ -14,10 +14,8 @@ namespace OpenInvoicePeru.Estructuras.CommonAggregateComponents
 
         public TaxSubtotal()
         {
-            
             TaxAmount = new PayableAmount();
             TaxCategory = new TaxCategory();
-            Percent = 18m;
         }
     }
 }

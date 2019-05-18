@@ -30,7 +30,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>..\artifacts\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -81,7 +81,9 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System" />
-    <Reference Include="System.Security" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
@@ -89,9 +91,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Net.Http.Formatting">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Http">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
@@ -150,7 +149,7 @@
       <Name>OpenInvoicePeru.Comun.Dto</Name>
     </ProjectReference>
     <ProjectReference Include="..\OpenInvoicePeru.Comun\OpenInvoicePeru.Comun.csproj">
-      <Project>{c6d3447f-6aed-4da5-b28c-7c0356f2f4a8}</Project>
+      <Project>{C6D3447F-6AED-4DA5-B28C-7C0356F2F4A8}</Project>
       <Name>OpenInvoicePeru.Comun</Name>
     </ProjectReference>
     <ProjectReference Include="..\OpenInvoicePeru.Firmado\OpenInvoicePeru.Firmado.csproj">
@@ -162,7 +161,7 @@
       <Name>OpenInvoicePeru.Servicio.Soap</Name>
     </ProjectReference>
     <ProjectReference Include="..\OpenInvoicePeru.Servicio\OpenInvoicePeru.Servicio.csproj">
-      <Project>{25d6b9af-55a6-4e7f-a061-52a492ccdb6e}</Project>
+      <Project>{25D6B9AF-55A6-4E7F-A061-52A492CCDB6E}</Project>
       <Name>OpenInvoicePeru.Servicio</Name>
     </ProjectReference>
     <ProjectReference Include="..\OpenInvoicePeru.Xml\OpenInvoicePeru.Xml.csproj">

@@ -375,13 +375,13 @@
             // 
             // Ctr_AyuEmpresas
             // 
-            this.Ctr_AyuEmpresas.CampoDevCod = "ID";
+            this.Ctr_AyuEmpresas.CampoDevCod = "empresacodigo";
             this.Ctr_AyuEmpresas.CampoDevDesc = "Empresarazonsocial";
             this.Ctr_AyuEmpresas.Codigo = "";
             this.Ctr_AyuEmpresas.Descripcion = "";
             this.Ctr_AyuEmpresas.Filtro = "";
             this.Ctr_AyuEmpresas.ListaAlias = "Codigo,razon social";
-            this.Ctr_AyuEmpresas.ListaCampos = "id,empresarazonsocial";
+            this.Ctr_AyuEmpresas.ListaCampos = "empresacodigo,empresarazonsocial";
             this.Ctr_AyuEmpresas.Location = new System.Drawing.Point(20, 28);
             this.Ctr_AyuEmpresas.LongCod = "3";
             this.Ctr_AyuEmpresas.LongDesc = "50";

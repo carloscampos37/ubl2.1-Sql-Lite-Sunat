@@ -85,7 +85,7 @@ namespace OpenInvoicePeru.WinApp
                     Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
                     if (Dtx.Rows.Count == 1)
                     {
-                        Ctr_AyuEmpresas.Codigo = Convert.ToString(Dtx.Rows[0]["id"]);
+                        Ctr_AyuEmpresas.Codigo = Convert.ToString(Dtx.Rows[0]["empresacodigo"]);
                         Ctr_AyuEmpresas.EjecAyuda();
                     }
 
@@ -862,8 +862,8 @@ namespace OpenInvoicePeru.WinApp
             SQL += " FROM dbo.FE_DocumentosElectronicosCab a ";
             SQL = SQL + "  INNER join FE_DocumentosElectronicosDet b ON a.empresacodigo = b.empresacodigo ";
             SQL = SQL + " AND a.documentoselectronicos_id = b.documentoselectronicos_id ";
-            SQL = SQL + "  INNER join FE_Establecimientos c ON a.establecimiento_id = c.id ";
-            SQL += " inner join .dbo.FE_AfectacionIgv d ON b.AfectacionIgv= d.Id  ";
+            SQL = SQL + "  INNER join FE_Establecimientos c ON a.establecimiento_id = c.establecimiento_id ";
+            SQL += " inner join .dbo.FE_AfectacionIgv d ON b.AfectacionIgv= d.ID  ";
             SQL = SQL + " WHERE a.Empresacodigo='" + Ctr_AyuEmpresas.Codigo + "' AND fechadocumento = '" + DtpFechaDoc.Text + "'";
 
             if (vTipoDoc == "RC")
@@ -1171,7 +1171,7 @@ namespace OpenInvoicePeru.WinApp
             SQL = " SELECT * FROM fe_DocumentosFE where DocumentoCodigo='" + Ctr_AyuDocumento.Codigo + "'";
             Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
             vTipoDoc = (string)Dtx.Rows[0]["DocumentoCodigo"];
-            vtipoEnvio = (int)Dtx.Rows[0]["tipoenvioid"];
+            vtipoEnvio = (int)Dtx.Rows[0]["tipoenvio_id"];
             BntEnvioSunat.Visible = false;
             BntGeneraEnvios.Visible = true;
             if (vtipoEnvio == 1)
@@ -1193,14 +1193,9 @@ namespace OpenInvoicePeru.WinApp
 
         #endregion textBox
 
-        private void FrmEnviosSunat_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void Ctr_AyuEmpresas_AlDevolverDato(object Sender, DataRow e)
         {
-            SQL = "SELECT  * FROM [v_FE_DatosGeneralesEmpresas] WHERE id='" + Ctr_AyuEmpresas.Codigo + "'";
+            SQL = "SELECT  * FROM [v_FE_DatosGeneralesEmpresas] WHERE empresacodigo='" + Ctr_AyuEmpresas.Codigo + "'";
 
             DtEmpresa = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
             if (DtEmpresa.Rows.Count > 0)
@@ -1208,6 +1203,11 @@ namespace OpenInvoicePeru.WinApp
                 TxtRuc.Text = (string)DtEmpresa.Rows[0]["Empresaruc"];
                 TxtDireccion.Text = (string)DtEmpresa.Rows[0]["DireccionCompleta"];
             }
+        }
+
+        private void FrmEnviosSunat_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

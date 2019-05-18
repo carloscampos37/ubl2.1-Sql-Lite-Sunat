@@ -60,10 +60,10 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
             writer.WriteAttributeString("xmlns", EspacioNombres.xmlnsSummaryDocuments);
             writer.WriteAttributeString("xmlns:cac", EspacioNombres.cac);
             writer.WriteAttributeString("xmlns:cbc", EspacioNombres.cbc);
-            writer.WriteAttributeString("xmlns:ds", Http.ds);
+            writer.WriteAttributeString("xmlns:ds", EspacioNombres.ds);
             writer.WriteAttributeString("xmlns:ext", EspacioNombres.ext);
             writer.WriteAttributeString("xmlns:sac", EspacioNombres.sac);
-            writer.WriteAttributeString("xmlns:xsi", Http.xsi);
+            writer.WriteAttributeString("xmlns:xsi", EspacioNombres.xsi);
 
             #region UBLExtensions
 
