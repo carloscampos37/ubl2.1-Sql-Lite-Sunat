@@ -186,7 +186,7 @@ namespace OpenInvoicePeru.WinApp
             // 
             // rbResumen
             // 
-            this.rbResumen.Location = new System.Drawing.Point(28, 66);
+            this.rbResumen.Location = new System.Drawing.Point(28, 72);
             this.rbResumen.Name = "rbResumen";
             this.rbResumen.Size = new System.Drawing.Size(206, 20);
             this.rbResumen.TabIndex = 2;
@@ -194,7 +194,7 @@ namespace OpenInvoicePeru.WinApp
             // 
             // rbRetenciones
             // 
-            this.rbRetenciones.Location = new System.Drawing.Point(28, 36);
+            this.rbRetenciones.Location = new System.Drawing.Point(28, 39);
             this.rbRetenciones.Name = "rbRetenciones";
             this.rbRetenciones.Size = new System.Drawing.Size(195, 20);
             this.rbRetenciones.TabIndex = 1;
@@ -378,7 +378,7 @@ namespace OpenInvoicePeru.WinApp
             this.kryptonPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.kryptonPanel1.Location = new System.Drawing.Point(0, 0);
             this.kryptonPanel1.Name = "kryptonPanel1";
-            this.kryptonPanel1.Size = new System.Drawing.Size(476, 622);
+            this.kryptonPanel1.Size = new System.Drawing.Size(1028, 745);
             this.kryptonPanel1.TabIndex = 26;
             // 
             // FrmEnviarSunat
@@ -386,7 +386,7 @@ namespace OpenInvoicePeru.WinApp
             this.AcceptButton = this.btnGen;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(476, 622);
+            this.ClientSize = new System.Drawing.Size(1028, 745);
             this.Controls.Add(this.kryptonPanel1);
             this.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -394,6 +394,7 @@ namespace OpenInvoicePeru.WinApp
             this.Name = "FrmEnviarSunat";
             this.ShowInTaskbar = true;
             this.Text = "OpenInvoicePeru - Prueba de Envio a SUNAT";
+            this.Load += new System.EventHandler(this.FrmEnviarSunat_Load);
             ((System.ComponentModel.ISupportInitialize)(this.groupBox1.Panel)).EndInit();
             this.groupBox1.Panel.ResumeLayout(false);
             this.groupBox1.Panel.PerformLayout();

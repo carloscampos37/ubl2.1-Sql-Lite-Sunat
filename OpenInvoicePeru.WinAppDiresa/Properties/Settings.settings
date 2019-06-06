@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Jck.WinAppDiresa.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="CadenaConexion" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Server=(local);database=Diresa;User ID=sa;Password=12345</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

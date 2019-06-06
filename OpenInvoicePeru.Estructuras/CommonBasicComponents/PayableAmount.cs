@@ -9,4 +9,6 @@ namespace OpenInvoicePeru.Estructuras.CommonBasicComponents
 
         public decimal Value { get; set; }
     }
+
+
 }

@@ -42,9 +42,17 @@ namespace OpenInvoicePeru.Comun.Dto.Modelos
 
         public string PlacaVehiculo { get; set; }
 
-        [JsonProperty(Required = Required.Always)]
-        public decimal TotalVenta { get; set; }
+        // nuevo
 
+        public decimal ItemGravado { get; set; }
+
+        public decimal ItemInafecto { get; set; }
+
+        public decimal ItemExonerado { get; set; }
+
+         [JsonProperty(Required = Required.Always)]
+        public decimal TotalVenta { get; set; }
+         
         [JsonIgnore]
         public decimal Suma { get; set; }
 
@@ -54,6 +62,9 @@ namespace OpenInvoicePeru.Comun.Dto.Modelos
             UnidadMedida = "NIU";
             TipoPrecio = "01";
             TipoImpuesto = "10";
+            ItemExonerado = 0;
+            ItemInafecto = 0;
+            ItemGravado = 0;
         }
     }
 }

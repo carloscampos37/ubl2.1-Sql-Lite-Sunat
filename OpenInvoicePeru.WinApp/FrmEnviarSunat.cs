@@ -36,11 +36,6 @@ namespace OpenInvoicePeru.WinApp
                 {
                     Cursor.Current = Cursors.WaitCursor;
 
-                    using (var ctx = new OpenInvoicePeruDb())
-                    {
-                        direccionSunatBindingSource.DataSource = ctx.DireccionesSunat.ToList();
-                        direccionSunatBindingSource.ResetBindings(false);
-                    }
                 }
                 catch (Exception ex)
                 {
@@ -337,5 +332,10 @@ namespace OpenInvoicePeru.WinApp
         }
 
         #endregion Metodos Privados
+
+        private void FrmEnviarSunat_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

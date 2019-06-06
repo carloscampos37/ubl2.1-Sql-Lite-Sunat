@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 using OpenInvoicePeru.Comun.Constantes;
 using OpenInvoicePeru.Comun.Dto.Intercambio;
 using System.IO.Compression;
+using OpenInvoicePeru.Comun;
 
 namespace OpenInvoicePeru.Firmado
 {
@@ -18,7 +19,7 @@ namespace OpenInvoicePeru.Firmado
         /// <typeparam name="T">Clase a serializar</typeparam>
         /// <param name="objectToSerialize">Instancia de la Clase</param>
         /// <returns>Devuelve una cadena Base64 del archivo XML</returns>
-        async Task<string> ISerializador.GenerarXml<T>(T objectToSerialize)
+        public async Task<string> GenerarXml<T>(T objectToSerialize) where T : IEstructuraXml
         {
             var task = Task.Factory.StartNew(() =>
             {
@@ -44,7 +45,7 @@ namespace OpenInvoicePeru.Firmado
         /// <param name="tramaXml">Cadena Base64 con el contenido del XML</param>
         /// <param name="nombreArchivo">Nombre del archivo ZIP</param>
         /// <returns>Devuelve Cadena Base64 del archizo ZIP</returns>
-        async Task<string> ISerializador.GenerarZip(string tramaXml, string nombreArchivo)
+        public async Task<string> GenerarZip(string tramaXml, string nombreArchivo)
         {
             var task = Task.Factory.StartNew(() =>
             {
@@ -86,17 +87,17 @@ namespace OpenInvoicePeru.Firmado
             {
                 if (memRespuesta.Length <= 0)
                 {
-                    response.MensajeError = "Respuesta SUNAT Vacio";
+                    response.MensajeError = "Respuesta SUNAT Vacío";
                     response.Exito = false;
                 }
                 else
                 {
-                    using (ZipArchive zipFile = new ZipArchive(memRespuesta, ZipArchiveMode.Read))
+                    using (var zipFile = new ZipArchive(memRespuesta, ZipArchiveMode.Read))
                     {
-                        foreach (ZipArchiveEntry entry in zipFile.Entries)
+                        foreach (var entry in zipFile.Entries)
                         {
                             if (!entry.Name.EndsWith(".xml")) continue;
-                            using (Stream ms = entry.Open())
+                            using (var ms = entry.Open())
                             {  
                                 var responseReader = new StreamReader(ms);
                                 var responseString = await responseReader.ReadToEndAsync();
