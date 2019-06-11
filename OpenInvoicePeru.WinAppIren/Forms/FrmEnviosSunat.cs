@@ -1,6 +1,4 @@
-﻿using  OpenInvoicePeru.Comun.Dto.Intercambio;
-using OpenInvoicePeru.Comun.Dto.Modelos;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -11,6 +9,8 @@ using System.Windows.Forms;
 using System.Configuration;
 using OpenInvoicePeru.WinApp.Properties;
 using OpenInvoicePeru.Class;
+using Comun.Dto.Intercambio;
+using Comun.Dto.Modelos;
 
 namespace  WinApp
 {
@@ -1196,8 +1196,12 @@ namespace  WinApp
         }
 
 
+
         #endregion textBox
 
+        private void FrmEnviosSunat_Load(object sender, EventArgs e)
+        {
 
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace WinApp
+﻿namespace OpenInvoicePeru.WinApp
 {
     partial class FrmEnviosSunat
     {
@@ -434,6 +434,7 @@
             this.Ctr_AyuUrlDoc.TabIndex = 115;
             this.Ctr_AyuUrlDoc.Titulo = null;
             this.Ctr_AyuUrlDoc.AlDevolverDato += new Ctr_Ayuda.Ctr_Ayuda.AlDevolverDatoEventHandler(this.Ctr_AyuUrlDoc_AlDevolverDato);
+            this.Ctr_AyuUrlDoc.Load += new System.EventHandler(this.Ctr_AyuUrlDoc_Load);
             // 
             // label9
             // 
@@ -489,13 +490,13 @@
             // 
             // Ctr_AyuEmpresas
             // 
-            this.Ctr_AyuEmpresas.CampoDevCod = "empresacodigo";
+            this.Ctr_AyuEmpresas.CampoDevCod = "EmpresaCodigo";
             this.Ctr_AyuEmpresas.CampoDevDesc = "EmpresaRazonSocial";
             this.Ctr_AyuEmpresas.Codigo = "";
             this.Ctr_AyuEmpresas.Descripcion = "";
             this.Ctr_AyuEmpresas.Filtro = "";
             this.Ctr_AyuEmpresas.ListaAlias = "Codigo,razonSocial";
-            this.Ctr_AyuEmpresas.ListaCampos = "empresacodigo,EmpresaRazonSocial";
+            this.Ctr_AyuEmpresas.ListaCampos = "EmpresaCodigo,EmpresaRazonSocial";
             this.Ctr_AyuEmpresas.Location = new System.Drawing.Point(26, 28);
             this.Ctr_AyuEmpresas.LongCod = "3";
             this.Ctr_AyuEmpresas.LongDesc = "50";
@@ -741,6 +742,7 @@
             this.Name = "FrmEnviosSunat";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmEnviosSunat";
+            this.Load += new System.EventHandler(this.FrmEnviosSunat_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);

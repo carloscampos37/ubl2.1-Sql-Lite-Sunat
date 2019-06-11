@@ -276,9 +276,9 @@
       <Project>{6bf3676b-7da8-4bba-b034-3eb16283a761}</Project>
       <Name>OpenInvoicePeru.Entidades</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OpenInvoicePeru.Firmado\OpenInvoicePeru.Firmado.csproj">
+    <ProjectReference Include="..\..\FacturasElectronicasWeb\OpenInvoicePeru.Firmado\Jck.Firmado.csproj">
       <Project>{1cfd1d28-d342-413d-a6e1-7616cb9708e2}</Project>
-      <Name>OpenInvoicePeru.Firmado</Name>
+      <Name>Jck.Firmado</Name>
     </ProjectReference>
     <ProjectReference Include="..\OpenInvoicePeru.Datos\OpenInvoicePeru.Datos.csproj">
       <Project>{562d08a8-ed00-4e21-9f48-3e391aad575e}</Project>

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Net.Http;
 using System.Windows.Forms;
-using OpenInvoicePeru.Comun.Dto.Intercambio;
-using  OpenInvoicePeru.Comun.Dto.Modelos;
 using System.Configuration;
 using System.IO;
 using System.Speech.Synthesis;
@@ -12,6 +10,8 @@ using System.Speech.Synthesis;
 using System.Text.RegularExpressions;
 using OpenInvoicePeru.WinApp.Properties;
 using OpenInvoicePeru.Class;
+using Comun.Dto.Modelos;
+using Comun.Dto.Intercambio;
 
 namespace  OpenInvoicePeru.WinApp
 {
@@ -80,16 +80,16 @@ namespace  OpenInvoicePeru.WinApp
                     Ctr_AyuEmpresas.CadenaCone = VGCnxSqlE;
 
                     Ctr_AyuEmpresas.Filtro = " EstadoAnulado=0 ";
-                    SQL = " Select * from fe_Empresas where " + Ctr_AyuEmpresas.Filtro;
+                    SQL = " Select * from feEmpresas where " + Ctr_AyuEmpresas.Filtro;
                     Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
                     if (Dtx.Rows.Count == 1)
                     {
-                        Ctr_AyuEmpresas.Codigo = Convert.ToString(Dtx.Rows[0]["empresacodigo"]);
+                        Ctr_AyuEmpresas.Codigo = Convert.ToString(Dtx.Rows[0]["ID"]);
                         Ctr_AyuEmpresas.EjecAyuda();
                     }
 
                     Ctr_AyuUrlDoc.Filtro = " EstadoAnulado=0 ";
-                    SQL = " Select * from fe_DireccionesSunat where " + Ctr_AyuUrlDoc.Filtro;
+                    SQL = " Select * from feDireccionesSunat where " + Ctr_AyuUrlDoc.Filtro;
                     Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
                     if (Dtx.Rows.Count == 1)
                     {
@@ -383,13 +383,13 @@ namespace  OpenInvoicePeru.WinApp
                         TipoDocumento = vTipoDocumento,
                         NombreLegal = vNombreLegal,
                     },
-                    AfectacionIgv = new AfectacionIgv
-                    {
-                        Nemotecnico = vNemoTecnico,
-                        Nombre = vNombre,
-                        Codigo = vCodigo,
-                        Id = vId
-                    },
+            //        AfectacionIgv = new AfectacionIgv
+            //        {
+            //            Nemotecnico = vNemoTecnico,
+            //            Nombre = vNombre,
+           //             Codigo = vCodigo,
+           //             Id = vId
+              //      },
                     IdDocumento = idDoc,
                     FechaEmision = DtpFechaDoc.Value.ToString(FormatoFecha),
 
@@ -429,7 +429,7 @@ namespace  OpenInvoicePeru.WinApp
                 if (vTipoDoc == "07" || vTipoDoc == "08")
                 {
                     // nota de credito
-                    var vRelacionado = new OpenInvoicePeru.Comun.Dto.Modelos.DocumentoRelacionado
+                    var vRelacionado = new DocumentoRelacionado
                     {
                         TipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["TipoDocumentoModifica"]),
                         NroDocumento = vNroDocumentoModifica
@@ -495,12 +495,12 @@ namespace  OpenInvoicePeru.WinApp
                     FechaEmision = DtpFechaEnvioDoc.Value.ToString(FormatoFecha),
                     FechaReferencia = DtpFechaEnvioDoc.Value.ToString(FormatoFecha),
                     Emisor = CrearEmisor(DtEmpresa),
-                    Bajas = new List<OpenInvoicePeru.Comun.Dto.Modelos.DocumentoBaja>()
+                    Bajas = new List<DocumentoBaja>()
                 };
 
                 for (int i3 = 0; i3 <= DtDocumentos.Rows.Count - 1; i3++)
                 {
-                    OpenInvoicePeru.Comun.Dto.Modelos.DocumentoBaja DocumentoBajasItem = new OpenInvoicePeru.Comun.Dto.Modelos.DocumentoBaja
+                    DocumentoBaja DocumentoBajasItem = new DocumentoBaja
                     {
                         Id = i3 + 1,
                         Correlativo = Convert.ToString(DtDocumentos.Rows[i3]["NumeroDocumento"]),
@@ -540,7 +540,7 @@ namespace  OpenInvoicePeru.WinApp
                 vFechaXml += ModFunc.Derecha("0" + Convert.ToString(DtpFechaEnvioDoc.Value.Day), 2);
                 vFechaXml += "-00" + Convert.ToString(DtDocumentos.Rows[0]["item"]);
 
-                OpenInvoicePeru.Comun.Dto.Modelos.ResumenDiario ResumenDiario = new OpenInvoicePeru.Comun.Dto.Modelos.ResumenDiario
+                ResumenDiario ResumenDiario = new ResumenDiario
                 {
                     IdDocumento = vFechaXml,
                     //       ResumenDiario.IdDocumento = TxtRuc.Text;

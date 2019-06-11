@@ -375,18 +375,18 @@
             // 
             // Ctr_AyuEmpresas
             // 
-            this.Ctr_AyuEmpresas.CampoDevCod = "empresacodigo";
+            this.Ctr_AyuEmpresas.CampoDevCod = "Id";
             this.Ctr_AyuEmpresas.CampoDevDesc = "Empresarazonsocial";
             this.Ctr_AyuEmpresas.Codigo = "";
             this.Ctr_AyuEmpresas.Descripcion = "";
             this.Ctr_AyuEmpresas.Filtro = "";
             this.Ctr_AyuEmpresas.ListaAlias = "Codigo,razon social";
-            this.Ctr_AyuEmpresas.ListaCampos = "empresacodigo,empresarazonsocial";
+            this.Ctr_AyuEmpresas.ListaCampos = "Id,Empresarazonsocial";
             this.Ctr_AyuEmpresas.Location = new System.Drawing.Point(20, 28);
             this.Ctr_AyuEmpresas.LongCod = "3";
             this.Ctr_AyuEmpresas.LongDesc = "50";
             this.Ctr_AyuEmpresas.Name = "Ctr_AyuEmpresas";
-            this.Ctr_AyuEmpresas.NombreTabla = "fe_empresas";
+            this.Ctr_AyuEmpresas.NombreTabla = "feEmpresas";
             this.Ctr_AyuEmpresas.Requerido = true;
             this.Ctr_AyuEmpresas.Size = new System.Drawing.Size(219, 17);
             this.Ctr_AyuEmpresas.TabIndex = 120;
@@ -731,14 +731,14 @@
             this.tabPage2.Text = "DOCUMENTOS";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // FrmEnviosSunat
+            // FrmEnviarSunat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1062, 566);
             this.Controls.Add(this.tabControl1);
-            this.Name = "FrmEnviosSunat";
+            this.Name = "FrmEnviarSunat";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmEnviosSunat";
             this.Load += new System.EventHandler(this.FrmEnviosSunat_Load);

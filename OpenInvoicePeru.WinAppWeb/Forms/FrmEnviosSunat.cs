@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Data;
 using System.Net.Http;
 using System.Windows.Forms;
-using OpenInvoicePeru.Comun.Dto.Intercambio;
-using OpenInvoicePeru.Comun.Dto.Modelos;
+using OpenInvoicePeru.WinApp.Properties;
+
 using System.Configuration;
 using System.IO;
 using System.Speech.Synthesis;
 
 using System.Text.RegularExpressions;
-
-using Class;
 using WinApp.Properties;
-using OpenInvoicePeru.WinApp.Properties;
+using Class;
+using Comun.Dto.Modelos;
+using Comun.Dto.Intercambio;
 
-namespace WinApp
+namespace OpenInvoicePeru.WinApp
 {
     public partial class FrmEnviosSunat : Form
     {
@@ -49,10 +49,10 @@ namespace WinApp
         // local
         //      private string VGCnxSqlE = "Server=(local);database=cesarisfe;User ID=sa;Password=12345";
 
-         //  private string VGCnxSqlE = "Server=(local);database=facturaselectronicasweb;User ID=sa;Password=12345";
+        //   private string VGCnxSqlE = "Server=jck;database=facturaselectronicas;User ID=sa;Password=12345";
 
         //private string VGCnxSqlE = "Server=servidor;database=facturaselectronicas;User ID=sa;Password=Aa12345";
-      private string VGCnxSqlE = Settings.Default.CadenaConexion;
+        private string VGCnxSqlE = Settings.Default.CadenaConexion;
 
         public string vFechaXml;
         public string vUrlSunat = "";
@@ -86,7 +86,7 @@ namespace WinApp
                     Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
                     if (Dtx.Rows.Count == 1)
                     {
-                        Ctr_AyuEmpresas.Codigo = Convert.ToString(Dtx.Rows[0]["empresacodigo"]);
+                        Ctr_AyuEmpresas.Codigo = Convert.ToString(Dtx.Rows[0]["Empresacodigo"]);
                         Ctr_AyuEmpresas.EjecAyuda();
                     }
 
@@ -119,18 +119,19 @@ namespace WinApp
 
         private async void CrearFacturas(int ii)
         {
-            string idDoc = Convert.ToString(DtDocumentos.Rows[ii]["Seriedocumento"] + "-" + DtDocumentos.Rows[ii]["NumeroDocumento"]);
+           
+                string idDoc = Convert.ToString(DtDocumentos.Rows[ii]["Seriedocumento"] + "-" + DtDocumentos.Rows[ii]["NumeroDocumento"]);
 
-            vRutaArchivoXML = Path.Combine(vRutaXml, $"{idDoc}.xml");
+                vRutaArchivoXML = Path.Combine(vRutaXml, $"{idDoc}.xml");
 
-            if (string.IsNullOrEmpty(idDoc))
-                throw new InvalidOperationException("La Serie y el Correlativo no pueden estar vacíos");
+                if (string.IsNullOrEmpty(idDoc))
+                    throw new InvalidOperationException("La Serie y el Correlativo no pueden estar vacíos");
 
-            var tramaXmlSinFirma = Convert.ToBase64String(File.ReadAllBytes(vRutaArchivoXML));
-            String vRutaCertificado = Convert.ToString(DtEmpresa.Rows[0]["CarpetaCertificadoDigital"]) +
-                                                    Convert.ToString(DtEmpresa.Rows[0]["NombreCertificadoDigital"]);
+                var tramaXmlSinFirma = Convert.ToBase64String(File.ReadAllBytes(vRutaArchivoXML));
+                String vRutaCertificado = Convert.ToString(DtEmpresa.Rows[0]["CarpetaCertificadoDigital"]) +
+                                                        Convert.ToString(DtEmpresa.Rows[0]["NombreCertificadoDigital"]);
             try
-            {
+            { 
                 var firmadoRequest = new FirmadoRequest
                 {
                     TramaXmlSinFirma = tramaXmlSinFirma,
@@ -195,7 +196,7 @@ namespace WinApp
                 {
                     respuestaEnvio = await jsonEnvioDocumento.Content.ReadAsAsync<EnviarResumenResponse>();
                     var rpta = (EnviarResumenResponse)respuestaEnvio;
-                    txtResult.Text += $@"{Resources.procesoCorrecto}{Environment.NewLine}{rpta.NroTicket}{Environment.NewLine}";
+                    txtResult.Text = txtResult.Text + $@"{Resources.procesoCorrecto}{Environment.NewLine}{rpta.NroTicket}{Environment.NewLine}";
                 }
 
                 if (!respuestaEnvio.Exito)
@@ -368,14 +369,15 @@ namespace WinApp
                 string vletras = Convert.ToString(DtDocumentos.Rows[ii]["letras"]);
 
                 decimal vDscto = 0;
-                string vNroDocumento = Convert.ToString(DtDocumentos.Rows[ii]["clienteID"]);
-                string vTipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["IdentidadID"]);
+                string vNroDocumento = Convert.ToString(DtDocumentos.Rows[ii]["clientecodigo"]);
+                string vTipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["IdentidadCodigo"]);
                 string vNombreLegal = Convert.ToString(DtDocumentos.Rows[ii]["ClienterazonSocial"]);
 
                 string vNombre = Convert.ToString(DtDocumentos.Rows[ii]["nombre"]);
                 string vNemoTecnico = Convert.ToString(DtDocumentos.Rows[ii]["nombre"]);
                 string vCodigo = Convert.ToString(DtDocumentos.Rows[ii]["codigo"]);
                 string vId = Convert.ToString(DtDocumentos.Rows[ii]["Id"]);
+
 
                 DocumentoElectronico _xDocumento = new DocumentoElectronico
                 {
@@ -397,11 +399,11 @@ namespace WinApp
                     FechaEmision = DtpFechaDoc.Value.ToString(FormatoFecha),
 
                     Moneda = "PEN",
-                    MontoEnLetras = vletras,
+                    MontoEnLetras= vletras,
                     CalculoIgv = 18m,
                     CalculoIsc = Convert.ToDecimal(DtDocumentos.Rows[ii]["porcentajeIsc"]),
                     CalculoDetraccion = 0.00m,
-                    TipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["documentoID"]),
+                    TipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["tipodocumento"]),
                     Gravadas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGravado"]),
                     Inafectas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteinafecto"]),
                     Exoneradas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteexonerado"]),
@@ -418,6 +420,7 @@ namespace WinApp
                     FechaRegistro = DtpFechaDoc.Value.ToString(FormatoFecha),
                     AnexoSunat = Convert.ToString(DtDocumentos.Rows[ii]["AnexoSunat"]),
                     NroPedido = Convert.ToString(DtDocumentos.Rows[ii]["pedidonumero"])
+
                 };
                 DtArticulos = DetalleArticulos(DtDocumentos, ii);
                 _xDocumento.TotItem = DtArticulos.Rows.Count;
@@ -427,12 +430,12 @@ namespace WinApp
                 }
 
                 string vNroDocumentoModifica = Convert.ToString(DtDocumentos.Rows[ii]["SeriedocumentoModifica"]) + "-" + Convert.ToString(DtDocumentos.Rows[ii]["NumeroDocumentoModifica"]);
-                string vTipoDoc = Convert.ToString(DtDocumentos.Rows[ii]["DocumentoID"]);
+                string vTipoDoc = Convert.ToString(DtDocumentos.Rows[ii]["TipoDocumento"]);
 
                 if (vTipoDoc == "07" || vTipoDoc == "08")
                 {
                     // nota de credito
-                    var vRelacionado = new OpenInvoicePeru.Comun.Dto.Modelos.DocumentoRelacionado
+                    var vRelacionado = new DocumentoRelacionado
                     {
                         TipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["TipoDocumentoModifica"]),
                         NroDocumento = vNroDocumentoModifica
@@ -440,7 +443,7 @@ namespace WinApp
                     _xDocumento.Relacionados.Add(vRelacionado);
 
                     // nota de debito
-                    var vDiscrepancia = new  Discrepancia
+                    var vDiscrepancia = new Discrepancia
                     {
                         Tipo = Convert.ToString(DtDocumentos.Rows[ii]["TipodocumentoModifica"]),
                         NroReferencia = vNroDocumentoModifica,
@@ -492,19 +495,19 @@ namespace WinApp
                 vFechaXml += ModFunc.Derecha("0" + Convert.ToString(DtpFechaEnvioDoc.Value.Day), 2);
                 vFechaXml += "-012";
 
-                 ComunicacionBaja ComunicacionBaja = new ComunicacionBaja
+                ComunicacionBaja ComunicacionBaja = new ComunicacionBaja
                 {
                     IdDocumento = vFechaXml,
                     FechaEmision = DtpFechaEnvioDoc.Value.ToString(FormatoFecha),
                     FechaReferencia = DtpFechaEnvioDoc.Value.ToString(FormatoFecha),
                     Emisor = CrearEmisor(DtEmpresa),
-                    Bajas = new List<OpenInvoicePeru.Comun.Dto.Modelos.DocumentoBaja>()
+                    Bajas = new List<DocumentoBaja>()
                 };
 
                 for (int i3 = 0; i3 <= DtDocumentos.Rows.Count - 1; i3++)
                 {
-                    OpenInvoicePeru.Comun.Dto.Modelos.DocumentoBaja DocumentoBajasItem = new OpenInvoicePeru.Comun.Dto.Modelos.DocumentoBaja
-                     {
+                    DocumentoBaja DocumentoBajasItem = new DocumentoBaja
+                    {
                         Id = i3 + 1,
                         Correlativo = Convert.ToString(DtDocumentos.Rows[i3]["NumeroDocumento"]),
                         TipoDocumento = Convert.ToString(DtDocumentos.Rows[i3]["TipoDocumento"]),
@@ -543,7 +546,7 @@ namespace WinApp
                 vFechaXml += ModFunc.Derecha("0" + Convert.ToString(DtpFechaEnvioDoc.Value.Day), 2);
                 vFechaXml += "-00" + Convert.ToString(DtDocumentos.Rows[0]["item"]);
 
-                OpenInvoicePeru.Comun.Dto.Modelos.ResumenDiario ResumenDiario = new OpenInvoicePeru.Comun.Dto.Modelos.ResumenDiario
+                Comun.Dto.Modelos.ResumenDiario ResumenDiario = new Comun.Dto.Modelos.ResumenDiario
                 {
                     IdDocumento = vFechaXml,
                     //       ResumenDiario.IdDocumento = TxtRuc.Text;
@@ -623,8 +626,8 @@ namespace WinApp
                 for (int ii = 0; ii <= DtDocumentos.Rows.Count - 1; ii++)
                 {
                     decimal vDscto = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteDsctoGlobal"]);
-                    string vNroDocumento = Convert.ToString(DtDocumentos.Rows[ii]["clienteID"]);
-                    string vTipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["IdentidadID"]);
+                    string vNroDocumento = Convert.ToString(DtDocumentos.Rows[ii]["clientecodigo"]);
+                    string vTipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["IdentidadCodigo"]);
                     string vNombreLegal = Convert.ToString(DtDocumentos.Rows[ii]["ClienterazonSocial"]);
 
                     GrupoResumenNuevo DocumentoResumenItem = new GrupoResumenNuevo();
@@ -632,7 +635,7 @@ namespace WinApp
                     vIdDocumento += DtDocumentos.Rows[ii]["NumeroDocumento"];
 
                     DocumentoResumenItem.Id = ii + 1;
-                    DocumentoResumenItem.TipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["DocumentoID"]);
+                    DocumentoResumenItem.TipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["TipoDocumento"]);
                     DocumentoResumenItem.IdDocumento = vIdDocumento;
                     DocumentoResumenItem.NroDocumentoReceptor = vNroDocumento;
                     DocumentoResumenItem.TipoDocumentoReceptor = vTipoDocumento;
@@ -687,18 +690,19 @@ namespace WinApp
 
         private DataTable DetalleArticulos(DataTable dt, int iii)
         {
-             try
+            DataTable dtx = new DataTable();
+            try
             {
-                DataTable dtx = new DataTable();
-                string vEmpresa = Convert.ToString(dt.Rows[iii]["EmpresaID"]);
-                string vNroDoc = Convert.ToString(dt.Rows[iii]["documentoselectronicosCabid"]);
-                string vCorrelDoc = Convert.ToString(dt.Rows[iii]["ID"]);
+                string vEmpresa = Convert.ToString(dt.Rows[iii]["EmpresaCodigo"]);
+                string vNroDoc = Convert.ToString(dt.Rows[iii]["documentoselectronicos_id"]);
+                string vCorrelDoc = Convert.ToString(dt.Rows[iii]["DocumentosElectronicosCorrel"]);
 
-                SQL = " SELECT ProductodescripcionP=isnull(d.ProductoDescripcion,''''),Producto,UnidadMedidaId,b.*, c.* FROM ";
-                SQL += " dbo.FE_DocumentosElectronicosCab a INNER join .dbo.FE_DocumentosElectronicosDet b ON a.ID = b.documentoselectronicoscabID ";
-                SQL += " INNER join .dbo.FE_DocumentosElectronicosDetItem c ON b.ID  = c.documentoselectronicosDetID ";
-                SQL += " LEFT join .dbo.FE_Productos d ON c.ProductoID= d.ID ";
-                SQL += " WHERE a.empresaID='" + vEmpresa + "' AND fechadocumento ='" + DtpFechaDoc.Text + "' AND c.documentoselectronicosDetID=" + vCorrelDoc + "";
+                SQL = " SELECT ProductodescripcionP=isnull(d.ProductoDescripcion,''''),ProductoServicios,UnidadMedida_Id,b.*, c.* FROM ";
+                SQL += " dbo.FE_DocumentosElectronicosCab a INNER join .dbo.FE_DocumentosElectronicosDet b ON a.empresacodigo = b.empresacodigo ";
+                SQL += " AND a.documentoselectronicos_id = b.documentoselectronicos_id INNER join .dbo.FE_DocumentosElectronicosDetItem c ";
+                SQL += " ON b.empresacodigo = c.empresacodigo AND b.documentoselectronicos_id = c.documentoselectronicos_id AND b.DocumentosElectronicosCorrel=c.DocumentosElectronicosCorrel ";
+                SQL += " LEFT join .dbo.FE_Productos d ON c.empresacodigo= d.empresacodigo AND c.ProductoCodigo= d.ProductoCodigo ";
+                SQL += " WHERE a.empresacodigo='" + vEmpresa + "' AND fechadocumento ='" + DtpFechaDoc.Text + "' AND b.documentoselectronicos_id=" + vNroDoc + " AND b.DocumentosElectronicosCorrel=" + vCorrelDoc + "";
 
                 dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
                 return dtx;
@@ -752,7 +756,7 @@ namespace WinApp
                     vPrecioUnitario = Convert.ToDecimal(DtArticulos.Rows[i]["Preciovta"]);
                 }
                 string vDescripcion = "";
-                if (Convert.ToString(DtArticulos.Rows[i]["Productodescripcion"]) != "")
+                if (Convert.ToString(DtArticulos.Rows[i]["Productodescripcion"])!="")
                 {
                     vDescripcion = Convert.ToString(DtArticulos.Rows[i]["Productodescripcion"]);
                 }
@@ -767,15 +771,15 @@ namespace WinApp
                     Cantidad = Convert.ToDecimal(DtArticulos.Rows[i]["Productocantidad"]),
                     PrecioReferencial = vPrecioUnitario,
                     PrecioUnitario = vPrecioUnitario,
-                    TipoPrecio = Convert.ToString(DtArticulos.Rows[i]["TipodePrecioID"]),
-                    CodigoItem = Convert.ToString(DtArticulos.Rows[i]["Producto"]),
+                    TipoPrecio = Convert.ToString(DtArticulos.Rows[i]["TipodePrecio"]),
+                    CodigoItem = Convert.ToString(DtArticulos.Rows[i]["ProductoCodigo"]),
                     Descripcion = vDescripcion,
                     UnidadMedida = "NIU",
                     Impuesto = Convert.ToDecimal(DtArticulos.Rows[i]["ItemIgv"]),
-                    TipoImpuesto = Convert.ToString(DtArticulos.Rows[i]["TipodeImpuestoID"]),
+                    TipoImpuesto = Convert.ToString(DtArticulos.Rows[i]["TipodeImpuesto"]),
                     ImpuestoSelectivo = Convert.ToDecimal(DtArticulos.Rows[i]["itemIsc"]),
                     OtroImpuesto = 0,
-                    ItemGravado = Convert.ToDecimal(DtArticulos.Rows[i]["ItemGravado"]),
+                     ItemGravado= Convert.ToDecimal(DtArticulos.Rows[i]["ItemGravado"]),
                     TotalVenta = Convert.ToDecimal(DtArticulos.Rows[i]["ItemVenta"]),
                     Suma = Convert.ToDecimal(DtArticulos.Rows[i]["ItemVenta"])
                 };
@@ -833,9 +837,9 @@ namespace WinApp
             try
             {
                 SQL = " SELECT b.* FROM dbo.FE_ResumenDiarioDocumentosCab a ";
-                SQL += " INNER JOIN dbo.FE_ResumenDiarioDocumentosDet b ON a.Id = b.ResumendiarioCabID  ";
-                SQL += " WHERE a.EmpresaID='" + Ctr_AyuEmpresas.Codigo + "' AND fechadocumento = '" + DtpFechaDoc.Text + "'";
-                SQL += " AND a.EstadoAnulado=0 AND b.EstadoAnulado=0 Order by Establecimientoid ";
+                SQL += " INNER JOIN dbo.FE_ResumenDiarioDocumentosDet b ON a.empresacodigo = b.empresacodigo AND a.Resumendiario_id = b.Resumendiario_id  ";
+                SQL += " WHERE a.Empresacodigo='" + Ctr_AyuEmpresas.Codigo + "' AND fechadocumento = '" + DtpFechaDoc.Text + "'";
+                SQL += " AND a.EstadoAnulado=0 AND b.EstadoAnulado=0 Order by Establecimiento_id ";
                 DtAceptados = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
             }
             catch
@@ -858,20 +862,20 @@ namespace WinApp
         {
             txtResult.Text = "";
 
-            SQL = " SELECT a.empresaCodigo, a.Establecimiento_id,Fechadocumento,b.*,Letras=[dbo].fn_NumeroEnLetra(TotalImporteVenta,'01'),AnexoSunat,d.* ";
-            SQL += " FROM dbo.FE_DocumentosElectronicosCab a ";
-            SQL += "  INNER join FE_DocumentosElectronicosDet b ON a.DocumentosElectronicos_id = b.DocumentosElectronicos_id ";
-            SQL += "  INNER join FE_Establecimientos c ON a.Establecimiento_id = c.Establecimiento_id ";
-            SQL += " inner join .dbo.FE_AfectacionIgv d ON b.AfectacionIgv= d.AfectacionIgv  ";
-            SQL += " WHERE a.EmpresaCodigo='" + Ctr_AyuEmpresas.Codigo + "' AND fechadocumento = '" + DtpFechaDoc.Text + "'";
+            SQL = " SELECT a.EstablecimientoID,Fechadocumento,b.*,Letras=[dbo].fn_NumeroEnLetra(TotalImporteVenta,'01'),AnexoSunat,d.* ";
+            SQL += " FROM FeEmpresas aa INNER JOIN dbo.FeDocumentosElectronicosCab a ON aa.ID=a.EmpresaID ";
+            SQL = SQL + "  INNER join FeDocumentosElectronicosDet b ON a.ID = b.FEDocumentosElectronicosDet ";
+             SQL = SQL + "  INNER join FeEstablecimientos c ON a.establecimientoID = c.ID ";
+            SQL = SQL + " WHERE aa.ID='" + Ctr_AyuEmpresas.Codigo + "' AND fechadocumento = '" + DtpFechaDoc.Text + "'";
 
             if (vTipoDoc == "RC")
             {
-                SQL = " SELECT  Item=IdentificadorEnvio+1,EstablecimientoID,Fechadocumento,grupo=b.GrupodeEnvioSunat, c.*,Letras=[dbo].fn_NumeroEnLetra(c.TotalImporteVenta,'01') ";
+                SQL = " SELECT  Item=IdentificadorEnvio+1,Establecimiento_id,Fechadocumento,grupo=b.GrupodeEnvioSunat, c.*,Letras=[dbo].fn_NumeroEnLetra(c.TotalImporteVenta,'01') ";
                 SQL += " FROM dbo.FE_ResumenDiarioDocumentosCab a ";
-                SQL += " INNER JOIN dbo.FE_ResumenDiarioDocumentosDet b ON a.Resumendiario_ID = b.Resumendiario_ID  ";
-                SQL += " INNER join FE_ResumenDiarioDocumentosDetItem c ON b.Resumendiario_ID = c.Resumendiario_ID AND b.ResumendiarioCorrel=c.ResumendiarioCorrel ";
-                SQL += " WHERE a.EmpresaCodigo='" + Ctr_AyuEmpresas.Codigo + "' AND fechadocumento = '" + DtpFechaDoc.Text + "'";
+                SQL += " INNER JOIN dbo.FE_ResumenDiarioDocumentosDet b ON a.empresacodigo = b.empresacodigo AND a.Resumendiario_id = b.Resumendiario_id  ";
+                SQL += " INNER join FE_ResumenDiarioDocumentosDetItem c ON b.empresacodigo = c.empresacodigo AND b.Resumendiario_id = c.Resumendiario_id ";
+                SQL += " AND b.ResumendiarioCorrel = c.ResumendiarioCorrel ";
+                SQL += " WHERE a.Empresacodigo='" + Ctr_AyuEmpresas.Codigo + "' AND fechadocumento = '" + DtpFechaDoc.Text + "'";
                 SQL += " AND a.EstadoAnulado=0 AND b.EstadoAnulado=0 AND b.GrupodeEnvioSunat=" + TxtGrupo.Text + " Order by IdentificadorEnvio ";
             }
             else
@@ -883,13 +887,13 @@ namespace WinApp
                 SQL += " AND a.ComunicacionBaja_id = b.ComunicacionBaja_id ";
                 SQL += " WHERE a.Empresacodigo='" + Ctr_AyuEmpresas.Codigo + "' AND fechadocumento = '" + DtpFechaDoc.Text + "'";
                 SQL += " AND a.EstadoAnulado=0 AND b.EstadoAnulado=0   ";
-                SQL += " AND b.GrupodeEnvioSunat=" + TxtGrupo.Text + " Order by Establecimientoid ";
+                SQL += " AND b.GrupodeEnvioSunat=" + TxtGrupo.Text + " Order by Establecimiento_id ";
                 SQL += " AND a.EstadoAnulado=0 AND b.EstadoAnulado=0 Order by Establecimiento_id ";
             }
             else
             {
                 SQL += "AND TipoDocumento='" + vTipoDoc + "'";
-                SQL += " AND a.EstadoAnulado=0 AND b.EstadoAnulado=0 Order by a.Establecimiento_ID ";
+                SQL += " AND a.EstadoAnulado=0 AND b.EstadoAnulado=0 Order by Establecimiento_id ";
             }
 
             DtDocumentos = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
@@ -1200,6 +1204,13 @@ namespace WinApp
 
         #endregion textBox
 
- 
+        private void FrmEnviosSunat_Load(object sender, EventArgs e)
+        {
+        }
+
+        private void Ctr_AyuUrlDoc_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
