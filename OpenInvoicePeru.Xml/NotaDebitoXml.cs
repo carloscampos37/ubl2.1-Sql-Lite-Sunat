@@ -35,7 +35,7 @@ namespace OpenInvoicePeru.Xml
                                         PayableAmount = new PayableAmount()
                                         {
                                             CurrencyId = documento.Moneda,
-                                            Value = documento.Gravadas
+                                            Value = documento.TotalGravadas
                                         }
                                     }
                                 },
@@ -220,7 +220,7 @@ namespace OpenInvoicePeru.Xml
                     LineExtensionAmount = new PayableAmount
                     {
                         CurrencyId = documento.Moneda,
-                        Value = detalleDocumento.TotalVenta
+                        Value = detalleDocumento.ItemVenta
                     },
                     PricingReference = new PricingReference
                     {

@@ -28,13 +28,13 @@ namespace OpenInvoicePeru.Comun.Dto.Modelos
         [JsonProperty(Required = Required.AllowNull)]
         public string TipoOperacion { get; set; }
 
-        public decimal Gravadas { get; set; }
+        public decimal TotalGravadas { get; set; }
 
-        public decimal Gratuitas { get; set; }
+        public decimal TotalGratuitas { get; set; }
 
-        public decimal Inafectas { get; set; }
+        public decimal TotalInafectas { get; set; }
 
-        public decimal Exoneradas { get; set; }
+        public decimal TotalExoneradas { get; set; }
 
         public decimal DescuentoGlobal { get; set; }
 
@@ -58,8 +58,7 @@ namespace OpenInvoicePeru.Comun.Dto.Modelos
         public int TotItem { get; set; }
 
         [JsonIgnore]
- 
-         public decimal MontoPercepcion { get; set; }
+          public decimal MontoPercepcion { get; set; }
 
         public decimal MontoDetraccion { get; set; }
 

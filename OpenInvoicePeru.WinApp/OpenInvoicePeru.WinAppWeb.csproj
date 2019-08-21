@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OpenInvoicePeru.WinApp</RootNamespace>
-    <AssemblyName>OpenInvoicePeru</AssemblyName>
+    <AssemblyName>FacturasElectronicaWebs</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publicar\</PublishUrl>
@@ -62,29 +62,8 @@
     <ApplicationIcon>openinvoiceperulogo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ComponentFactory.Krypton.Design, Version=4.4.1.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
-      <HintPath>..\packages\KryptonWinFormControls.4.4.1.0\lib\net40\ComponentFactory.Krypton.Design.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="ComponentFactory.Krypton.Docking, Version=4.4.1.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
-      <HintPath>..\packages\KryptonWinFormControls.4.4.1.0\lib\net40\ComponentFactory.Krypton.Docking.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="ComponentFactory.Krypton.Navigator, Version=4.4.1.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
-      <HintPath>..\packages\KryptonWinFormControls.4.4.1.0\lib\net40\ComponentFactory.Krypton.Navigator.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="ComponentFactory.Krypton.Ribbon, Version=4.4.1.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
-      <HintPath>..\packages\KryptonWinFormControls.4.4.1.0\lib\net40\ComponentFactory.Krypton.Ribbon.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="ComponentFactory.Krypton.Toolkit, Version=4.4.1.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
-      <HintPath>..\packages\KryptonWinFormControls.4.4.1.0\lib\net40\ComponentFactory.Krypton.Toolkit.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="ComponentFactory.Krypton.Workspace, Version=4.4.1.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
-      <HintPath>..\packages\KryptonWinFormControls.4.4.1.0\lib\net40\ComponentFactory.Krypton.Workspace.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Ctr_Ayuda">
+      <HintPath>..\..\..\..\..\comunNET\c#\DLL\Ctr_Ayuda.dll</HintPath>
     </Reference>
     <Reference Include="DotNetZip, Version=1.13.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.13.0\lib\net40\DotNetZip.dll</HintPath>
@@ -96,14 +75,14 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.3.2\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="OpenInvoicePeru.Comun.Dto, Version=1.5.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OpenInvoicePeru.DataTransfersObjects.1.5.2\lib\net40\OpenInvoicePeru.Comun.Dto.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="RestSharp, Version=106.5.4.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.106.5.4\lib\net452\RestSharp.dll</HintPath>
       <Private>True</Private>
@@ -127,6 +106,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Speech" />
     <Reference Include="System.Web" />
@@ -150,88 +130,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrmDatosAdicionales.cs">
+    <Compile Include="FrmEnviosSunat.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmDatosAdicionales.Designer.cs">
-      <DependentUpon>FrmDatosAdicionales.cs</DependentUpon>
+    <Compile Include="FrmEnviosSunat.designer.cs">
+      <DependentUpon>FrmEnviosSunat.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmDatosGuia.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmDatosGuia.Designer.cs">
-      <DependentUpon>FrmDatosGuia.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmDetalleDocumento.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmDetalleDocumento.Designer.cs">
-      <DependentUpon>FrmDetalleDocumento.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmDiscrepancia.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmDiscrepancia.Designer.cs">
-      <DependentUpon>FrmDiscrepancia.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmDocumento.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmDocumento.Designer.cs">
-      <DependentUpon>FrmDocumento.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmDocumentoRelacionado.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmDocumentoRelacionado.Designer.cs">
-      <DependentUpon>FrmDocumentoRelacionado.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmEnviarSunat.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmEnviarSunat.Designer.cs">
-      <DependentUpon>FrmEnviarSunat.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmTicket.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmTicket.Designer.cs">
-      <DependentUpon>FrmTicket.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PlantillaBase.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PlantillaBase.Designer.cs">
-      <DependentUpon>PlantillaBase.cs</DependentUpon>
-    </Compile>
+    <Compile Include="ModFunciones.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FrmDatosAdicionales.resx">
-      <DependentUpon>FrmDatosAdicionales.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmDatosGuia.resx">
-      <DependentUpon>FrmDatosGuia.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmDetalleDocumento.resx">
-      <DependentUpon>FrmDetalleDocumento.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmDiscrepancia.resx">
-      <DependentUpon>FrmDiscrepancia.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmDocumento.resx">
-      <DependentUpon>FrmDocumento.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmDocumentoRelacionado.resx">
-      <DependentUpon>FrmDocumentoRelacionado.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmEnviarSunat.resx">
-      <DependentUpon>FrmEnviarSunat.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmTicket.resx">
-      <DependentUpon>FrmTicket.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PlantillaBase.resx">
-      <DependentUpon>PlantillaBase.cs</DependentUpon>
+    <EmbeddedResource Include="FrmEnviosSunat.resx">
+      <DependentUpon>FrmEnviosSunat.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -272,17 +181,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OpenInvoicePeru.Comun.Dto\OpenInvoicePeru.Comun.Dto.csproj">
+      <Project>{a265a65a-c2a9-4f9e-b272-bed5ed04df98}</Project>
+      <Name>OpenInvoicePeru.Comun.Dto</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OpenInvoicePeru.Entidades\OpenInvoicePeru.Entidades.csproj">
       <Project>{6bf3676b-7da8-4bba-b034-3eb16283a761}</Project>
       <Name>OpenInvoicePeru.Entidades</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\FacturasElectronicasWeb\OpenInvoicePeru.Firmado\Jck.Firmado.csproj">
+    <ProjectReference Include="..\..\FacturasElectronicasWeb\OpenInvoicePeru.Firmado\OpenInvoicePeru.Firmado.csproj">
       <Project>{1cfd1d28-d342-413d-a6e1-7616cb9708e2}</Project>
-      <Name>Jck.Firmado</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OpenInvoicePeru.Datos\OpenInvoicePeru.Datos.csproj">
-      <Project>{562d08a8-ed00-4e21-9f48-3e391aad575e}</Project>
-      <Name>OpenInvoicePeru.Datos</Name>
+      <Name>OpenInvoicePeru.Firmado</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

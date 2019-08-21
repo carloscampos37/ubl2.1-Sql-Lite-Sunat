@@ -10,8 +10,9 @@ using System.Speech.Synthesis;
 using System.Text.RegularExpressions;
 using OpenInvoicePeru.WinApp.Properties;
 using OpenInvoicePeru.Class;
-using Comun.Dto.Modelos;
-using Comun.Dto.Intercambio;
+
+using OpenInvoicePeru.Comun.Dto.Modelos;
+using OpenInvoicePeru.Comun.Dto.Intercambio;
 
 namespace  OpenInvoicePeru.WinApp
 {
@@ -369,10 +370,10 @@ namespace  OpenInvoicePeru.WinApp
                 string vTipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["IdentidadID"]);
                 string vNombreLegal = Convert.ToString(DtDocumentos.Rows[ii]["ClienterazonSocial"]);
 
-                string vNombre = Convert.ToString(DtDocumentos.Rows[ii]["nombre"]);
-                string vNemoTecnico = Convert.ToString(DtDocumentos.Rows[ii]["nombre"]);
-                string vCodigo = Convert.ToString(DtDocumentos.Rows[ii]["codigo"]);
-                string vId = Convert.ToString(DtDocumentos.Rows[ii]["Id"]);
+     //                   string vNombre = Convert.ToString(DtDocumentos.Rows[ii]["nombre"]);
+     //                   string vNemoTecnico = Convert.ToString(DtDocumentos.Rows[ii]["nombre"]);
+     //                   string vCodigo = Convert.ToString(DtDocumentos.Rows[ii]["codigo"]);
+     //                   string vId = Convert.ToString(DtDocumentos.Rows[ii]["Id"]);
 
                 DocumentoElectronico _xDocumento = new DocumentoElectronico
                 {
@@ -383,49 +384,55 @@ namespace  OpenInvoicePeru.WinApp
                         TipoDocumento = vTipoDocumento,
                         NombreLegal = vNombreLegal,
                     },
-            //        AfectacionIgv = new AfectacionIgv
-            //        {
-            //            Nemotecnico = vNemoTecnico,
-            //            Nombre = vNombre,
-           //             Codigo = vCodigo,
-           //             Id = vId
-              //      },
-                    IdDocumento = idDoc,
-                    FechaEmision = DtpFechaDoc.Value.ToString(FormatoFecha),
-
-                    Moneda = "PEN",
-                    MontoEnLetras = vletras,
-                    CalculoIgv = 18m,
-                    CalculoIsc = Convert.ToDecimal(DtDocumentos.Rows[ii]["porcentajeIsc"]),
-                    CalculoDetraccion = 0.00m,
-                    TipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["documentoID"]),
-                    Gravadas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGravado"]),
-                    Inafectas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteinafecto"]),
-                    Exoneradas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteexonerado"]),
-                    Gratuitas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGratuitas"]),
-                    TotalOtrosTributos = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteOtros"]),
-                    TotalIsc = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteisc"]),
-                    TotalIgv = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteIgv"]),
-                    DescuentoGlobal = vDscto,
-                    TotalVenta = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteventa"]),
-                    Items = new List<DetalleDocumento>(),
-
-                    // nuevo 2.1
-                    PorcentajeIgv = Convert.ToDecimal(DtDocumentos.Rows[ii]["PorcentajeIgv"]),
-                    FechaRegistro = DtpFechaDoc.Value.ToString(FormatoFecha),
-                    AnexoSunat = Convert.ToString(DtDocumentos.Rows[ii]["AnexoSunat"]),
-                    NroPedido = Convert.ToString(DtDocumentos.Rows[ii]["pedidonumero"])
+   //                         AfectacionIgv = new AfectacionIgv
+   //                        {
+   //                            Nemotecnico = vNemoTecnico,
+   //                             Nombre = vNombre,
+   //                              Codigo = vCodigo,
+   //                              Id = vId
+   //                       },
                 };
-                DtArticulos = DetalleArticulos(DtDocumentos, ii);
+                _xDocumento.IdDocumento = idDoc;
+                  _xDocumento.FechaEmision = DtpFechaDoc.Value.ToString(FormatoFecha);
+
+                 _xDocumento.Moneda = "PEN";
+                 _xDocumento.MontoEnLetras = vletras;
+                 _xDocumento.CalculoIgv = 18m;
+             _xDocumento.CalculoIsc = Convert.ToDecimal(DtDocumentos.Rows[ii]["porcentajeIsc"]);
+                 _xDocumento.CalculoDetraccion = 0.00m;
+                 _xDocumento.TipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["documentoID"]);
+                  _xDocumento.TotalGravadas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGravado"]);
+                 _xDocumento.TotalInafectas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteinafecto"]);
+                 _xDocumento.TotalExoneradas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteexonerado"]);
+                   _xDocumento.TotalGratuitas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGratuitas"]);
+                 _xDocumento.TotalOtrosTributos = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteOtros"]);
+                 _xDocumento.TotalIsc = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteisc"]);
+                  _xDocumento.TotalIgv = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteIgv"]);
+                 _xDocumento.DescuentoGlobal = vDscto;
+                 _xDocumento.TotalVenta = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteventa"]);
+                  _xDocumento.Items = new List<DetalleDocumento>();
+
+                // nuevo 2.1
+      //          _xDocumento.PorcentajeIgv = Convert.ToDecimal(DtDocumentos.Rows[ii]["PorcentajeIgv"]);
+                _xDocumento.FechaRegistro =Convert.ToString( DtDocumentos.Rows[ii]["fechaRegistro"]);
+                _xDocumento.AnexoSunat = Convert.ToString(DtDocumentos.Rows[ii]["AnexoSunat"]);
+                _xDocumento.NroPedido = Convert.ToString(DtDocumentos.Rows[ii]["pedidonumero"]);
+
+
+            DtArticulos = DetalleArticulos(DtDocumentos, ii);
                 _xDocumento.TotItem = DtArticulos.Rows.Count;
                 for (int i3 = 0; i3 <= DtArticulos.Rows.Count - 1; i3++)
                 {
                     _xDocumento.Items.Add(DetalleItem(DtArticulos, i3));
                 }
 
-                string vNroDocumentoModifica = Convert.ToString(DtDocumentos.Rows[ii]["SeriedocumentoModifica"]) + "-" + Convert.ToString(DtDocumentos.Rows[ii]["NumeroDocumentoModifica"]);
                 string vTipoDoc = Convert.ToString(DtDocumentos.Rows[ii]["DocumentoID"]);
+                string vNroDocumentoModifica = Convert.ToString(DtDocumentos.Rows[ii]["SeriedocumentoModifica"]) + "-" + Convert.ToString(DtDocumentos.Rows[ii]["NumeroDocumentoModifica"]);
 
+                if (vTipoDoc == "08")
+                {
+                    string vNroDocumentoModifica1 = Convert.ToString(DtDocumentos.Rows[ii]["SeriedocumentoModifica"]);
+                }
                 if (vTipoDoc == "07" || vTipoDoc == "08")
                 {
                     // nota de credito
@@ -691,10 +698,11 @@ namespace  OpenInvoicePeru.WinApp
                 string vNroDoc = Convert.ToString(dt.Rows[iii]["documentoselectronicosCabid"]);
                 string vCorrelDoc = Convert.ToString(dt.Rows[iii]["ID"]);
 
-                SQL = " SELECT ProductodescripcionP=isnull(d.ProductoDescripcion,''''),Producto,UnidadMedidaId,b.*, c.* FROM ";
-                SQL += " dbo.FE_DocumentosElectronicosCab a INNER join .dbo.FE_DocumentosElectronicosDet b ON a.ID = b.documentoselectronicoscabID ";
-                SQL += " INNER join .dbo.FE_DocumentosElectronicosDetItem c ON b.ID  = c.documentoselectronicosDetID ";
-                SQL += " LEFT join .dbo.FE_Productos d ON c.ProductoID= d.ID ";
+                SQL = " SELECT ProductodescripcionP=isnull(d.ProductoDescripcion,''''),Producto,UnidadMedidaId,b.*, c.*,e.* FROM ";
+                SQL += " dbo.FEDocumentosElectronicosCab a INNER join .dbo.FEDocumentosElectronicosDet b ON a.ID = b.documentoselectronicoscabID ";
+                SQL += " INNER join .dbo.FEDocumentosElectronicosDetItem c ON b.ID  = c.documentoselectronicosDetID ";
+                SQL += " LEFT join .dbo.FEProductos d ON c.ProductoID= d.ID ";
+                SQL += " INNER JOIN .dbo.FeAfectacionIgv e ON c.AfectacionIgv=e.ID";
                 SQL += " WHERE a.empresaID='" + vEmpresa + "' AND fechadocumento ='" + DtpFechaDoc.Text + "' AND c.documentoselectronicosDetID=" + vCorrelDoc + "";
 
                 dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
@@ -758,23 +766,38 @@ namespace  OpenInvoicePeru.WinApp
                     vDescripcion = "DIESEL B5";
                 }
 
-                DetalleDocumento detalle = new DetalleDocumento
+                DetalleDocumento detalle = new DetalleDocumento();
+                               
+                    detalle.Id = Convert.ToInt32(i + 1);
+                    detalle.Cantidad = Convert.ToDecimal(DtArticulos.Rows[i]["Productocantidad"]);
+                    detalle.PrecioReferencial = vPrecioUnitario;
+                    detalle.PrecioUnitario = vPrecioUnitario;
+                    detalle.TipoPrecio = Convert.ToString(DtArticulos.Rows[i]["TipodePrecioID"]);
+                    detalle.CodigoItem = Convert.ToString(DtArticulos.Rows[i]["ProductoID"]);
+                    detalle.Descripcion = vDescripcion;
+                    detalle.UnidadMedida = "NIU";
+                    detalle.Impuesto = Convert.ToDecimal(DtArticulos.Rows[i]["ItemIgv"]);
+                    detalle.TipoImpuesto = Convert.ToString(DtArticulos.Rows[i]["TipodeImpuestoID"]);
+                    detalle.ImpuestoSelectivo = Convert.ToDecimal(DtArticulos.Rows[i]["itemIsc"]);
+                    detalle.OtroImpuesto = 0;
+                    detalle.ItemGravado = Convert.ToDecimal(DtArticulos.Rows[i]["ItemGravado"]);
+                detalle.ItemInafecto = Convert.ToDecimal(DtArticulos.Rows[i]["ItemInafecto"]);
+                detalle.ItemExonerado = Convert.ToDecimal(DtArticulos.Rows[i]["ItemExonerado"]);
+
+                detalle.ItemVenta = Convert.ToDecimal(DtArticulos.Rows[i]["ItemVenta"]);
+                    detalle.ItemSuma = Convert.ToDecimal(DtArticulos.Rows[i]["ItemVenta"]);
+                
+                string vNombre = Convert.ToString(DtArticulos.Rows[i]["nombre"]);
+                string vNemoTecnico = Convert.ToString(DtArticulos.Rows[i]["Nemotecnico"]);
+                string vCodigo = Convert.ToString(DtArticulos.Rows[i]["codigo"]);
+                string vId = Convert.ToString(DtArticulos.Rows[i]["Id"]);
+
+                detalle.AfectacionIgv = new AfectacionIgv
                 {
-                    Id = Convert.ToInt32(i + 1),
-                    Cantidad = Convert.ToDecimal(DtArticulos.Rows[i]["Productocantidad"]),
-                    PrecioReferencial = vPrecioUnitario,
-                    PrecioUnitario = vPrecioUnitario,
-                    TipoPrecio = Convert.ToString(DtArticulos.Rows[i]["TipodePrecioID"]),
-                    CodigoItem = Convert.ToString(DtArticulos.Rows[i]["Producto"]),
-                    Descripcion = vDescripcion,
-                    UnidadMedida = "NIU",
-                    Impuesto = Convert.ToDecimal(DtArticulos.Rows[i]["ItemIgv"]),
-                    TipoImpuesto = Convert.ToString(DtArticulos.Rows[i]["TipodeImpuestoID"]),
-                    ImpuestoSelectivo = Convert.ToDecimal(DtArticulos.Rows[i]["itemIsc"]),
-                    OtroImpuesto = 0,
-                    ItemGravado = Convert.ToDecimal(DtArticulos.Rows[i]["ItemGravado"]),
-                    TotalVenta = Convert.ToDecimal(DtArticulos.Rows[i]["ItemVenta"]),
-                    Suma = Convert.ToDecimal(DtArticulos.Rows[i]["ItemVenta"])
+                    Nemotecnico = vNemoTecnico,
+                    Nombre = vNombre,
+                    Codigo = vCodigo,
+                    Id = vId
                 };
 
                 return detalle;
@@ -829,8 +852,8 @@ namespace  OpenInvoicePeru.WinApp
         {
             try
             {
-                SQL = " SELECT b.* FROM dbo.FE_ResumenDiarioDocumentosCab a ";
-                SQL += " INNER JOIN dbo.FE_ResumenDiarioDocumentosDet b ON a.Id = b.ResumendiarioCabID  ";
+                SQL = " SELECT b.* FROM dbo.FEResumenDiarioDocumentosCab a ";
+                SQL += " INNER JOIN dbo.FEResumenDiarioDocumentosDet b ON a.Id = b.ResumendiarioCabID  ";
                 SQL += " WHERE a.EmpresaID='" + Ctr_AyuEmpresas.Codigo + "' AND fechadocumento = '" + DtpFechaDoc.Text + "'";
                 SQL += " AND a.EstadoAnulado=0 AND b.EstadoAnulado=0 Order by Establecimientoid ";
                 DtAceptados = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
@@ -855,20 +878,21 @@ namespace  OpenInvoicePeru.WinApp
         {
             txtResult.Text = "";
 
-            SQL = " SELECT a.empresaCodigo, a.Establecimiento_id,Fechadocumento,b.*,Letras=[dbo].fn_NumeroEnLetra(TotalImporteVenta,'01'),AnexoSunat,d.* ";
-            SQL += " FROM dbo.FE_DocumentosElectronicosCab a ";
-            SQL += "  INNER join FE_DocumentosElectronicosDet b ON a.DocumentosElectronicos_id = b.DocumentosElectronicos_id ";
-            SQL += "  INNER join FE_Establecimientos c ON a.Establecimiento_id = c.Establecimiento_id ";
-            SQL += " inner join .dbo.FE_AfectacionIgv d ON b.AfectacionIgv= d.AfectacionIgv  ";
-            SQL += " WHERE a.EmpresaCodigo='" + Ctr_AyuEmpresas.Codigo + "' AND fechadocumento = '" + DtpFechaDoc.Text + "'";
+     //       SQL = " SELECT a.empresaID, a.EstablecimientoID,Fechadocumento,b.*,Letras=[dbo].fn_NumeroEnLetra(TotalImporteVenta,'01'),AnexoSunat,d.* ";
+            SQL = " SELECT a.empresaID, a.EstablecimientoID,Fechadocumento,b.*,Letras=[dbo].fn_NumeroEnLetra(TotalImporteVenta,'01'),AnexoSunat ";
+            SQL += " FROM dbo.FEDocumentosElectronicosCab a ";
+            SQL += "  INNER join FEDocumentosElectronicosDet b ON a.ID = b.DocumentosElectronicosCabID ";
+            SQL += "  INNER join FeEstablecimientos c ON a.EstablecimientoID = c.ID ";
+      //      SQL += "  INNER join FeAfectacionIgv d ON b.AfectacionIgv = d.ID ";
+            SQL += " WHERE a.EmpresaID='" + Ctr_AyuEmpresas.Codigo + "' AND fechadocumento = '" + DtpFechaDoc.Text + "'";
 
             if (vTipoDoc == "RC")
             {
                 SQL = " SELECT  Item=IdentificadorEnvio+1,EstablecimientoID,Fechadocumento,grupo=b.GrupodeEnvioSunat, c.*,Letras=[dbo].fn_NumeroEnLetra(c.TotalImporteVenta,'01') ";
-                SQL += " FROM dbo.FE_ResumenDiarioDocumentosCab a ";
-                SQL += " INNER JOIN dbo.FE_ResumenDiarioDocumentosDet b ON a.Resumendiario_ID = b.Resumendiario_ID  ";
-                SQL += " INNER join FE_ResumenDiarioDocumentosDetItem c ON b.Resumendiario_ID = c.Resumendiario_ID AND b.ResumendiarioCorrel=c.ResumendiarioCorrel ";
-                SQL += " WHERE a.EmpresaCodigo='" + Ctr_AyuEmpresas.Codigo + "' AND fechadocumento = '" + DtpFechaDoc.Text + "'";
+                SQL += " FROM dbo.FEResumenDiarioDocumentosCab a ";
+                SQL += " INNER JOIN dbo.FEResumenDiarioDocumentosDet b ON a.ID = b.ResumendiarioCabID  ";
+                SQL += " INNER join FEResumenDiarioDocumentosDetItem c ON b.ID = c.ResumendiarioDetID ";
+                SQL += " WHERE a.EmpresaID='" + Ctr_AyuEmpresas.Codigo + "' AND fechadocumento = '" + DtpFechaDoc.Text + "'";
                 SQL += " AND a.EstadoAnulado=0 AND b.EstadoAnulado=0 AND b.GrupodeEnvioSunat=" + TxtGrupo.Text + " Order by IdentificadorEnvio ";
             }
             else
@@ -885,8 +909,8 @@ namespace  OpenInvoicePeru.WinApp
             }
             else
             {
-                SQL += "AND TipoDocumento='" + vTipoDoc + "'";
-                SQL += " AND a.EstadoAnulado=0 AND b.EstadoAnulado=0 Order by a.Establecimiento_ID ";
+                SQL += "AND DocumentoID='" + vTipoDoc + "'";
+                SQL += " AND a.EstadoAnulado=0 AND b.EstadoAnulado=0 Order by a.EstablecimientoID ";
             }
 
             DtDocumentos = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
@@ -1137,15 +1161,15 @@ namespace  OpenInvoicePeru.WinApp
 
         private void Ctr_AyuUrlDoc_AlDevolverDato(object Sender, DataRow e)
         {
-            DataTable Dtx = new DataTable();
-            SQL = " SELECT DireccionSunatUrl FROM fe_direccionesSunat where DireccionSunat_id='" + Ctr_AyuUrlDoc.Codigo + "'";
+              DataTable Dtx = new DataTable();
+            SQL = " SELECT DireccionSunatUrl FROM fedireccionesSunat where ID='" + Ctr_AyuUrlDoc.Codigo + "'";
             Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
             vUrlSunat = (string)Dtx.Rows[0][0];
         }
 
         private void Ctr_AyuEmpresas_AlDevolverDato(object Sender, DataRow e)
         {
-            SQL = "SELECT  * FROM [v_FE_DatosGeneralesEmpresas] WHERE Empresacodigo='" + Ctr_AyuEmpresas.Codigo + "'";
+            SQL = "SELECT  * FROM [v_FeDatosGeneralesEmpresas] WHERE ID='" + Ctr_AyuEmpresas.Codigo + "'";
 
             DtEmpresa = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
             if (DtEmpresa.Rows.Count > 0)
@@ -1172,10 +1196,10 @@ namespace  OpenInvoicePeru.WinApp
         private void Ctr_AyuDocumento_AlDevolverDato(object Sender, DataRow e)
         {
             DataTable Dtx = new DataTable();
-            SQL = " SELECT * FROM fe_DocumentosFE where DocumentoCodigo='" + Ctr_AyuDocumento.Codigo + "'";
+            SQL = " SELECT * FROM feDocumentosFE where ID='" + Ctr_AyuDocumento.Codigo + "'";
             Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
-            vTipoDoc = (string)Dtx.Rows[0]["DocumentoCodigo"];
-            vtipoEnvio = (int)Dtx.Rows[0]["tipoenvio_id"];
+            vTipoDoc = (string)Dtx.Rows[0]["ID"];
+            vtipoEnvio = (int)Dtx.Rows[0]["tipoenvioid"];
             BntEnvioSunat.Visible = false;
             BntGeneraEnvios.Visible = true;
             if (vtipoEnvio == 1)
@@ -1201,5 +1225,6 @@ namespace  OpenInvoicePeru.WinApp
         {
 
         }
+
     }
 }

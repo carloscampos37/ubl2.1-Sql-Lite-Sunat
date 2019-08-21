@@ -12,8 +12,8 @@ using System.Speech.Synthesis;
 using System.Text.RegularExpressions;
 using WinApp.Properties;
 using Class;
-using Comun.Dto.Modelos;
-using Comun.Dto.Intercambio;
+using OpenInvoicePeru.Comun.Dto.Modelos;
+using OpenInvoicePeru.Comun.Dto.Intercambio;
 
 namespace OpenInvoicePeru.WinApp
 {
@@ -388,13 +388,6 @@ namespace OpenInvoicePeru.WinApp
                         TipoDocumento = vTipoDocumento,
                         NombreLegal = vNombreLegal,
                     },
-                    AfectacionIgv = new AfectacionIgv
-                    {
-                        Nemotecnico = vNemoTecnico,
-                        Nombre = vNombre,
-                        Codigo = vCodigo,
-                        Id = vId
-                    },
                     IdDocumento = idDoc,
                     FechaEmision = DtpFechaDoc.Value.ToString(FormatoFecha),
 
@@ -404,10 +397,10 @@ namespace OpenInvoicePeru.WinApp
                     CalculoIsc = Convert.ToDecimal(DtDocumentos.Rows[ii]["porcentajeIsc"]),
                     CalculoDetraccion = 0.00m,
                     TipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["tipodocumento"]),
-                    Gravadas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGravado"]),
-                    Inafectas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteinafecto"]),
-                    Exoneradas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteexonerado"]),
-                    Gratuitas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGratuitas"]),
+                    TotalGravadas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGravado"]),
+                    TotalInafectas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteinafecto"]),
+                    TotalExoneradas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteexonerado"]),
+                    TotalGratuitas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGratuitas"]),
                     TotalOtrosTributos = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteOtros"]),
                     TotalIsc = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteisc"]),
                     TotalIgv = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteIgv"]),
@@ -780,8 +773,8 @@ namespace OpenInvoicePeru.WinApp
                     ImpuestoSelectivo = Convert.ToDecimal(DtArticulos.Rows[i]["itemIsc"]),
                     OtroImpuesto = 0,
                      ItemGravado= Convert.ToDecimal(DtArticulos.Rows[i]["ItemGravado"]),
-                    TotalVenta = Convert.ToDecimal(DtArticulos.Rows[i]["ItemVenta"]),
-                    Suma = Convert.ToDecimal(DtArticulos.Rows[i]["ItemVenta"])
+                    ItemVenta = Convert.ToDecimal(DtArticulos.Rows[i]["ItemVenta"]),
+                    ItemSuma = Convert.ToDecimal(DtArticulos.Rows[i]["ItemVenta"])
                 };
 
                 return detalle;

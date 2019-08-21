@@ -51,10 +51,10 @@ namespace OpenInvoicePeru.Comun.Dto.Modelos
         public decimal ItemExonerado { get; set; }
 
          [JsonProperty(Required = Required.Always)]
-        public decimal TotalVenta { get; set; }
+        public decimal ItemVenta { get; set; }
          
         [JsonIgnore]
-        public decimal Suma { get; set; }
+        public decimal ItemSuma { get; set; }
 
         public DetalleDocumento()
         {

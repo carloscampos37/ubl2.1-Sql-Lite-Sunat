@@ -91,7 +91,6 @@
     <None Include="Diagramas\Percepciones.cd" />
     <None Include="Diagramas\ResumenesDiarios.cd" />
     <None Include="Diagramas\Retenciones.cd" />
-    <None Include="OpenInvoicePeru.DataTransfersObjects.1.5.2.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

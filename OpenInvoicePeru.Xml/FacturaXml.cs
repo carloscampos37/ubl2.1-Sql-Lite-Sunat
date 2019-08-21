@@ -39,7 +39,7 @@ namespace OpenInvoicePeru.Xml
                                         PayableAmount = new PayableAmount()
                                         {
                                             CurrencyId = documento.Moneda,
-                                            Value = documento.Gravadas
+                                            Value = documento.TotalGravadas
                                         }
                                     },
                                     new AdditionalMonetaryTotal
@@ -48,7 +48,7 @@ namespace OpenInvoicePeru.Xml
                                         PayableAmount = new PayableAmount
                                         {
                                             CurrencyId = documento.Moneda,
-                                            Value = documento.Inafectas
+                                            Value = documento.TotalInafectas
                                         }
                                     },
                                     new AdditionalMonetaryTotal
@@ -57,7 +57,7 @@ namespace OpenInvoicePeru.Xml
                                         PayableAmount = new PayableAmount
                                         {
                                             CurrencyId = documento.Moneda,
-                                            Value = documento.Exoneradas
+                                            Value = documento.TotalExoneradas
                                         }
                                     },
                                     new AdditionalMonetaryTotal
@@ -66,7 +66,7 @@ namespace OpenInvoicePeru.Xml
                                         PayableAmount = new PayableAmount
                                         {
                                             CurrencyId = documento.Moneda,
-                                            Value = documento.Gratuitas
+                                            Value = documento.TotalGratuitas
                                         }
                                     }
                                 },
@@ -167,7 +167,7 @@ namespace OpenInvoicePeru.Xml
                         LineExtensionAmount = new PayableAmount
                         {
                             CurrencyId = documento.Moneda,
-                            Value = documento.Gravadas + documento.Exoneradas + documento.Inafectas + documento.Gratuitas
+                            Value = documento.TotalGravadas + documento.TotalExoneradas + documento.TotalInafectas + documento.TotalGratuitas
                         },
                         TaxInclusiveAmount = new PayableAmount
                         {
@@ -203,7 +203,7 @@ namespace OpenInvoicePeru.Xml
                         TaxableAmount =new PayableAmount
                         {
                             CurrencyId="S",
-                            Value =documento.Gravadas
+                            Value =documento.TotalGravadas
                         },
                         TaxAmount = new PayableAmount
                         {
@@ -267,7 +267,7 @@ namespace OpenInvoicePeru.Xml
                         }
                     });
                 }
-                if (documento.Inafectas  > 0)
+                if (documento.TotalInafectas  > 0)
                 {
                     
                     invoice.TaxTotals.Add(new TaxTotal
@@ -276,7 +276,7 @@ namespace OpenInvoicePeru.Xml
                         TaxableAmount = new PayableAmount
                         {
                             CurrencyId = "O",
-                            Value = documento.Inafectas 
+                            Value = documento.TotalInafectas 
                         },
                         TaxAmount = new PayableAmount
                         {
@@ -288,7 +288,7 @@ namespace OpenInvoicePeru.Xml
                             TaxAmount = new PayableAmount
                             {
                                 CurrencyId = documento.Moneda,
-                                Value = documento.Inafectas 
+                                Value = documento.TotalInafectas 
                             },
                             TaxCategory = new TaxCategory
                             {
@@ -302,7 +302,7 @@ namespace OpenInvoicePeru.Xml
                         }
                     });
                 }
-                if (documento.Exoneradas  > 0)
+                if (documento.TotalExoneradas  > 0)
                 {
                     invoice.TaxTotals.Add(new TaxTotal
                     {
@@ -310,7 +310,7 @@ namespace OpenInvoicePeru.Xml
                         TaxableAmount = new PayableAmount
                         {
                             CurrencyId = "E",
-                            Value = documento.Exoneradas 
+                            Value = documento.TotalExoneradas 
                         },
                         TaxAmount = new PayableAmount
                         {
@@ -322,7 +322,7 @@ namespace OpenInvoicePeru.Xml
                             TaxAmount = new PayableAmount
                             {
                                 CurrencyId = documento.Moneda,
-                                Value = documento.Exoneradas 
+                                Value = documento.TotalExoneradas 
                             },
                             TaxCategory = new TaxCategory
                             {
@@ -336,7 +336,7 @@ namespace OpenInvoicePeru.Xml
                         }
                     });
                 }
-                if (documento.Gratuitas  > 0)
+                if (documento.TotalGratuitas  > 0)
                 {
                     invoice.TaxTotals.Add(new TaxTotal
                     {
@@ -345,7 +345,7 @@ namespace OpenInvoicePeru.Xml
                         {
                            
                             CurrencyId = "I",
-                            Value = documento.Gratuitas 
+                            Value = documento.TotalGratuitas 
                         },
                         TaxAmount = new PayableAmount
                         {
@@ -357,7 +357,7 @@ namespace OpenInvoicePeru.Xml
                             TaxAmount = new PayableAmount
                             {
                                 CurrencyId = documento.Moneda,
-                                Value = documento.Exoneradas
+                                Value = documento.TotalExoneradas
                             },
                             TaxCategory = new TaxCategory
                             {
@@ -627,7 +627,7 @@ namespace OpenInvoicePeru.Xml
                         LineExtensionAmount = new PayableAmount
                         {
                             CurrencyId = documento.Moneda,
-                            Value = detalleDocumento.TotalVenta
+                            Value = detalleDocumento.ItemVenta
                         },
                         PricingReference = new PricingReference
                         {
@@ -725,12 +725,12 @@ namespace OpenInvoicePeru.Xml
                         {
                             CurrencyId = documento.Moneda,
                             // Comprobamos que sea una operacion gratuita.
-                            Value = documento.Gratuitas > 0 ? 0 : detalleDocumento.PrecioReferencial
+                            Value = documento.TotalGratuitas > 0 ? 0 : detalleDocumento.PrecioReferencial
                         },
                         PriceTypeCode = detalleDocumento.TipoPrecio
                     });
                     // Para operaciones no onerosas (gratuitas)
-                    if (documento.Gratuitas > 0)
+                    if (documento.TotalGratuitas > 0)
                         linea.PricingReference.AlternativeConditionPrices.Add(new AlternativeConditionPrice
                         {
                             PriceAmount = new PayableAmount

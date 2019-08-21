@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OpenInvoicePeru.WinApp</RootNamespace>
-    <AssemblyName>WinAppIren</AssemblyName>
+    <AssemblyName>WinAppFacturasElectronicas</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -63,6 +63,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>OpenInvoicePeru.WinApp.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ctr_Ayuda">
@@ -193,17 +196,13 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\FacturasElectronicasWeb\OpenInvoicePeru.Comun.Dto\Jck.Comun.Dto.csproj">
-      <Project>{A265A65A-C2A9-4F9E-B272-BED5ED04DF98}</Project>
-      <Name>Jck.Comun.Dto</Name>
+    <ProjectReference Include="..\..\FacturasElectronicasWeb\OpenInvoicePeru.Comun.Dto\OpenInvoicePeru.Comun.Dto.csproj">
+      <Project>{a265a65a-c2a9-4f9e-b272-bed5ed04df98}</Project>
+      <Name>OpenInvoicePeru.Comun.Dto</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\FacturasElectronicasWeb\OpenInvoicePeru.Comun\Jck.Comun.csproj">
-      <Project>{c6d3447f-6aed-4da5-b28c-7c0356f2f4a8}</Project>
-      <Name>Jck.Comun</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\FacturasElectronicasWeb\OpenInvoicePeru.Firmado\Jck.Firmado.csproj">
+    <ProjectReference Include="..\..\FacturasElectronicasWeb\OpenInvoicePeru.Firmado\OpenInvoicePeru.Firmado.csproj">
       <Project>{1cfd1d28-d342-413d-a6e1-7616cb9708e2}</Project>
-      <Name>Jck.Firmado</Name>
+      <Name>OpenInvoicePeru.Firmado</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

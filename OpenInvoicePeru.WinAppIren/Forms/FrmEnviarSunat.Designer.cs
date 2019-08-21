@@ -417,18 +417,18 @@
             // 
             // Ctr_AyuDocumento
             // 
-            this.Ctr_AyuDocumento.CampoDevCod = "DocumentoCodigo";
+            this.Ctr_AyuDocumento.CampoDevCod = "ID";
             this.Ctr_AyuDocumento.CampoDevDesc = "DocumentoDescripcion";
             this.Ctr_AyuDocumento.Codigo = "";
             this.Ctr_AyuDocumento.Descripcion = "";
             this.Ctr_AyuDocumento.Filtro = "";
             this.Ctr_AyuDocumento.ListaAlias = "Codigo,Descripcion";
-            this.Ctr_AyuDocumento.ListaCampos = "DocumentoCodigo,DocumentoDescripcion";
+            this.Ctr_AyuDocumento.ListaCampos = "ID,DocumentoDescripcion";
             this.Ctr_AyuDocumento.Location = new System.Drawing.Point(822, 36);
             this.Ctr_AyuDocumento.LongCod = "2";
             this.Ctr_AyuDocumento.LongDesc = "50";
             this.Ctr_AyuDocumento.Name = "Ctr_AyuDocumento";
-            this.Ctr_AyuDocumento.NombreTabla = "fe_DocumentosFE";
+            this.Ctr_AyuDocumento.NombreTabla = "feDocumentosFE";
             this.Ctr_AyuDocumento.Requerido = true;
             this.Ctr_AyuDocumento.Size = new System.Drawing.Size(202, 16);
             this.Ctr_AyuDocumento.TabIndex = 117;
@@ -437,18 +437,18 @@
             // 
             // Ctr_AyuUrlDoc
             // 
-            this.Ctr_AyuUrlDoc.CampoDevCod = "DireccionSunat_id";
-            this.Ctr_AyuUrlDoc.CampoDevDesc = "DireccionSunatTipo";
+            this.Ctr_AyuUrlDoc.CampoDevCod = "ID";
+            this.Ctr_AyuUrlDoc.CampoDevDesc = "DireccionSunat";
             this.Ctr_AyuUrlDoc.Codigo = "";
             this.Ctr_AyuUrlDoc.Descripcion = "";
             this.Ctr_AyuUrlDoc.Filtro = "";
-            this.Ctr_AyuUrlDoc.ListaAlias = "Codigo,Direccion,Urk";
-            this.Ctr_AyuUrlDoc.ListaCampos = "DireccionSunat_id,DireccionSunattipo,Direccionsunaturl";
+            this.Ctr_AyuUrlDoc.ListaAlias = "Codigo,Direccion,Url";
+            this.Ctr_AyuUrlDoc.ListaCampos = "id,DireccionSunat,Direccionsunaturl";
             this.Ctr_AyuUrlDoc.Location = new System.Drawing.Point(616, 36);
             this.Ctr_AyuUrlDoc.LongCod = "3";
             this.Ctr_AyuUrlDoc.LongDesc = "50";
             this.Ctr_AyuUrlDoc.Name = "Ctr_AyuUrlDoc";
-            this.Ctr_AyuUrlDoc.NombreTabla = "fe_DireccionesSunat";
+            this.Ctr_AyuUrlDoc.NombreTabla = "feDireccionesSunat";
             this.Ctr_AyuUrlDoc.Requerido = true;
             this.Ctr_AyuUrlDoc.Size = new System.Drawing.Size(219, 17);
             this.Ctr_AyuUrlDoc.TabIndex = 115;
