@@ -684,6 +684,8 @@ namespace OpenInvoicePeru.WinApp
                 string vNroDoc = Convert.ToString(dt.Rows[iii]["documentoselectronicosCabid"]);
                 string vCorrelDoc = Convert.ToString(dt.Rows[iii]["ID"]);
 
+
+
                 SQL = " SELECT ProductodescripcionP=isnull(d.ProductoDescripcion,''''),Producto,UnidadMedidaId,b.*, c.* FROM ";
                 SQL += " dbo.FE_DocumentosElectronicosCab a INNER join .dbo.FE_DocumentosElectronicosDet b ON a.ID = b.documentoselectronicoscabID ";
                 SQL += " INNER join .dbo.FE_DocumentosElectronicosDetItem c ON b.ID  = c.documentoselectronicosDetID ";
