@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using System.Data;
 using System.Net.Http;
 using System.Windows.Forms;
-using  Comun.Dto.Intercambio;
-using  Comun.Dto.Modelos;
-using  WinApp.Properties;
-
+using OpenInvoicePeru.Comun.Dto.Intercambio;
+using OpenInvoicePeru.Comun.Dto.Modelos;
 using System.Configuration;
 using System.IO;
 using System.Speech.Synthesis;
 
 using System.Text.RegularExpressions;
-using  Class;
+using OpenInvoicePeru.WinAppFE.Properties;
+using Class;
 
-namespace  WinApp
+namespace  OpenInvoicePeru.WinApp
 {
     public partial class FrmEnviosSunat : Form
     {
@@ -27,6 +26,7 @@ namespace  WinApp
 
         public readonly HttpClient _client;
         public string vRutaArchivoXML;
+        public string vArchivoXML;
         public string vRutaXml = "";
         public string vRutaCdr = "";
         public Int32 vRegistros = 0;
@@ -148,7 +148,6 @@ namespace  WinApp
                 ReemplaCaracteres(Convert.ToString(vRutaArchivoXML));
 
                 var TramaXML = Convert.ToBase64String(File.ReadAllBytes(vRutaArchivoXML));
-
                 var enviarDocumentoRequest = new EnviarDocumentoRequest
                 {
                     Ruc = Convert.ToString(DtEmpresa.Rows[0]["EmpresaRuc"]),
@@ -470,10 +469,46 @@ namespace  WinApp
                 if (!respuesta.Exito)
                     throw new ApplicationException(respuesta.MensajeError);
 
-                //        String vRutaXml = Convert.ToString(DtEmpresa.Rows[0]["CarpetaEnviosXml"]);
-                vRutaArchivoXML = Path.Combine(vRutaXml, $"{_xDocumento.IdDocumento}.xml");
 
-                File.WriteAllBytes(vRutaArchivoXML, Convert.FromBase64String(respuesta.TramaXmlSinFirma));
+
+                idDoc = DtEmpresa.Rows[0]["EmpresaRuc"] + "-" + vTipoDoc;
+                idDoc += "-" + Convert.ToString(DtDocumentos.Rows[ii]["Seriedocumento"] + "-" + DtDocumentos.Rows[ii]["NumeroDocumento"]);
+                vArchivoXML = Path.Combine(vRutaXml, $"{idDoc}.xml");
+                //    File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(respuesta.TramaXmlSinFirma));
+                //    return;
+
+                //        String vRutaXml = Convert.ToString(DtEmpresa.Rows[0]["CarpetaEnviosXml"]);
+
+                var tramaXmlSinFirma = respuesta.TramaXmlSinFirma;
+
+
+                String vRutaCertificado = Convert.ToString(DtEmpresa.Rows[0]["CarpetaCertificadoDigital"]) +
+                                                        Convert.ToString(DtEmpresa.Rows[0]["NombreCertificadoDigital"]);
+                var firmadoRequest = new FirmadoRequest
+                {
+                    TramaXmlSinFirma = tramaXmlSinFirma,
+                    CertificadoDigital = Convert.ToBase64String(File.ReadAllBytes(vRutaCertificado)),
+                    PasswordCertificado = Convert.ToString(DtEmpresa.Rows[0]["PasswCertificadoDigital"]),
+                    UnSoloNodoExtension = true
+                };
+
+                var jsonFirmado = await _client.PostAsJsonAsync("api/Firmar", firmadoRequest);
+                var respuestaFirmado = await jsonFirmado.Content.ReadAsAsync<FirmadoResponse>();
+                if (!respuestaFirmado.Exito)
+                    throw new ApplicationException(respuestaFirmado.MensajeError);
+
+
+                vArchivoXML = Path.Combine(vRutaXml, $"{idDoc}.xml");
+
+
+
+                File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado));
+
+                ReemplaCaracteres(Convert.ToString(vArchivoXML));
+
+
+
+
             }
             catch (Exception ex)
             {
@@ -760,8 +795,8 @@ namespace  WinApp
                 {
                     vDescripcion = "DIESEL B5";
                 }
-
-                DetalleDocumento detalle = new DetalleDocumento
+  
+               DetalleDocumento detalle = new DetalleDocumento
                 {
                     Id = Convert.ToInt32(i + 1),
                     Cantidad = Convert.ToDecimal(DtArticulos.Rows[i]["Productocantidad"]),

@@ -70,7 +70,7 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
 
 
         public Invoice()
-        {            
+        {
             AccountingSupplierParty = new AccountingSupplierParty();
             AccountingCustomerParty = new AccountingSupplierParty();
             DespatchDocumentReferences = new List<InvoiceDocumentReference>();
@@ -100,8 +100,8 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
             try
             {
                 // pagina 1
-          
-                    #region pagina1
+
+                #region pagina1
 
                 #region Cabecera
 
@@ -188,12 +188,12 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
                     #endregion Note
 
                     #region Note2
-              //      writer.WriteStartElement("cbc:Note");
-              //      {
-               //         writer.WriteAttributeString("languageLocaleID", "1000");
-                //        writer.WriteString(NroPedido);
-                //    }
-               //     writer.WriteEndElement();
+                    //      writer.WriteStartElement("cbc:Note");
+                    //      {
+                    //         writer.WriteAttributeString("languageLocaleID", "1000");
+                    //        writer.WriteString(NroPedido);
+                    //    }
+                    //     writer.WriteEndElement();
                     #endregion Note2
 
                     #region DocumentCurrencyCode
@@ -301,12 +301,12 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
                                 writer.WriteStartElement("cac:RegistrationAddress");
                                 {
                                     writer.WriteElementString("cbc:AddressTypeCode",AnexoSunat );
-                                //    {
-                                //        writer.WriteAttributeString ("schemeAgencyName", Sunat.peSunat);
-                                //        writer.WriteAttributeString("schemeName", "Establecimientos anexos");
-                                //        writer.WriteString(AnexoSunat);
-                                //    }
-                                //    writer.WriteEndElement();
+                                    //    {
+                                    //        writer.WriteAttributeString ("schemeAgencyName", Sunat.peSunat);
+                                    //        writer.WriteAttributeString("schemeName", "Establecimientos anexos");
+                                    //        writer.WriteString(AnexoSunat);
+                                    //    }
+                                    //    writer.WriteEndElement();
                                 }
                                 writer.WriteEndElement();
                             }
@@ -366,7 +366,7 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
 
                             #endregion PartyLegalEntity
 
-                       }
+                        }
                         writer.WriteEndElement();
                         #endregion Party
 
@@ -498,16 +498,16 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
 
                     writer.WriteStartElement("cac:LegalMonetaryTotal");
                     {
-                      
-                     //   if (LegalMonetaryTotal.LineExtensionAmount.Value > 0)
-                   //     {
-                         //   writer.WriteStartElement("cbc:LineExtensionAmount");
-                         //   {
-                         //       writer.WriteAttributeString("currencyID", LegalMonetaryTotal.Moneda );
+
+                        //   if (LegalMonetaryTotal.LineExtensionAmount.Value > 0)
+                        //     {
+                        //   writer.WriteStartElement("cbc:LineExtensionAmount");
+                        //   {
+                        //       writer.WriteAttributeString("currencyID", LegalMonetaryTotal.Moneda );
                         //        writer.WriteValue(LegalMonetaryTotal.LineExtensionAmount.Value.ToString(Formatos.FormatoNumerico, Formato));
-                       //     }
-                     //       writer.WriteEndElement();
-                      //  }
+                        //     }
+                        //       writer.WriteEndElement();
+                        //  }
                         if (LegalMonetaryTotal.TaxInclusiveAmount.Value > 0)
                         {
                             writer.WriteStartElement("cbc:TaxInclusiveAmount");
@@ -645,7 +645,7 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
                             #endregion AllowanceCharge
 
                             // hasta aqui Ok 
-                            
+
                             #region TaxTotal
 
                             foreach (var taxTotal in invoiceLine.TaxTotals)
@@ -726,7 +726,7 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
                                             writer.WriteStartElement("cac:TaxScheme");
                                             {
                                                 #region ID
-
+                                              
                                                 writer.WriteStartElement("cbc:ID");
                                                 {
                                                     writer.WriteAttributeString("schemeID", Sunat.iso5153);
@@ -737,7 +737,7 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
                                                 }
                                                 writer.WriteEndElement();
                                                 #endregion ID
-
+                                             
                                                 writer.WriteElementString("cbc:Name", taxTotal.TaxSubtotal.TaxCategory.TaxScheme.Name);
                                                 writer.WriteElementString("cbc:TaxTypeCode", taxTotal.TaxSubtotal.TaxCategory.TaxScheme.TaxTypeCode);
 
@@ -815,7 +815,7 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
                     #endregion pagina4
                 }
             }
-            
+
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);

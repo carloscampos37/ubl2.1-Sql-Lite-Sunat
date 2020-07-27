@@ -20,7 +20,7 @@ namespace OpenInvoicePeru.Xml
             try
             {
                 var documento = (DocumentoElectronico)request;
-                documento.MontoEnLetras = Conversion.Enletras(documento.TotalVenta);
+                documento.MontoEnLetras = documento.MontoEnLetras;
                 var invoice = new Invoice()
                 {
                     UblExtensions = new UblExtensions
@@ -295,7 +295,7 @@ namespace OpenInvoicePeru.Xml
                                 TaxScheme = new TaxScheme
                                 {
                                     Id = "9998",
-                                    Name = "INAFECTO",
+                                    Name = "INA",
                                     TaxTypeCode = "FRE"
                                 }
                             }
@@ -329,7 +329,7 @@ namespace OpenInvoicePeru.Xml
                                 TaxScheme = new TaxScheme
                                 {
                                     Id = "9997",
-                                    Name = "EXONERADO",
+                                    Name = "EXO",
                                     TaxTypeCode = "VAT"
                                 }
                             }
@@ -682,8 +682,8 @@ namespace OpenInvoicePeru.Xml
                                 TaxScheme = new TaxScheme()
                                 {
                                     Id = "1000",
-                                    Name = "IGV",
-                                    TaxTypeCode = "VAT"
+                                    Name ="IGV",
+                                    TaxTypeCode ="VAT"
                                 }
                             }
                         }
@@ -742,8 +742,6 @@ namespace OpenInvoicePeru.Xml
                         });
 
                     // linea.AditionalItemIdentification.Id = documento.PlacaVehiculo;
-
-
 
                     /* 51 - Descuentos por ítem */
                     if (detalleDocumento.Descuento > 0)

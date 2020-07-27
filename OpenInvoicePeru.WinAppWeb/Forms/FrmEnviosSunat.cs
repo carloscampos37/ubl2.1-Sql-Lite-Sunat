@@ -397,10 +397,10 @@ namespace OpenInvoicePeru.WinApp
                     CalculoIsc = Convert.ToDecimal(DtDocumentos.Rows[ii]["porcentajeIsc"]),
                     CalculoDetraccion = 0.00m,
                     TipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["tipodocumento"]),
-                    TotalGravadas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGravado"]),
-                    TotalInafectas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteinafecto"]),
-                    TotalExoneradas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteexonerado"]),
-                    TotalGratuitas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGratuitas"]),
+                    Gravadas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGravado"]),
+                    Inafectas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteinafecto"]),
+                    Exoneradas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteexonerado"]),
+                    Gratuitas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGratuitas"]),
                     TotalOtrosTributos = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteOtros"]),
                     TotalIsc = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteisc"]),
                     TotalIgv = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteIgv"]),
@@ -773,8 +773,8 @@ namespace OpenInvoicePeru.WinApp
                     ImpuestoSelectivo = Convert.ToDecimal(DtArticulos.Rows[i]["itemIsc"]),
                     OtroImpuesto = 0,
                      ItemGravado= Convert.ToDecimal(DtArticulos.Rows[i]["ItemGravado"]),
-                    ItemVenta = Convert.ToDecimal(DtArticulos.Rows[i]["ItemVenta"]),
-                    ItemSuma = Convert.ToDecimal(DtArticulos.Rows[i]["ItemVenta"])
+                    TotalVenta  = Convert.ToDecimal(DtArticulos.Rows[i]["ItemVenta"])
+                //    ItemSuma = Convert.ToDecimal(DtArticulos.Rows[i]["ItemVenta"])
                 };
 
                 return detalle;

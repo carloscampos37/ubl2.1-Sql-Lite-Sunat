@@ -43,7 +43,7 @@ namespace OpenInvoicePeru.Comun.Dto.Modelos
         public string PlacaVehiculo { get; set; }
 
         // nuevo
-
+   
         public decimal ItemGravado { get; set; }
 
         public decimal ItemInafecto { get; set; }
@@ -52,8 +52,8 @@ namespace OpenInvoicePeru.Comun.Dto.Modelos
 
          [JsonProperty(Required = Required.Always)]
         public decimal ItemVenta { get; set; }
-         
-        [JsonIgnore]
+
+        [JsonProperty(Required = Required.Always)]
         public decimal ItemSuma { get; set; }
 
         public DetalleDocumento()

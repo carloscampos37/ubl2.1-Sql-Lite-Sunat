@@ -8,7 +8,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OpenInvoicePeru.Comun.Dto.Modelos.DatoAdicional">
-    <Position X="5.25" Y="7.75" Width="1.75" />
+    <Position X="6.25" Y="9" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Modelos\DatoAdicional.cs</FileName>
@@ -28,7 +28,7 @@
   <Class Name="OpenInvoicePeru.Comun.Dto.Modelos.DetalleDocumento">
     <Position X="9.5" Y="2.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>QAESAgEAABAAAgAAAAAAAwABAgAAEAAAAIACIAAAAAA=</HashCode>
+      <HashCode>YAESAAFAAAAAAgAAQAAAAwAJAgAAEAAAAIACIACAAAA=</HashCode>
       <FileName>Modelos\DetalleDocumento.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -41,8 +41,18 @@
   </Class>
   <Class Name="OpenInvoicePeru.Comun.Dto.Modelos.DocumentoElectronico" BaseTypeListCollapsed="true">
     <Position X="5" Y="0.5" Width="2.25" />
+    <AssociationLine Name="Emisor" Type="OpenInvoicePeru.Comun.Dto.Modelos.Contribuyente">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.131" Y="0.06" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="DatoAdicionales" Type="OpenInvoicePeru.Comun.Dto.Modelos.DatoAdicional">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.1" Y="0.466" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>gGMBEAAAABIUCAACAABDAAAAJJECRBAAMAAAAigAAAA=</HashCode>
+      <HashCode>gCExUAAAABIUCAACAQBDAACAJJACbBAAMgASAigAAAA=</HashCode>
       <FileName>Modelos\DocumentoElectronico.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -66,5 +76,12 @@
       <FileName>Modelos\DocumentoRelacionado.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Interface Name="OpenInvoicePeru.Comun.Dto.Contratos.IDocumentoElectronico" Collapsed="true">
+    <Position X="9.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contratos\IDocumentoElectronico.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

@@ -79,7 +79,7 @@ namespace OpenInvoicePeru.WinApp
                     Ctr_AyuEmpresas.CadenaCone = VGCnxSqlE;
 
                     Ctr_AyuEmpresas.Filtro = " EstadoAnulado=0 ";
-                    SQL = " Select * from fe_Empresas where " + Ctr_AyuEmpresas.Filtro;
+                    SQL = " Select * from FeEmpresas where " + Ctr_AyuEmpresas.Filtro;
                     Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
                     if (Dtx.Rows.Count == 1)
                     {
@@ -88,11 +88,11 @@ namespace OpenInvoicePeru.WinApp
                     }
 
                     Ctr_AyuUrlDoc.Filtro = " EstadoAnulado=0 ";
-                    SQL = " Select * from fe_DireccionesSunat where " + Ctr_AyuUrlDoc.Filtro;
+                    SQL = " Select * from FeDireccionesSunat where " + Ctr_AyuUrlDoc.Filtro;
                     Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
                     if (Dtx.Rows.Count == 1)
                     {
-                        Ctr_AyuUrlDoc.Codigo = Convert.ToString(Dtx.Rows[0]["DireccionSunat_id"]);
+                        Ctr_AyuUrlDoc.Codigo = Convert.ToString(Dtx.Rows[0]["DireccionSunatID"]);
                         Ctr_AyuUrlDoc.EjecAyuda();
                     }
 
@@ -824,8 +824,8 @@ namespace OpenInvoicePeru.WinApp
         {
             try
             {
-                SQL = " SELECT b.* FROM dbo.FE_ResumenDiarioDocumentosCab a ";
-                SQL += " INNER JOIN dbo.FE_ResumenDiarioDocumentosDet b ON a.Id = b.ResumendiarioCabID  ";
+                SQL = " SELECT b.* FROM dbo.FeResumenDiarioDocumentosCab a ";
+                SQL += " INNER JOIN dbo.FeResumenDiarioDocumentosDet b ON a.Id = b.ResumendiarioCabID  ";
                 SQL += " WHERE a.EmpresaID='" + Ctr_AyuEmpresas.Codigo + "' AND fechadocumento = '" + DtpFechaDoc.Text + "'";
                 SQL += " AND a.EstadoAnulado=0 AND b.EstadoAnulado=0 Order by Establecimientoid ";
                 DtAceptados = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
@@ -851,18 +851,18 @@ namespace OpenInvoicePeru.WinApp
             txtResult.Text = "";
 
             SQL = " SELECT a.empresaID, a.Establecimientoid,Fechadocumento,b.*,Letras=[dbo].fn_NumeroEnLetra(TotalImporteVenta,'01'),AnexoSunat,d.* ";
-            SQL += " FROM dbo.FE_DocumentosElectronicosCab a ";
-            SQL = SQL + "  INNER join FE_DocumentosElectronicosDet b ON a.ID = b.documentoselectronicoscabID ";
-            SQL = SQL + "  INNER join FE_Establecimientos c ON a.establecimientoID = c.ID ";
-            SQL += " inner join .dbo.FE_AfectacionIgv d ON b.AfectacionIgv= d.Id  ";
+            SQL += " FROM dbo.FEDocumentosElectronicosCab a ";
+            SQL = SQL + "  INNER join FeDocumentosElectronicosDet b ON a.ID = b.documentoselectronicoscabID ";
+            SQL = SQL + "  INNER join FeEstablecimientos c ON a.establecimientoID = c.ID ";
+            SQL += " inner join .dbo.FeAfectacionIgv d ON b.AfectacionIgv= d.Id  ";
             SQL = SQL + " WHERE a.EmpresaID='" + Ctr_AyuEmpresas.Codigo + "' AND fechadocumento = '" + DtpFechaDoc.Text + "'";
 
             if (vTipoDoc == "RC")
             {
                 SQL = " SELECT  Item=IdentificadorEnvio+1,EstablecimientoID,Fechadocumento,grupo=b.GrupodeEnvioSunat, c.*,Letras=[dbo].fn_NumeroEnLetra(c.TotalImporteVenta,'01') ";
-                SQL += " FROM dbo.FE_ResumenDiarioDocumentosCab a ";
-                SQL += " INNER JOIN dbo.FE_ResumenDiarioDocumentosDet b ON a.ID = b.ResumendiarioCabID  ";
-                SQL += " INNER join FE_ResumenDiarioDocumentosDetItem c ON b.ID = c.ResumendiarioDetID ";
+                SQL += " FROM dbo.FeResumenDiarioDocumentosCab a ";
+                SQL += " INNER JOIN dbo.FeResumenDiarioDocumentosDet b ON a.ID = b.ResumendiarioCabID  ";
+                SQL += " INNER join FeResumenDiarioDocumentosDetItem c ON b.ID = c.ResumendiarioDetID ";
                 SQL += " WHERE a.EmpresaID='" + Ctr_AyuEmpresas.Codigo + "' AND fechadocumento = '" + DtpFechaDoc.Text + "'";
                 SQL += " AND a.EstadoAnulado=0 AND b.EstadoAnulado=0 AND b.GrupodeEnvioSunat=" + TxtGrupo.Text + " Order by IdentificadorEnvio ";
             }
@@ -1133,14 +1133,14 @@ namespace OpenInvoicePeru.WinApp
         private void Ctr_AyuUrlDoc_AlDevolverDato(object Sender, DataRow e)
         {
             DataTable Dtx = new DataTable();
-            SQL = " SELECT DireccionSunatUrl FROM fe_direccionesSunat where DireccionSunat_id='" + Ctr_AyuUrlDoc.Codigo + "'";
+            SQL = " SELECT DireccionSunatUrl FROM fedireccionesSunat where ID='" + Ctr_AyuUrlDoc.Codigo + "'";
             Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
             vUrlSunat = (string)Dtx.Rows[0][0];
         }
 
         private void Ctr_AyuEmpresas_AlDevolverDato(object Sender, DataRow e)
         {
-            SQL = "SELECT  * FROM [v_FE_DatosGeneralesEmpresas] WHERE Empresacodigo='" + Ctr_AyuEmpresas.Codigo + "'";
+            SQL = "SELECT  * FROM [v_FEDatosGeneralesEmpresas] WHERE ID='" + Ctr_AyuEmpresas.Codigo + "'";
 
             DtEmpresa = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
             if (DtEmpresa.Rows.Count > 0)
@@ -1167,9 +1167,9 @@ namespace OpenInvoicePeru.WinApp
         private void Ctr_AyuDocumento_AlDevolverDato(object Sender, DataRow e)
         {
             DataTable Dtx = new DataTable();
-            SQL = " SELECT * FROM fe_DocumentosFE where DocumentoCodigo='" + Ctr_AyuDocumento.Codigo + "'";
+            SQL = " SELECT * FROM feDocumentosFE where ID='" + Ctr_AyuDocumento.Codigo + "'";
             Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
-            vTipoDoc = (string)Dtx.Rows[0]["DocumentoCodigo"];
+            vTipoDoc = (string)Dtx.Rows[0]["ID"];
             vtipoEnvio = (int)Dtx.Rows[0]["tipoenvioid"];
             BntEnvioSunat.Visible = false;
             BntGeneraEnvios.Visible = true;
@@ -1192,9 +1192,6 @@ namespace OpenInvoicePeru.WinApp
 
         #endregion textBox
 
-        private void FrmEnviosSunat_Load(object sender, EventArgs e)
-        {
 
-        }
     }
 }

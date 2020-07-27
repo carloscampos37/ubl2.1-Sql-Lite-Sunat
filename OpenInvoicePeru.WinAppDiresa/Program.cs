@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 
-namespace Jck.WinAppDiresa
+namespace OpenInvoicePeru.WinApp
 {
     public static class Program
     {
@@ -27,7 +27,7 @@ namespace Jck.WinAppDiresa
             {
                 MessageBox.Show(ex.Message + ex.InnerException?.Message, Application.ProductName);
             }
-            Application.Run(new FrmEnviosDocumentosFE());
-        }
+            Application.Run(new FrmEnviosSunat());
+                    }
     }
 }
