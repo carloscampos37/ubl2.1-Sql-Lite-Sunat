@@ -43,7 +43,9 @@ namespace OpenInvoicePeru.Comun.Dto.Modelos
         public string PlacaVehiculo { get; set; }
 
         // nuevo
-   
+
+        public AfectacionIgv AfectacionIgv { get; set; }
+
         public decimal ItemGravado { get; set; }
 
         public decimal ItemInafecto { get; set; }

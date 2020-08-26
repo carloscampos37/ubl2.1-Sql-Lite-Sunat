@@ -654,14 +654,18 @@ namespace OpenInvoicePeru.Xml
                             }
                         },
                     };
-              
+                    decimal Valor = detalleDocumento.ItemGravado;
+              if (detalleDocumento.ItemExonerado + detalleDocumento.ItemInafecto > 0)
+                            {
+                        Valor = detalleDocumento.ItemExonerado + detalleDocumento.ItemInafecto;
+                    }
                     /* 16 - Afectación al IGV por ítem */
                     linea.TaxTotals.Add(new TaxTotal
                     {
                         TaxableAmount=new PayableAmount
                         {
                             CurrencyId=documento.Moneda,
-                            Value=detalleDocumento.ItemGravado ,
+                            Value= Valor
                         },
                         TaxAmount = new PayableAmount
                         {
@@ -681,9 +685,10 @@ namespace OpenInvoicePeru.Xml
                                 TaxExemptionReasonCode = detalleDocumento.TipoImpuesto,
                                 TaxScheme = new TaxScheme()
                                 {
-                                    Id = "1000",
-                                    Name ="IGV",
-                                    TaxTypeCode ="VAT"
+                                    Id = detalleDocumento.AfectacionIgv.Id,
+                                    Codigo = detalleDocumento.AfectacionIgv.Codigo,
+                                    Name = detalleDocumento.AfectacionIgv.Nombre,
+                                    TaxTypeCode = detalleDocumento.AfectacionIgv.Nemotecnico
                                 }
                             }
                         }
@@ -741,9 +746,7 @@ namespace OpenInvoicePeru.Xml
                             PriceTypeCode = "02"
                         });
 
-                    // linea.AditionalItemIdentification.Id = documento.PlacaVehiculo;
-
-                    /* 51 - Descuentos por ítem */
+                        /* 51 - Descuentos por ítem */
                     if (detalleDocumento.Descuento > 0)
                     {
                         linea.AllowanceCharge.ChargeIndicator = false;

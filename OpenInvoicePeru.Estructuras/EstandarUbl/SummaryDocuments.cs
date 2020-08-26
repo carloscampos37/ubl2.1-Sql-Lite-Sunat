@@ -152,7 +152,6 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
             #region AccountingSupplierParty
 
             writer.WriteStartElement("cac:AccountingSupplierParty");
-
             writer.WriteElementString("cbc:CustomerAssignedAccountID", AccountingSupplierParty.CustomerAssignedAccountId);
             writer.WriteElementString("cbc:AdditionalAccountID",
                 AccountingSupplierParty.AdditionalAccountId);

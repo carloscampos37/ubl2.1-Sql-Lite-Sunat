@@ -60,7 +60,7 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
 
         public string NroPedido { get; set; }
 
-        public int TotItem {get;set;}
+        public int TotItem { get; set; }
 
         // nuevo 
 
@@ -171,7 +171,7 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
                         writer.WriteAttributeString("listAgencyName", Sunat.peSunat);
                         writer.WriteAttributeString("listName", Sunat.TipoDocumento);
                         writer.WriteAttributeString("listURI", Sunat.catalogos + "01");
-                        writer.WriteAttributeString("listID","0101");
+                        writer.WriteAttributeString("listID", "0101");
                         writer.WriteString("01");
                     }
                     writer.WriteEndElement();
@@ -300,7 +300,7 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
                                 writer.WriteElementString("cbc:RegistrationName", Signature.SignatoryParty.PartyName.Name);
                                 writer.WriteStartElement("cac:RegistrationAddress");
                                 {
-                                    writer.WriteElementString("cbc:AddressTypeCode",AnexoSunat );
+                                    writer.WriteElementString("cbc:AddressTypeCode", AnexoSunat);
                                     //    {
                                     //        writer.WriteAttributeString ("schemeAgencyName", Sunat.peSunat);
                                     //        writer.WriteAttributeString("schemeName", "Establecimientos anexos");
@@ -562,7 +562,7 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
                             writer.WriteStartElement("cbc:InvoicedQuantity");
                             {
                                 writer.WriteAttributeString("unitCode", invoiceLine.InvoicedQuantity.UnitCode);
-                                writer.WriteAttributeString("unitCodeListID",Sunat.iso20 );
+                                writer.WriteAttributeString("unitCodeListID", Sunat.iso20);
                                 writer.WriteAttributeString("unitCodeListAgencyName", Sunat.unece);
                                 writer.WriteString(invoiceLine.InvoicedQuantity.Value.ToString(Formatos.FormatoNumerico, Formato));
                             }
@@ -702,7 +702,7 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
                                                 writer.WriteAttributeString("schemeID", Sunat.iso5305);
                                                 writer.WriteAttributeString("schemeName", Sunat.taxCategory);
                                                 writer.WriteAttributeString("schemeAgencyName", Sunat.unece);
-                                                writer.WriteString("S");
+                                                writer.WriteString(taxTotal.TaxSubtotal.TaxCategory.TaxScheme.Id );
                                             }
                                             writer.WriteEndElement();
                                             #endregion ID
@@ -726,18 +726,18 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
                                             writer.WriteStartElement("cac:TaxScheme");
                                             {
                                                 #region ID
-                                              
+
                                                 writer.WriteStartElement("cbc:ID");
                                                 {
                                                     writer.WriteAttributeString("schemeID", Sunat.iso5153);
                                                     writer.WriteAttributeString("schemeName", Sunat.TaxIdentifier);
                                                     writer.WriteAttributeString("schemeAgencyName", Sunat.unece);
-                                                    writer.WriteString(taxTotal.TaxSubtotal.TaxCategory.TaxScheme.Id);
+                                                    writer.WriteString(taxTotal.TaxSubtotal.TaxCategory.TaxScheme.Codigo);
 
                                                 }
                                                 writer.WriteEndElement();
                                                 #endregion ID
-                                             
+
                                                 writer.WriteElementString("cbc:Name", taxTotal.TaxSubtotal.TaxCategory.TaxScheme.Name);
                                                 writer.WriteElementString("cbc:TaxTypeCode", taxTotal.TaxSubtotal.TaxCategory.TaxScheme.TaxTypeCode);
 

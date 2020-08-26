@@ -30,6 +30,7 @@ namespace OpenInvoicePeru.WebApi.Controllers
 
                 _servicioSunatDocumentos.Inicializar(new ParametrosConexion
                 {
+                    Ruc = request.Ruc,
                     UserName = request.UsuarioSol,
                     Password = request.ClaveSol,
                     EndPointUrl = request.EndPointUrl

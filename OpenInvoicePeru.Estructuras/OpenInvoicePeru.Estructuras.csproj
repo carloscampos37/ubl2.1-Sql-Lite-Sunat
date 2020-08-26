@@ -108,12 +108,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenInvoicePeru.Comun\OpenInvoicePeru.Comun.csproj">
-      <Project>{C6D3447F-6AED-4DA5-B28C-7C0356F2F4A8}</Project>
+      <Project>{c6d3447f-6aed-4da5-b28c-7c0356f2f4a8}</Project>
       <Name>OpenInvoicePeru.Comun</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
