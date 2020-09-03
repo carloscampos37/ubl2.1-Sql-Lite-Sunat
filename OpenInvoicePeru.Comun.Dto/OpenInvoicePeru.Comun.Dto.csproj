@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OpenInvoicePeru.Comun.Dto</RootNamespace>
     <AssemblyName>OpenInvoicePeru.Comun.Dto</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -34,12 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp, Version=106.5.4.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharp.106.5.4\lib\net452\RestSharp.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="RestSharp, Version=106.6.10.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.6.10\lib\net452\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -50,6 +48,7 @@
     <Compile Include="Contratos\IDocumentoElectronico.cs" />
     <Compile Include="Intercambio\ConsultaConstanciaRequest.cs" />
     <Compile Include="Intercambio\RespuestaComunConArchivo.cs" />
+    <Compile Include="Modelos\AfectacionIgv.cs" />
     <Compile Include="Modelos\ComunicacionBaja.cs" />
     <Compile Include="Intercambio\ConsultaTicketRequest.cs" />
     <Compile Include="Modelos\Contribuyente.cs" />
@@ -92,7 +91,6 @@
     <None Include="Diagramas\Percepciones.cd" />
     <None Include="Diagramas\ResumenesDiarios.cd" />
     <None Include="Diagramas\Retenciones.cd" />
-    <None Include="OpenInvoicePeru.DataTransfersObjects.1.5.2.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

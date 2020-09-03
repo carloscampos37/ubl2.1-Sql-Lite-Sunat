@@ -12,7 +12,7 @@ namespace OpenInvoicePeru.Firmado
 {
     public class Certificador : ICertificador
     {
-        async Task<FirmadoResponse> ICertificador.FirmarXml(FirmadoRequest request)
+        public async Task<FirmadoResponse> FirmarXml(FirmadoRequest request)
         {
             var task = Task.Factory.StartNew(() =>
             {

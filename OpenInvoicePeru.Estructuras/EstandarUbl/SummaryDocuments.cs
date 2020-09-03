@@ -60,10 +60,10 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
             writer.WriteAttributeString("xmlns", EspacioNombres.xmlnsSummaryDocuments);
             writer.WriteAttributeString("xmlns:cac", EspacioNombres.cac);
             writer.WriteAttributeString("xmlns:cbc", EspacioNombres.cbc);
-            writer.WriteAttributeString("xmlns:ds", EspacioNombres.ds);
+            writer.WriteAttributeString("xmlns:ds", Http.ds);
             writer.WriteAttributeString("xmlns:ext", EspacioNombres.ext);
             writer.WriteAttributeString("xmlns:sac", EspacioNombres.sac);
-            writer.WriteAttributeString("xmlns:xsi", EspacioNombres.xsi);
+            writer.WriteAttributeString("xmlns:xsi", Http.xsi);
 
             #region UBLExtensions
 
@@ -152,7 +152,6 @@ namespace OpenInvoicePeru.Estructuras.EstandarUbl
             #region AccountingSupplierParty
 
             writer.WriteStartElement("cac:AccountingSupplierParty");
-
             writer.WriteElementString("cbc:CustomerAssignedAccountID", AccountingSupplierParty.CustomerAssignedAccountId);
             writer.WriteElementString("cbc:AdditionalAccountID",
                 AccountingSupplierParty.AdditionalAccountId);

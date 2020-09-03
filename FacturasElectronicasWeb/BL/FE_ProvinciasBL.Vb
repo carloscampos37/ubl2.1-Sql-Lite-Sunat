@@ -1,0 +1,24 @@
+Imports DataAccess
+Imports BusinessEntities
+Imports System.Data
+Public Class FE_ProvinciasBL
+
+Public Function GrabarProc(ByVal vBaseData As String, ByVal vTipo As Integer,ByVal vCadConexProc As String, ByVal objFE_ProvinciasBE As FE_ProvinciasBE) As Boolean
+Dim objFE_ProvinciasDA As New FE_ProvinciasDA
+Try
+Return objFE_ProvinciasDA.GrabarProc(vBaseData, vTipo,vCadConexProc, objFE_ProvinciasBE)
+Catch ex As Exception
+Throw ex
+End try
+End Function
+
+Public Function ConsultarProc(ByVal vBaseData As String, ByVal vTipo As Integer,ByVal vCadConexProc As String, Optional vCondicion as string="") As Datatable
+Dim objFE_ProvinciasDA As New FE_ProvinciasDA
+Try
+Return objFE_ProvinciasDA.ConsultarProc(vBaseData, vTipo,vCadConexProc, vCondicion)
+Catch ex As Exception
+Throw ex
+End try
+End Function
+
+End Class

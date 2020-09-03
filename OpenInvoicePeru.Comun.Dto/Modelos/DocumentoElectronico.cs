@@ -28,13 +28,13 @@ namespace OpenInvoicePeru.Comun.Dto.Modelos
         [JsonProperty(Required = Required.AllowNull)]
         public string TipoOperacion { get; set; }
 
-        public decimal Gravadas { get; set; }
+        public decimal TotalGravadas { get; set; }
 
-        public decimal Gratuitas { get; set; }
+        public decimal TotalGratuitas { get; set; }
 
-        public decimal Inafectas { get; set; }
+        public decimal TotalInafectas { get; set; }
 
-        public decimal Exoneradas { get; set; }
+        public decimal TotalExoneradas { get; set; }
 
         public decimal DescuentoGlobal { get; set; }
 
@@ -51,12 +51,14 @@ namespace OpenInvoicePeru.Comun.Dto.Modelos
 
         public decimal TotalOtrosTributos { get; set; }
 
-        [JsonIgnore]
         public string MontoEnLetras { get; set; }
 
         public string PlacaVehiculo { get; set; }
 
-        public decimal MontoPercepcion { get; set; }
+        public int TotItem { get; set; }
+
+        [JsonIgnore]
+          public decimal MontoPercepcion { get; set; }
 
         public decimal MontoDetraccion { get; set; }
 
@@ -84,6 +86,26 @@ namespace OpenInvoicePeru.Comun.Dto.Modelos
 
         [JsonProperty(Required = Required.AllowNull)]
         public string NroOrdenCompra { get; set; }
+
+        // nuevo 
+
+        [JsonProperty(Required = Required.Always)]
+        public string AnexoSunat { get; set; }
+
+        [JsonProperty(Required = Required.Always)]
+        public string NroPedido { get; set; }
+
+        [JsonProperty(Required = Required.Always)]
+        public string FechaRegistro { get; set; }
+
+        [JsonProperty(Required = Required.Always)]
+        public string NroItem { get; set; }
+
+        [JsonProperty(Required = Required.Always)]
+        public AfectacionIgv AfectacionIgv { get; set; }
+
+        [JsonProperty(Required = Required.Always)]
+        public decimal PorcentajeIgv { get; set; }
 
         [JsonIgnore]
         public decimal CalculoIgv { get; set; }
@@ -113,7 +135,7 @@ namespace OpenInvoicePeru.Comun.Dto.Modelos
             OtrosDocumentosRelacionados = new List<DocumentoRelacionado>();
             Discrepancias = new List<Discrepancia>();
             TipoDocumento = "01"; // Factura.
-            TipoOperacion = "01"; // Venta Interna.
+            TipoOperacion = "0101"; // Venta Interna.
             Moneda = "PEN"; // Soles.
             MontoEnLetras = string.Empty;
         }

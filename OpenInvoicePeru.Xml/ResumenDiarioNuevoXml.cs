@@ -13,7 +13,7 @@ namespace OpenInvoicePeru.Xml
     public class ResumenDiarioNuevoXml : IDocumentoXml
     {
         IEstructuraXml IDocumentoXml.Generar(IDocumentoElectronico request)
-        {
+        { 
             var documento = (ResumenDiarioNuevo)request;
             var summary = new SummaryDocuments
             {
