@@ -8,13 +8,13 @@ using System.IO;
 using System.Speech.Synthesis;
 
 using System.Text.RegularExpressions;
-using OpenInvoicePeru.WinApp.Properties;
+using OpenInvoicePeru.WinAppIren.Properties;
 using OpenInvoicePeru.Class;
 
 using OpenInvoicePeru.Comun.Dto.Modelos;
 using OpenInvoicePeru.Comun.Dto.Intercambio;
 
-namespace  OpenInvoicePeru.WinApp
+namespace  OpenInvoicePeru.WinAppIren
 {
     public partial class FrmEnviarSunat : Form
     {
@@ -51,7 +51,7 @@ namespace  OpenInvoicePeru.WinApp
         //   private string VGCnxSqlE = "Server=jck;database=facturaselectronicas;User ID=sa;Password=12345";
 
         //private string VGCnxSqlE = "Server=servidor;database=facturaselectronicas;User ID=sa;Password=Aa12345";
-        private string VGCnxSqlE = Settings.Default.CadenaConexion;
+        private string VGCnxSqlE = Settings.Default.CadenaConexionA;
 
         public string vFechaXml;
         public string vUrlSunat = "";
@@ -131,6 +131,7 @@ namespace  OpenInvoicePeru.WinApp
             {
                 var firmadoRequest = new FirmadoRequest
                 {
+                    Ruc = Convert.ToString(DtEmpresa.Rows[0]["EmpresaRuc"]),
                     TramaXmlSinFirma = tramaXmlSinFirma,
                     CertificadoDigital = Convert.ToBase64String(File.ReadAllBytes(vRutaCertificado)),
                     PasswordCertificado = Convert.ToString(DtEmpresa.Rows[0]["PasswCertificadoDigital"]),
@@ -223,6 +224,7 @@ namespace  OpenInvoicePeru.WinApp
 
                 var firmadoRequest = new FirmadoRequest
                 {
+                    Ruc = Convert.ToString(DtEmpresa.Rows[0]["EmpresaRuc"]),
                     TramaXmlSinFirma = tramaXmlSinFirma,
                     CertificadoDigital = vCertificado,
                     PasswordCertificado = vPassword,
@@ -295,6 +297,7 @@ namespace  OpenInvoicePeru.WinApp
 
                 var firmadoRequest = new FirmadoRequest
                 {
+                    Ruc = Convert.ToString(DtEmpresa.Rows[0]["EmpresaRuc"]),
                     TramaXmlSinFirma = tramaXmlSinFirma,
                     CertificadoDigital = Convert.ToBase64String(File.ReadAllBytes(vRutaCertificado)),
                     PasswordCertificado = Convert.ToString(DtEmpresa.Rows[0]["PasswCertificadoDigital"]),
@@ -560,74 +563,7 @@ namespace  OpenInvoicePeru.WinApp
             }
         }
 
-        private async void CrearXmlResumen1()
-        {
-            try
-            {
-                vFechaXml = "RC-" + Convert.ToString(DtpFechaEnvioDoc.Value.Year);
-                vFechaXml += ModFunc.Derecha("0" + Convert.ToString(DtpFechaEnvioDoc.Value.Month), 2);
-                vFechaXml += ModFunc.Derecha("0" + Convert.ToString(DtpFechaEnvioDoc.Value.Day), 2);
-                vFechaXml += "-00" + Convert.ToString(DtDocumentos.Rows[0]["item"]);
-
-                ResumenDiario ResumenDiario = new ResumenDiario
-                {
-                    IdDocumento = vFechaXml,
-                    //       ResumenDiario.IdDocumento = TxtRuc.Text;
-                    FechaEmision = Convert.ToString(DtpFechaEnvioDoc.Text),
-                    FechaReferencia = Convert.ToString(DtpFechaDoc.Text),
-                    Emisor = CrearEmisor(DtEmpresa),
-
-                    Resumenes = new List<GrupoResumen>()
-                };
-
-                for (int ii = 0; ii <= DtDocumentos.Rows.Count - 1; ii++)
-                {
-                    decimal vDscto = 0;
-
-                    GrupoResumen DocumentoResumenItem = new GrupoResumen();
-
-                    string vIdDocumento = DocumentoResumenItem.Serie = Convert.ToString(DtDocumentos.Rows[ii]["SerieDocumento"]) + "-";
-                    vIdDocumento += DtDocumentos.Rows[ii]["NumeroDocumento"];
-
-                    DocumentoResumenItem.Id = ii + 1;
-                    DocumentoResumenItem.TipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["TipoDocumento"]);
-                    DocumentoResumenItem.Serie = Convert.ToString(DtDocumentos.Rows[ii]["serieDocumento"]);
-                    DocumentoResumenItem.CorrelativoInicio = Convert.ToInt32(DtDocumentos.Rows[ii]["numeroDocumento"]);
-                    DocumentoResumenItem.CorrelativoFin = Convert.ToInt32(DtDocumentos.Rows[ii]["numeroDocumentofinal"]);
-                    DocumentoResumenItem.Moneda = "PEN";
-
-                    DocumentoResumenItem.Gravadas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGravado"]);
-                    DocumentoResumenItem.Inafectas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteinafecto"]);
-                    DocumentoResumenItem.Exoneradas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteexonerado"]);
-                    DocumentoResumenItem.TotalIgv = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteIgv"]);
-                    DocumentoResumenItem.TotalDescuentos = vDscto;
-                    DocumentoResumenItem.TotalIsc = 0;
-                    DocumentoResumenItem.Gratuitas = 0;
-                    DocumentoResumenItem.TotalVenta = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteventa"]);
-
-                    ResumenDiario.Resumenes.Add(DocumentoResumenItem);
-                }
-                string _metodoApi = "api/GenerarResumenDiario/v1";
-                var response = await _client.PostAsJsonAsync(_metodoApi, ResumenDiario);
-
-                var respuesta = await response.Content.ReadAsAsync<DocumentoResponse>();
-
-                if (!respuesta.Exito)
-                    throw new ApplicationException(respuesta.MensajeError);
-
-                vArchivoXML = vFechaXml;
-                vArchivoXML = Path.Combine(vRutaXml, $"{vArchivoXML}.xml");
-
-                File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(respuesta.TramaXmlSinFirma));
-                ModFunc.ActualizaItemDia(Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, VGCnxSqlE);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private async void CrearXmlResumen2()
+          private async void CrearXmlResumen2()
         {
             try
             {

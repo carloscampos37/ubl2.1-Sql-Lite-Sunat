@@ -1,4 +1,4 @@
-﻿namespace OpenInvoicePeru.WinApp
+﻿namespace OpenInvoicePeru.WinAppDiresa
 {
     partial class FrmEnviosSunat
     {
@@ -411,8 +411,8 @@
             this.Ctr_AyuUrlDoc.Size = new System.Drawing.Size(227, 17);
             this.Ctr_AyuUrlDoc.TabIndex = 122;
             this.Ctr_AyuUrlDoc.Titulo = null;
-            this.Ctr_AyuUrlDoc.AlDevolverDato += new Ctr_Ayuda.Ctr_Ayuda.AlDevolverDatoEventHandler(this.Ctr_AyuUrlDoc_AlDevolverDato_1);
-          // 
+            this.Ctr_AyuUrlDoc.AlDevolverDato += new Ctr_Ayuda.Ctr_Ayuda.AlDevolverDatoEventHandler(this.Ctr_AyuUrlDoc_AlDevolverDato);
+            // 
             // Ctr_AyuEmpresas
             // 
             this.Ctr_AyuEmpresas.CampoDevCod = "Id";

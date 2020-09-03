@@ -1,4 +1,4 @@
-﻿namespace OpenInvoicePeru.WinApp
+﻿namespace OpenInvoicePeru.WinAppIren
 {
     partial class FrmEnviarSunat
     {

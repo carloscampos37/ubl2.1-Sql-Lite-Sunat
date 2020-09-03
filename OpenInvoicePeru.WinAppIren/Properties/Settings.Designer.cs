@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OpenInvoicePeru.WinApp.Properties {
+namespace OpenInvoicePeru.WinAppIren.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -26,24 +26,24 @@ namespace OpenInvoicePeru.WinApp.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Server=172.16.44.41;database=iren;User ID=sa;Password=12345")]
-        public string CadenaConexionx {
-            get {
-                return ((string)(this["CadenaConexionx"]));
-            }
-            set {
-                this["CadenaConexionx"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=(local);database=iren;User ID=sa;Password=12345")]
         public string CadenaConexion {
             get {
                 return ((string)(this["CadenaConexion"]));
             }
             set {
                 this["CadenaConexion"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=(local);database=iren;User ID=sa;Password=12345")]
+        public string CadenaConexionA {
+            get {
+                return ((string)(this["CadenaConexionA"]));
+            }
+            set {
+                this["CadenaConexionA"] = value;
             }
         }
     }

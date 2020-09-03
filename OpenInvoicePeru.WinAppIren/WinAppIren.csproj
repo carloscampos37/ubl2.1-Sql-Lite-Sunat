@@ -7,8 +7,8 @@
     <ProjectGuid>{73F6E878-099D-4DB3-9AC9-6DF243CD7BBD}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OpenInvoicePeru.WinApp</RootNamespace>
-    <AssemblyName>WinAppFacturasElectronicas</AssemblyName>
+    <RootNamespace>OpenInvoicePeru.WinAppIren</RootNamespace>
+    <AssemblyName>WinAppIren</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -62,7 +62,7 @@
     <ApplicationIcon>openinvoiceperulogo.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>OpenInvoicePeru.WinApp.Program</StartupObject>
+    <StartupObject>OpenInvoicePeru.WinAppIren.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

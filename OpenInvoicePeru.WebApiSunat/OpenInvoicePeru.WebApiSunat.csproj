@@ -156,13 +156,13 @@
       <Project>{1cfd1d28-d342-413d-a6e1-7616cb9708e2}</Project>
       <Name>OpenInvoicePeru.Firmado</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OpenInvoicePeru.ServicioSunat.Soap\OpenInvoicePeru.ServicioSunat.Soap.csproj">
+    <ProjectReference Include="..\OpenInvoicePeru.ServicioOse.Soap\OpenInvoicePeru.ServicioOse.Soap.csproj">
       <Project>{f608fea2-ec58-4df7-81d6-960f6e1daed2}</Project>
-      <Name>OpenInvoicePeru.ServicioSunat.Soap</Name>
+      <Name>OpenInvoicePeru.ServicioOse.Soap</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OpenInvoicePeru.ServicioSunat\OpenInvoicePeru.ServicioSunat.csproj">
+    <ProjectReference Include="..\OpenInvoicePeru.ServicioOse\OpenInvoicePeru.ServicioOse.csproj">
       <Project>{25d6b9af-55a6-4e7f-a061-52a492ccdb6e}</Project>
-      <Name>OpenInvoicePeru.ServicioSunat</Name>
+      <Name>OpenInvoicePeru.ServicioOse</Name>
     </ProjectReference>
     <ProjectReference Include="..\OpenInvoicePeru.Xml\OpenInvoicePeru.Xml.csproj">
       <Project>{eda74dc8-b11b-4c7c-b604-0763b210e7d4}</Project>
