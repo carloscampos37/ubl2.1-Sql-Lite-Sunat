@@ -368,7 +368,7 @@
             this.panel1.Controls.Add(this.BtnConsultaTicket);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.groupBox1);
-            this.panel1.Location = new System.Drawing.Point(5, 15);
+            this.panel1.Location = new System.Drawing.Point(6, 16);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1024, 165);
             this.panel1.TabIndex = 3;
@@ -593,7 +593,7 @@
             // BntGeneraEnvios
             // 
             this.BntGeneraEnvios.BackColor = System.Drawing.Color.Gold;
-            this.BntGeneraEnvios.Location = new System.Drawing.Point(652, 60);
+            this.BntGeneraEnvios.Location = new System.Drawing.Point(672, 60);
             this.BntGeneraEnvios.Name = "BntGeneraEnvios";
             this.BntGeneraEnvios.Size = new System.Drawing.Size(104, 44);
             this.BntGeneraEnvios.TabIndex = 98;
@@ -741,7 +741,6 @@
             this.Name = "FrmEnviarSunat";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmEnviosSunat";
-            this.Load += new System.EventHandler(this.FrmEnviosSunat_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);

@@ -5,7 +5,7 @@ using OpenInvoicePeru.Comun.Dto.Intercambio;
 using OpenInvoicePeru.Firmado;
 using OpenInvoicePeru.ServicioSunat;
 
-namespace OpenInvoicePeru.WebApi.Controllers
+namespace OpenInvoicePeru.WebApiSunat.Controllers
 {
     public class ConsultarTicketController : ApiController
     {

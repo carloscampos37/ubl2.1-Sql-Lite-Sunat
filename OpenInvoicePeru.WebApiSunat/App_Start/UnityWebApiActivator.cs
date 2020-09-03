@@ -2,10 +2,10 @@ using System.Web.Http;
 using Microsoft.Practices.Unity.WebApi;
 using OpenInvoicePeru.WebApiSunat;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(OpenInvoicePeru.WebApi.App_Start.UnityWebApiActivator), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(OpenInvoicePeru.WebApi.App_Start.UnityWebApiActivator), "Shutdown")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(OpenInvoicePeru.WebApiSunat.App_Start.UnityWebApiActivator), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(OpenInvoicePeru.WebApiSunat.App_Start.UnityWebApiActivator), "Shutdown")]
 
-namespace OpenInvoicePeru.WebApi.App_Start
+namespace OpenInvoicePeru.WebApiSunat.App_Start
 {
     /// <summary>Provides the bootstrapping for integrating Unity with WebApi when it is hosted in ASP.NET</summary>
     public static class UnityWebApiActivator

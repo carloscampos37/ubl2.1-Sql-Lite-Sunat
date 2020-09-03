@@ -42,8 +42,8 @@ namespace OpenInvoicePeru.WebApiOse
             container
                 .RegisterType<ISerializador, Serializador>()
                 .RegisterType<ICertificador, Certificador>()
-                .RegisterType<IServicioSunatDocumentos, ServicioOseDocumentos>()
-                .RegisterType<IServicioSunatConsultas, ServicioOseConsultas>();
+                .RegisterType<IServicioSunatDocumentos, ServicioSunatDocumentos>()
+                .RegisterType<IServicioSunatConsultas, ServicioSunatConsultas>();
 
             container
                 .RegisterType<IDocumentoXml, FacturaXml>(nameof(GenerarFacturaController))

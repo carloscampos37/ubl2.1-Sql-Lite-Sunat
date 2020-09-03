@@ -53,11 +53,11 @@
             this.igv = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Inafecto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.Ctr_AyuDocumento = new Ctr_Ayuda.Ctr_Ayuda();
+            this.Ctr_AyuUrlDoc = new Ctr_Ayuda.Ctr_Ayuda();
             this.Ctr_AyuEmpresas = new Ctr_Ayuda.Ctr_Ayuda();
             this.label13 = new System.Windows.Forms.Label();
             this.TxtGrupo = new System.Windows.Forms.TextBox();
-            this.Ctr_AyuDocumento = new Ctr_Ayuda.Ctr_Ayuda();
-            this.Ctr_AyuUrlDoc = new Ctr_Ayuda.Ctr_Ayuda();
             this.label9 = new System.Windows.Forms.Label();
             this.TxtDireccion = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -341,12 +341,12 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.DarkOliveGreen;
+            this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.Controls.Add(this.Ctr_AyuDocumento);
+            this.panel1.Controls.Add(this.Ctr_AyuUrlDoc);
             this.panel1.Controls.Add(this.Ctr_AyuEmpresas);
             this.panel1.Controls.Add(this.label13);
             this.panel1.Controls.Add(this.TxtGrupo);
-            this.panel1.Controls.Add(this.Ctr_AyuDocumento);
-            this.panel1.Controls.Add(this.Ctr_AyuUrlDoc);
             this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.TxtDireccion);
             this.panel1.Controls.Add(this.label8);
@@ -373,6 +373,46 @@
             this.panel1.Size = new System.Drawing.Size(1024, 165);
             this.panel1.TabIndex = 3;
             // 
+            // Ctr_AyuDocumento
+            // 
+            this.Ctr_AyuDocumento.CampoDevCod = "ID";
+            this.Ctr_AyuDocumento.CampoDevDesc = "DocumentoDescripcion";
+            this.Ctr_AyuDocumento.Codigo = "";
+            this.Ctr_AyuDocumento.Descripcion = "";
+            this.Ctr_AyuDocumento.Filtro = "";
+            this.Ctr_AyuDocumento.ListaAlias = "Codigo,Descripcion";
+            this.Ctr_AyuDocumento.ListaCampos = "ID,DocumentoDescripcion";
+            this.Ctr_AyuDocumento.Location = new System.Drawing.Point(824, 36);
+            this.Ctr_AyuDocumento.LongCod = "2";
+            this.Ctr_AyuDocumento.LongDesc = "50";
+            this.Ctr_AyuDocumento.Name = "Ctr_AyuDocumento";
+            this.Ctr_AyuDocumento.NombreTabla = "feDocumentosFE";
+            this.Ctr_AyuDocumento.Requerido = true;
+            this.Ctr_AyuDocumento.Size = new System.Drawing.Size(212, 16);
+            this.Ctr_AyuDocumento.TabIndex = 123;
+            this.Ctr_AyuDocumento.Titulo = null;
+            this.Ctr_AyuDocumento.AlDevolverDato += new Ctr_Ayuda.Ctr_Ayuda.AlDevolverDatoEventHandler(this.Ctr_AyuDocumento_AlDevolverDato_1);
+            // 
+            // Ctr_AyuUrlDoc
+            // 
+            this.Ctr_AyuUrlDoc.CampoDevCod = "ID";
+            this.Ctr_AyuUrlDoc.CampoDevDesc = "DireccionSunat";
+            this.Ctr_AyuUrlDoc.Codigo = "";
+            this.Ctr_AyuUrlDoc.Descripcion = "";
+            this.Ctr_AyuUrlDoc.Filtro = "";
+            this.Ctr_AyuUrlDoc.ListaAlias = "Codigo,Direccion,Url";
+            this.Ctr_AyuUrlDoc.ListaCampos = "id,DireccionSunat,Direccionsunaturl";
+            this.Ctr_AyuUrlDoc.Location = new System.Drawing.Point(616, 35);
+            this.Ctr_AyuUrlDoc.LongCod = "3";
+            this.Ctr_AyuUrlDoc.LongDesc = "50";
+            this.Ctr_AyuUrlDoc.Name = "Ctr_AyuUrlDoc";
+            this.Ctr_AyuUrlDoc.NombreTabla = "feDireccionesSunat";
+            this.Ctr_AyuUrlDoc.Requerido = true;
+            this.Ctr_AyuUrlDoc.Size = new System.Drawing.Size(227, 17);
+            this.Ctr_AyuUrlDoc.TabIndex = 122;
+            this.Ctr_AyuUrlDoc.Titulo = null;
+            this.Ctr_AyuUrlDoc.AlDevolverDato += new Ctr_Ayuda.Ctr_Ayuda.AlDevolverDatoEventHandler(this.Ctr_AyuUrlDoc_AlDevolverDato_1);
+          // 
             // Ctr_AyuEmpresas
             // 
             this.Ctr_AyuEmpresas.CampoDevCod = "Id";
@@ -382,14 +422,14 @@
             this.Ctr_AyuEmpresas.Filtro = "";
             this.Ctr_AyuEmpresas.ListaAlias = "Codigo,razon social";
             this.Ctr_AyuEmpresas.ListaCampos = "Id,Empresarazonsocial";
-            this.Ctr_AyuEmpresas.Location = new System.Drawing.Point(20, 36);
+            this.Ctr_AyuEmpresas.Location = new System.Drawing.Point(20, 27);
             this.Ctr_AyuEmpresas.LongCod = "3";
             this.Ctr_AyuEmpresas.LongDesc = "50";
             this.Ctr_AyuEmpresas.Name = "Ctr_AyuEmpresas";
             this.Ctr_AyuEmpresas.NombreTabla = "feEmpresas";
             this.Ctr_AyuEmpresas.Requerido = true;
             this.Ctr_AyuEmpresas.Size = new System.Drawing.Size(235, 17);
-            this.Ctr_AyuEmpresas.TabIndex = 122;
+            this.Ctr_AyuEmpresas.TabIndex = 121;
             this.Ctr_AyuEmpresas.Titulo = null;
             this.Ctr_AyuEmpresas.AlDevolverDato += new Ctr_Ayuda.Ctr_Ayuda.AlDevolverDatoEventHandler(this.Ctr_AyuEmpresas_AlDevolverDato);
             // 
@@ -415,46 +455,6 @@
             this.TxtGrupo.TabIndex = 118;
             this.TxtGrupo.Text = "0";
             this.TxtGrupo.TextChanged += new System.EventHandler(this.TxtGrupo_TextChanged);
-            // 
-            // Ctr_AyuDocumento
-            // 
-            this.Ctr_AyuDocumento.CampoDevCod = "ID";
-            this.Ctr_AyuDocumento.CampoDevDesc = "DocumentoDescripcion";
-            this.Ctr_AyuDocumento.Codigo = "";
-            this.Ctr_AyuDocumento.Descripcion = "";
-            this.Ctr_AyuDocumento.Filtro = "";
-            this.Ctr_AyuDocumento.ListaAlias = "Codigo,Descripcion";
-            this.Ctr_AyuDocumento.ListaCampos = "ID,DocumentoDescripcion";
-            this.Ctr_AyuDocumento.Location = new System.Drawing.Point(822, 36);
-            this.Ctr_AyuDocumento.LongCod = "2";
-            this.Ctr_AyuDocumento.LongDesc = "50";
-            this.Ctr_AyuDocumento.Name = "Ctr_AyuDocumento";
-            this.Ctr_AyuDocumento.NombreTabla = "feDocumentosFE";
-            this.Ctr_AyuDocumento.Requerido = true;
-            this.Ctr_AyuDocumento.Size = new System.Drawing.Size(202, 16);
-            this.Ctr_AyuDocumento.TabIndex = 117;
-            this.Ctr_AyuDocumento.Titulo = null;
-            this.Ctr_AyuDocumento.AlDevolverDato += new Ctr_Ayuda.Ctr_Ayuda.AlDevolverDatoEventHandler(this.Ctr_AyuDocumento_AlDevolverDato);
-            // 
-            // Ctr_AyuUrlDoc
-            // 
-            this.Ctr_AyuUrlDoc.CampoDevCod = "id";
-            this.Ctr_AyuUrlDoc.CampoDevDesc = "DireccionSunat";
-            this.Ctr_AyuUrlDoc.Codigo = "";
-            this.Ctr_AyuUrlDoc.Descripcion = "";
-            this.Ctr_AyuUrlDoc.Filtro = "";
-            this.Ctr_AyuUrlDoc.ListaAlias = "Codigo,Direccion,Url";
-            this.Ctr_AyuUrlDoc.ListaCampos = "ID,Direccionsunat,DireccionSunatUrl";
-            this.Ctr_AyuUrlDoc.Location = new System.Drawing.Point(616, 36);
-            this.Ctr_AyuUrlDoc.LongCod = "3";
-            this.Ctr_AyuUrlDoc.LongDesc = "50";
-            this.Ctr_AyuUrlDoc.Name = "Ctr_AyuUrlDoc";
-            this.Ctr_AyuUrlDoc.NombreTabla = "feDireccionesSunat";
-            this.Ctr_AyuUrlDoc.Requerido = true;
-            this.Ctr_AyuUrlDoc.Size = new System.Drawing.Size(219, 17);
-            this.Ctr_AyuUrlDoc.TabIndex = 115;
-            this.Ctr_AyuUrlDoc.Titulo = null;
-            this.Ctr_AyuUrlDoc.AlDevolverDato += new Ctr_Ayuda.Ctr_Ayuda.AlDevolverDatoEventHandler(this.Ctr_AyuUrlDoc_AlDevolverDato);
             // 
             // label9
             // 
@@ -596,7 +596,7 @@
             this.BntGeneraEnvios.BackColor = System.Drawing.Color.Gold;
             this.BntGeneraEnvios.Location = new System.Drawing.Point(652, 60);
             this.BntGeneraEnvios.Name = "BntGeneraEnvios";
-            this.BntGeneraEnvios.Size = new System.Drawing.Size(104, 44);
+            this.BntGeneraEnvios.Size = new System.Drawing.Size(114, 44);
             this.BntGeneraEnvios.TabIndex = 98;
             this.BntGeneraEnvios.Text = "Generar registros";
             this.BntGeneraEnvios.UseVisualStyleBackColor = false;
@@ -645,7 +645,7 @@
             this.BntEnvioSunat.BackColor = System.Drawing.Color.Lime;
             this.BntEnvioSunat.Location = new System.Drawing.Point(893, 60);
             this.BntEnvioSunat.Name = "BntEnvioSunat";
-            this.BntEnvioSunat.Size = new System.Drawing.Size(109, 48);
+            this.BntEnvioSunat.Size = new System.Drawing.Size(119, 48);
             this.BntEnvioSunat.TabIndex = 77;
             this.BntEnvioSunat.Text = "&Enviar a SUNAT";
             this.BntEnvioSunat.UseVisualStyleBackColor = false;
@@ -656,7 +656,7 @@
             this.BtnConsultaTicket.BackColor = System.Drawing.Color.MistyRose;
             this.BtnConsultaTicket.Location = new System.Drawing.Point(894, 119);
             this.BtnConsultaTicket.Name = "BtnConsultaTicket";
-            this.BtnConsultaTicket.Size = new System.Drawing.Size(108, 32);
+            this.BtnConsultaTicket.Size = new System.Drawing.Size(118, 32);
             this.BtnConsultaTicket.TabIndex = 76;
             this.BtnConsultaTicket.Text = "Consultar N° Ticket";
             this.BtnConsultaTicket.UseVisualStyleBackColor = false;
@@ -763,8 +763,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox TxtGrupo;
-        internal Ctr_Ayuda.Ctr_Ayuda Ctr_AyuDocumento;
-        internal Ctr_Ayuda.Ctr_Ayuda Ctr_AyuUrlDoc;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox TxtDireccion;
         private System.Windows.Forms.Label label8;
@@ -812,5 +810,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn igv;
         private System.Windows.Forms.DataGridViewTextBoxColumn Inafecto;
         internal Ctr_Ayuda.Ctr_Ayuda Ctr_AyuEmpresas;
+        internal Ctr_Ayuda.Ctr_Ayuda Ctr_AyuUrlDoc;
+        internal Ctr_Ayuda.Ctr_Ayuda Ctr_AyuDocumento;
     }
 }

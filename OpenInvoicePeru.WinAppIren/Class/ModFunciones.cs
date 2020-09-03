@@ -93,7 +93,7 @@ namespace OpenInvoicePeru.Class
 
         public string DesMes(string vMes)
         {
-            string DescriMes = "";
+            string DescriMes ;
             switch (vMes)
             {
                 case "01":
@@ -175,9 +175,9 @@ namespace OpenInvoicePeru.Class
         //    sql+="WHERE a.ResumenDiario_id=b.resumenDiario_id";
         // }
 
-        public DataTable ConsultarTabla(string vSQL, string vCadConex, int vCommandTimeOut = 800)
+        public DataTable ConsultarTabla(string vSQL, string vCadConex)
         {
-            string cError = "";
+            string cError ;
             try
             {
                 string strConn = "";
@@ -198,7 +198,7 @@ namespace OpenInvoicePeru.Class
 
         public bool GrabarTabla(string vSQL, string vCadConex)
         {
-            string cError = "";
+            string cError;
             try
             {
                 SqlConnection oConn = new SqlConnection(vCadConex);
@@ -218,10 +218,10 @@ namespace OpenInvoicePeru.Class
 
         public void ActualizaEnviosDia(DataTable dtx, string vItemEnvio, string vNroticket, string Vgcnx)
         {
-            string Sql = "";
+            string Sql;
             for (int ii = 0; ii <= dtx.Rows.Count - 1; ii++)
             {
-                Sql = " UPDATE fe_ResumenDiarioDocumentos SET EstadoEnvioSunat_id='" + vItemEnvio + ", NumerodeAceptacion='" + vNroticket + "'";
+                Sql = " UPDATE feResumenDiarioDocumentos SET EstadoEnvioSunatid='" + vItemEnvio + ", NumerodeAceptacion='" + vNroticket + "'";
                 Sql += " WHERE empresacodigo='" + (string)dtx.Rows[ii]["Empresacodigo"] + "' ";
                 Sql += " AND ResumenDiario_Id=" + (int)dtx.Rows[ii]["ResumenDiario_Id"] + " AND ResumendiarioCorrel=" + (int)dtx.Rows[ii]["ResumenDiario_Id"];
 

@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 
-namespace OpenInvoicePeru.WebApi
+namespace OpenInvoicePeru.WebApiSunat
 {
     public class WebApiApplication : System.Web.HttpApplication
     {

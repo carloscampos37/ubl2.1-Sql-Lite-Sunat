@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.IO;
 using System.Windows.Forms;
 
@@ -28,6 +29,7 @@ namespace OpenInvoicePeru.WinApp
                 MessageBox.Show(ex.Message + ex.InnerException?.Message, Application.ProductName);
             }
             Application.Run(new FrmEnviosSunat());
-                    }
+        }
+
     }
 }

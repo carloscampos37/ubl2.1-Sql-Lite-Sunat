@@ -26,7 +26,7 @@ namespace  OpenInvoicePeru.WinApp
         public DataTable DtAceptados;
 
         public readonly HttpClient _client;
-        public string vRutaArchivoXML;
+        public string vArchivoXML;
         public string vRutaXml = "";
         public string vRutaCdr = "";
         public Int32 vRegistros = 0;
@@ -59,7 +59,7 @@ namespace  OpenInvoicePeru.WinApp
         public int vtipoEnvio = 0;
         public string SQL = "";
         public int vMaximoIItem = 400;
-
+         
         #endregion Variables Privadas
 
         #region Constructor
@@ -119,12 +119,12 @@ namespace  OpenInvoicePeru.WinApp
         {
             string idDoc = Convert.ToString(DtDocumentos.Rows[ii]["Seriedocumento"] + "-" + DtDocumentos.Rows[ii]["NumeroDocumento"]);
 
-            vRutaArchivoXML = Path.Combine(vRutaXml, $"{idDoc}.xml");
+            vArchivoXML = Path.Combine(vRutaXml, $"{idDoc}.xml");
 
             if (string.IsNullOrEmpty(idDoc))
                 throw new InvalidOperationException("La Serie y el Correlativo no pueden estar vacíos");
 
-            var tramaXmlSinFirma = Convert.ToBase64String(File.ReadAllBytes(vRutaArchivoXML));
+            var tramaXmlSinFirma = Convert.ToBase64String(File.ReadAllBytes(vArchivoXML));
             String vRutaCertificado = Convert.ToString(DtEmpresa.Rows[0]["CarpetaCertificadoDigital"]) +
                                                     Convert.ToString(DtEmpresa.Rows[0]["NombreCertificadoDigital"]);
             try
@@ -142,15 +142,15 @@ namespace  OpenInvoicePeru.WinApp
                 if (!respuestaFirmado.Exito)
                     throw new ApplicationException(respuestaFirmado.MensajeError);
 
-                File.WriteAllBytes(vRutaArchivoXML, Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado));
+                File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado));
 
-                ReemplaCaracteres(Convert.ToString(vRutaArchivoXML));
+                ReemplaCaracteres(Convert.ToString(vArchivoXML));
 
-                var TramaXML = Convert.ToBase64String(File.ReadAllBytes(vRutaArchivoXML));
+                var TramaXML = Convert.ToBase64String(File.ReadAllBytes(vArchivoXML));
 
                 var enviarDocumentoRequest = new EnviarDocumentoRequest
                 {
-                    Ruc = Convert.ToString(DtEmpresa.Rows[0]["EmpresaRuc"]),
+                    Ruc=TxtRuc.Text,
                     UsuarioSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaUsuarioSol"]),
                     ClaveSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaClaveSol"]),
                     EndPointUrl = vUrlSunat,
@@ -173,15 +173,15 @@ namespace  OpenInvoicePeru.WinApp
                     {
                         if (rpta.Exito && !string.IsNullOrEmpty(rpta.TramaZipCdr))
                         {
-                            vRutaArchivoXML = $"{respuestaEnvio.NombreArchivo}";
-                            vRutaArchivoXML = Path.Combine(vRutaCdr, vRutaArchivoXML);
+                            vArchivoXML = $"{respuestaEnvio.NombreArchivo}";
+                            vArchivoXML = Path.Combine(vRutaCdr, vArchivoXML);
 
-                            File.WriteAllBytes(vRutaArchivoXML, Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado));
+                            File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado));
 
-                            vRutaArchivoXML = "R-" + $"{respuestaEnvio.NombreArchivo}";
-                            vRutaArchivoXML = Path.Combine(vRutaCdr, vRutaArchivoXML);
+                            vArchivoXML =  $"{respuestaEnvio.NombreArchivo}";
+                            vArchivoXML = Path.Combine(vRutaCdr, vArchivoXML);
 
-                            File.WriteAllBytes(vRutaArchivoXML, Convert.FromBase64String(rpta.TramaZipCdr));
+                            File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(rpta.TramaZipCdr));
                         }
                     }
                     catch (Exception ex)
@@ -214,12 +214,10 @@ namespace  OpenInvoicePeru.WinApp
         {
             try
             {
-                if (string.IsNullOrEmpty(vFechaXml))
-                    throw new InvalidOperationException("La Serie y el Correlativo no pueden estar vacíos");
-
-                var tramaXmlSinFirma = Convert.ToBase64String(File.ReadAllBytes(vRutaArchivoXML));
+  
+                var tramaXmlSinFirma = Convert.ToBase64String(File.ReadAllBytes(vArchivoXML));
                 String vRutaCertificado = Convert.ToString(DtEmpresa.Rows[0]["CarpetaCertificadoDigital"]) +
-                                                        Convert.ToString(DtEmpresa.Rows[0]["NombreCertificadoDigital"]);
+                                                       Convert.ToString(DtEmpresa.Rows[0]["NombreCertificadoDigital"]);
                 string vCertificado = Convert.ToBase64String(File.ReadAllBytes(vRutaCertificado));
                 string vPassword = Convert.ToString(DtEmpresa.Rows[0]["PasswCertificadoDigital"]);
 
@@ -234,18 +232,18 @@ namespace  OpenInvoicePeru.WinApp
                 var jsonFirmado = await _client.PostAsJsonAsync("api/Firmar", firmadoRequest);
                 var respuestaFirmado = await jsonFirmado.Content.ReadAsAsync<FirmadoResponse>();
 
-                File.WriteAllBytes(vRutaArchivoXML, Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado));
+                File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado));
 
-                ReemplaCaracteres(Convert.ToString(vRutaArchivoXML));
+                ReemplaCaracteres(Convert.ToString(vArchivoXML));
 
                 if (!respuestaFirmado.Exito)
                     throw new ApplicationException(respuestaFirmado.MensajeError);
 
-                var TramaXML = Convert.ToBase64String(File.ReadAllBytes(vRutaArchivoXML));
+                var TramaXML = Convert.ToBase64String(File.ReadAllBytes(vArchivoXML));
 
                 var enviarDocumentoRequest = new EnviarDocumentoRequest
                 {
-                    Ruc = Convert.ToString(DtEmpresa.Rows[0]["EmpresaRuc"]),
+                    Ruc=TxtRuc.Text,
                     UsuarioSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaUsuarioSol"]),
                     ClaveSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaClaveSol"]),
                     EndPointUrl = vUrlSunat,
@@ -263,7 +261,7 @@ namespace  OpenInvoicePeru.WinApp
 
                 txtResult.Text = txtResult.Text + "  " + $@"{Resources.procesoCorrecto}{Environment.NewLine}{rpta.NroTicket}{Environment.NewLine}";
                 txtNroTicket.Text = rpta.NroTicket;
-                TxtXml.Text = vRutaArchivoXML;
+                TxtXml.Text = vArchivoXML;
 
                 if (!string.IsNullOrEmpty(txtNroTicket.Text))
                 {
@@ -291,7 +289,7 @@ namespace  OpenInvoicePeru.WinApp
                 if (string.IsNullOrEmpty(vFechaXml))
                     throw new InvalidOperationException("La Serie y el Correlativo no pueden estar vacíos");
 
-                var tramaXmlSinFirma = Convert.ToBase64String(File.ReadAllBytes(vRutaArchivoXML));
+                var tramaXmlSinFirma = Convert.ToBase64String(File.ReadAllBytes(vArchivoXML));
                 String vRutaCertificado = Convert.ToString(DtEmpresa.Rows[0]["CarpetaCertificadoDigital"]) +
                                                         Convert.ToString(DtEmpresa.Rows[0]["NombreCertificadoDigital"]);
 
@@ -306,19 +304,19 @@ namespace  OpenInvoicePeru.WinApp
                 var jsonFirmado = await _client.PostAsJsonAsync("api/Firmar", firmadoRequest);
                 var respuestaFirmado = await jsonFirmado.Content.ReadAsAsync<FirmadoResponse>();
 
-                File.WriteAllBytes(vRutaArchivoXML, Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado));
+                File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado));
 
-                ReemplaCaracteres(Convert.ToString(vRutaArchivoXML));
+                ReemplaCaracteres(Convert.ToString(vArchivoXML));
 
                 if (!respuestaFirmado.Exito)
                     throw new ApplicationException(respuestaFirmado.MensajeError);
 
-                var TramaXML = Convert.ToBase64String(File.ReadAllBytes(vRutaArchivoXML));
+                var TramaXML = Convert.ToBase64String(File.ReadAllBytes(vArchivoXML));
 
                 var enviarDocumentoRequest = new EnviarDocumentoRequest
                 {
-                    Ruc = Convert.ToString(DtEmpresa.Rows[0]["EmpresaRuc"]),
-                    UsuarioSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaUsuarioSol"]),
+                    Ruc=TxtRuc.Text,
+                     UsuarioSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaUsuarioSol"]),
                     ClaveSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaClaveSol"]),
                     EndPointUrl = vUrlSunat,
                     IdDocumento = vFechaXml,
@@ -370,10 +368,6 @@ namespace  OpenInvoicePeru.WinApp
                 string vTipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["IdentidadID"]);
                 string vNombreLegal = Convert.ToString(DtDocumentos.Rows[ii]["ClienterazonSocial"]);
 
-     //                   string vNombre = Convert.ToString(DtDocumentos.Rows[ii]["nombre"]);
-     //                   string vNemoTecnico = Convert.ToString(DtDocumentos.Rows[ii]["nombre"]);
-     //                   string vCodigo = Convert.ToString(DtDocumentos.Rows[ii]["codigo"]);
-     //                   string vId = Convert.ToString(DtDocumentos.Rows[ii]["Id"]);
 
                 DocumentoElectronico _xDocumento = new DocumentoElectronico
                 {
@@ -384,42 +378,35 @@ namespace  OpenInvoicePeru.WinApp
                         TipoDocumento = vTipoDocumento,
                         NombreLegal = vNombreLegal,
                     },
-   //                         AfectacionIgv = new AfectacionIgv
-   //                        {
-   //                            Nemotecnico = vNemoTecnico,
-   //                             Nombre = vNombre,
-   //                              Codigo = vCodigo,
-   //                              Id = vId
-   //                       },
                 };
                 _xDocumento.IdDocumento = idDoc;
-                  _xDocumento.FechaEmision = DtpFechaDoc.Value.ToString(FormatoFecha);
+                _xDocumento.FechaEmision = DtpFechaDoc.Value.ToString(FormatoFecha);
 
-                 _xDocumento.Moneda = "PEN";
-                 _xDocumento.MontoEnLetras = vletras;
-                 _xDocumento.CalculoIgv = 18m;
-             _xDocumento.CalculoIsc = Convert.ToDecimal(DtDocumentos.Rows[ii]["porcentajeIsc"]);
-                 _xDocumento.CalculoDetraccion = 0.00m;
-                 _xDocumento.TipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["documentoID"]);
-                  _xDocumento.TotalGravadas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGravado"]);
-                 _xDocumento.TotalInafectas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteinafecto"]);
-                 _xDocumento.TotalExoneradas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteexonerado"]);
-                   _xDocumento.TotalGratuitas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGratuitas"]);
-                 _xDocumento.TotalOtrosTributos = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteOtros"]);
-                 _xDocumento.TotalIsc = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteisc"]);
-                  _xDocumento.TotalIgv = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteIgv"]);
-                 _xDocumento.DescuentoGlobal = vDscto;
-                 _xDocumento.TotalVenta = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteventa"]);
-                  _xDocumento.Items = new List<DetalleDocumento>();
+                _xDocumento.Moneda = "PEN";
+                _xDocumento.MontoEnLetras = vletras;
+                _xDocumento.CalculoIgv = 18m;
+                _xDocumento.CalculoIsc = Convert.ToDecimal(DtDocumentos.Rows[ii]["porcentajeIsc"]);
+                _xDocumento.CalculoDetraccion = 0.00m;
+                _xDocumento.TipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["documentoID"]);
+                _xDocumento.TotalGravadas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGravado"]);
+                _xDocumento.TotalInafectas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteinafecto"]);
+                _xDocumento.TotalExoneradas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteexonerado"]);
+                _xDocumento.TotalGratuitas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGratuitas"]);
+                _xDocumento.TotalOtrosTributos = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteOtros"]);
+                _xDocumento.TotalIsc = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteisc"]);
+                _xDocumento.TotalIgv = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteIgv"]);
+                _xDocumento.DescuentoGlobal = vDscto;
+                _xDocumento.TotalVenta = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteventa"]);
+                _xDocumento.Items = new List<DetalleDocumento>();
 
                 // nuevo 2.1
-      //          _xDocumento.PorcentajeIgv = Convert.ToDecimal(DtDocumentos.Rows[ii]["PorcentajeIgv"]);
-                _xDocumento.FechaRegistro =Convert.ToString( DtDocumentos.Rows[ii]["fechaRegistro"]);
+                //          _xDocumento.PorcentajeIgv = Convert.ToDecimal(DtDocumentos.Rows[ii]["PorcentajeIgv"]);
+                _xDocumento.FechaRegistro = Convert.ToString(DtDocumentos.Rows[ii]["fechaRegistro"]);
                 _xDocumento.AnexoSunat = Convert.ToString(DtDocumentos.Rows[ii]["AnexoSunat"]);
                 _xDocumento.NroPedido = Convert.ToString(DtDocumentos.Rows[ii]["pedidonumero"]);
 
 
-            DtArticulos = DetalleArticulos(DtDocumentos, ii);
+                DtArticulos = DetalleArticulos(DtDocumentos, ii);
                 _xDocumento.TotItem = DtArticulos.Rows.Count;
                 for (int i3 = 0; i3 <= DtArticulos.Rows.Count - 1; i3++)
                 {
@@ -475,11 +462,46 @@ namespace  OpenInvoicePeru.WinApp
                 if (!respuesta.Exito)
                     throw new ApplicationException(respuesta.MensajeError);
 
-                //        String vRutaXml = Convert.ToString(DtEmpresa.Rows[0]["CarpetaEnviosXml"]);
-                vRutaArchivoXML = Path.Combine(vRutaXml, $"{_xDocumento.IdDocumento}.xml");
 
-                File.WriteAllBytes(vRutaArchivoXML, Convert.FromBase64String(respuesta.TramaXmlSinFirma));
-            }
+
+               idDoc = DtEmpresa.Rows[0]["EmpresaRuc"] + "-" + vTipoDoc;
+               idDoc += "-" + Convert.ToString(DtDocumentos.Rows[ii]["Seriedocumento"] + "-" + DtDocumentos.Rows[ii]["NumeroDocumento"]);
+               vArchivoXML = Path.Combine(vRutaXml, $"{idDoc}.xml");
+            //    File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(respuesta.TramaXmlSinFirma));
+            //    return;
+
+                //        String vRutaXml = Convert.ToString(DtEmpresa.Rows[0]["CarpetaEnviosXml"]);
+
+                var tramaXmlSinFirma = respuesta.TramaXmlSinFirma;
+
+
+                String vRutaCertificado = Convert.ToString(DtEmpresa.Rows[0]["CarpetaCertificadoDigital"]) +
+                                                        Convert.ToString(DtEmpresa.Rows[0]["NombreCertificadoDigital"]);
+                var firmadoRequest = new FirmadoRequest
+                {
+                    TramaXmlSinFirma = tramaXmlSinFirma,
+                    CertificadoDigital = Convert.ToBase64String(File.ReadAllBytes(vRutaCertificado)),
+                    PasswordCertificado = Convert.ToString(DtEmpresa.Rows[0]["PasswCertificadoDigital"]),
+                    UnSoloNodoExtension = true
+                };
+
+                var jsonFirmado = await _client.PostAsJsonAsync("api/Firmar", firmadoRequest);
+                var respuestaFirmado = await jsonFirmado.Content.ReadAsAsync<FirmadoResponse>();
+                if (!respuestaFirmado.Exito)
+                    throw new ApplicationException(respuestaFirmado.MensajeError);
+
+ 
+                vArchivoXML = Path.Combine(vRutaXml, $"{idDoc}.xml");
+
+
+
+                File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado));
+
+                    ReemplaCaracteres(Convert.ToString(vArchivoXML));
+
+
+
+           }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
@@ -527,10 +549,10 @@ namespace  OpenInvoicePeru.WinApp
                 if (!respuesta.Exito)
                     throw new ApplicationException(respuesta.MensajeError);
 
-                vRutaArchivoXML = ComunicacionBaja.IdDocumento;
-                vRutaArchivoXML = Path.Combine(vRutaXml, $"{vRutaArchivoXML}.xml");
+                vArchivoXML = ComunicacionBaja.IdDocumento;
+                vArchivoXML = Path.Combine(vRutaXml, $"{vArchivoXML}.xml");
 
-                File.WriteAllBytes(vRutaArchivoXML, Convert.FromBase64String(respuesta.TramaXmlSinFirma));
+                File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(respuesta.TramaXmlSinFirma));
             }
             catch (Exception ex)
             {
@@ -593,10 +615,10 @@ namespace  OpenInvoicePeru.WinApp
                 if (!respuesta.Exito)
                     throw new ApplicationException(respuesta.MensajeError);
 
-                vRutaArchivoXML = vFechaXml;
-                vRutaArchivoXML = Path.Combine(vRutaXml, $"{vRutaArchivoXML}.xml");
+                vArchivoXML = vFechaXml;
+                vArchivoXML = Path.Combine(vRutaXml, $"{vArchivoXML}.xml");
 
-                File.WriteAllBytes(vRutaArchivoXML, Convert.FromBase64String(respuesta.TramaXmlSinFirma));
+                File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(respuesta.TramaXmlSinFirma));
                 ModFunc.ActualizaItemDia(Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, VGCnxSqlE);
             }
             catch (Exception ex)
@@ -673,10 +695,36 @@ namespace  OpenInvoicePeru.WinApp
                 if (!respuesta.Exito)
                     throw new ApplicationException(respuesta.MensajeError);
 
-                vRutaArchivoXML = vFechaXml;
-                vRutaArchivoXML = Path.Combine(vRutaXml, $"{vRutaArchivoXML}.xml");
 
-                File.WriteAllBytes(vRutaArchivoXML, Convert.FromBase64String(respuesta.TramaXmlSinFirma));
+                var tramaXmlSinFirma = respuesta.TramaXmlSinFirma ;
+
+                // se agrego firma digital
+
+                String vRutaCertificado = Convert.ToString(DtEmpresa.Rows[0]["CarpetaCertificadoDigital"]) +
+                                                        Convert.ToString(DtEmpresa.Rows[0]["NombreCertificadoDigital"]);
+                string vCertificado = Convert.ToBase64String(File.ReadAllBytes(vRutaCertificado));
+                string vPassword = Convert.ToString(DtEmpresa.Rows[0]["PasswCertificadoDigital"]);
+
+                var firmadoRequest = new FirmadoRequest
+                {
+                    TramaXmlSinFirma = tramaXmlSinFirma,
+                    CertificadoDigital = vCertificado,
+                    PasswordCertificado = vPassword,
+                    UnSoloNodoExtension = true
+                };
+
+                var jsonFirmado = await _client.PostAsJsonAsync("api/Firmar", firmadoRequest);
+                var respuestaFirmado = await jsonFirmado.Content.ReadAsAsync<FirmadoResponse>();
+
+                vArchivoXML = Convert.ToString(DtEmpresa.Rows[0]["EmpresaRuc"])+"-" +vFechaXml;
+                vArchivoXML = Path.Combine(vRutaXml, $"{vArchivoXML}.xml");
+
+
+                File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado));
+                ReemplaCaracteres(Convert.ToString(vArchivoXML));
+
+
+
                 ModFunc.ActualizaItemDia(Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, VGCnxSqlE);
             }
             catch (Exception ex)
@@ -744,7 +792,7 @@ namespace  OpenInvoicePeru.WinApp
 
         public static DetalleDocumento DetalleItem(DataTable DtArticulos, int i)
         {
-            decimal vPrecioUnitario = 0;
+            decimal vPrecioUnitario ;
 
             try
             {
@@ -791,6 +839,19 @@ namespace  OpenInvoicePeru.WinApp
                 string vNemoTecnico = Convert.ToString(DtArticulos.Rows[i]["Nemotecnico"]);
                 string vCodigo = Convert.ToString(DtArticulos.Rows[i]["codigo"]);
                 string vId = Convert.ToString(DtArticulos.Rows[i]["Id"]);
+                string vAfectacionID = Convert.ToString(DtArticulos.Rows[i]["Id2"]);
+
+                decimal vImponible = Convert.ToDecimal(DtArticulos.Rows[i]["ItemGravado"]);
+                if(vAfectacionID == "E")
+                {
+                    detalle.ItemGravado =  Convert.ToDecimal(DtArticulos.Rows[i]["ItemExonerado"]);
+
+                }
+                if (vAfectacionID == "I")
+                {
+                    detalle.ItemGravado =  Convert.ToDecimal(DtArticulos.Rows[i]["ItemInafecto"]);
+
+                }
 
                 detalle.AfectacionIgv = new AfectacionIgv
                 {
@@ -798,6 +859,7 @@ namespace  OpenInvoicePeru.WinApp
                     Nombre = vNombre,
                     Codigo = vCodigo,
                     Id = vId
+
                 };
 
                 return detalle;
@@ -833,9 +895,9 @@ namespace  OpenInvoicePeru.WinApp
             }
         }
 
-        public void LlenaCombo(ComboBox Combo, string dato, string cnn)
+        public void LlenaCombo(ComboBox Combo, string dato)
         {
-            DataTable rsql = new DataTable();
+            DataTable rsql;
             Combo.Items.Clear();
             rsql = ModFunc.ConsultarTabla(dato, VGCnxSqlE);
             if (rsql.Rows.Count > 0)
@@ -943,31 +1005,31 @@ namespace  OpenInvoicePeru.WinApp
 
                     // Creacion de directorio empresa
                     vRutaXml = Convert.ToString(DtEmpresa.Rows[0]["CarpetaEnviosXml"]);
-                    vRutaArchivoXML = Ctr_AyuEmpresas.Codigo;
-                    vRutaArchivoXML = ModFunc.CreacionDirectorio(vRutaXml, vRutaArchivoXML);
+                    vArchivoXML = Ctr_AyuEmpresas.Codigo;
+                    vArchivoXML = ModFunc.CreacionDirectorio(vRutaXml, vArchivoXML);
 
                     // Creacion de directorio de facturas electronicas
 
                     // Creacion de directorio año
-                    vRutaXml = vRutaArchivoXML;
-                    vRutaArchivoXML = Convert.ToString(DtpFechaDoc.Value.Year);
-                    vRutaArchivoXML = ModFunc.CreacionDirectorio(vRutaXml, vRutaArchivoXML);
+                    vRutaXml = vArchivoXML;
+                    vArchivoXML = Convert.ToString(DtpFechaDoc.Value.Year);
+                    vArchivoXML = ModFunc.CreacionDirectorio(vRutaXml, vArchivoXML);
 
                     // Creacion de directorio mes
 
-                    vRutaXml = vRutaArchivoXML;
-                    vRutaArchivoXML = ModFunc.DesMes(ModFunc.Derecha("0" + Convert.ToString(DtpFechaDoc.Value.Month), 2));
-                    vRutaArchivoXML = ModFunc.CreacionDirectorio(vRutaXml, vRutaArchivoXML);
+                    vRutaXml = vArchivoXML;
+                    vArchivoXML = ModFunc.DesMes(ModFunc.Derecha("0" + Convert.ToString(DtpFechaDoc.Value.Month), 2));
+                    vArchivoXML = ModFunc.CreacionDirectorio(vRutaXml, vArchivoXML);
 
                     // Creacion de directorio XML
 
-                    vRutaXml = vRutaArchivoXML;
+                    vRutaXml = vArchivoXML;
                     vRutaCdr = vRutaXml;
-                    vRutaArchivoXML = "XML";
-                    vRutaXml = ModFunc.CreacionDirectorio(vRutaXml, vRutaArchivoXML);
+                    vArchivoXML = "XML";
+                    vRutaXml = ModFunc.CreacionDirectorio(vRutaXml, vArchivoXML);
 
-                    vRutaArchivoXML = "CDR";
-                    vRutaCdr = ModFunc.CreacionDirectorio(vRutaCdr, vRutaArchivoXML);
+                    vArchivoXML = "CDR";
+                    vRutaCdr = ModFunc.CreacionDirectorio(vRutaCdr, vArchivoXML);
                 }
                 switch (vTipoDoc)
                 {
@@ -1066,15 +1128,14 @@ namespace  OpenInvoicePeru.WinApp
 
         private async void BtnConsultaTicket_Click(object sender, EventArgs e)
         {
-            string vPath = "";
-            string vNro = "";
+            string vPath;
+            string vNro;
             try
             {
                 Cursor = Cursors.WaitCursor;
                 vNro = txtNroTicket.Text;
                 var consultaTicketRequest = new ConsultaTicketRequest
                 {
-                    Ruc = TxtRuc.Text,
                     UsuarioSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaUsuarioSol"]),
                     ClaveSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaclaveSol"]),
                     EndPointUrl = vUrlSunat,
@@ -1161,7 +1222,7 @@ namespace  OpenInvoicePeru.WinApp
 
         private void Ctr_AyuUrlDoc_AlDevolverDato(object Sender, DataRow e)
         {
-              DataTable Dtx = new DataTable();
+              DataTable Dtx ;
             SQL = " SELECT DireccionSunatUrl FROM fedireccionesSunat where ID='" + Ctr_AyuUrlDoc.Codigo + "'";
             Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
             vUrlSunat = (string)Dtx.Rows[0][0];
@@ -1195,7 +1256,7 @@ namespace  OpenInvoicePeru.WinApp
 
         private void Ctr_AyuDocumento_AlDevolverDato(object Sender, DataRow e)
         {
-            DataTable Dtx = new DataTable();
+            DataTable Dtx;
             SQL = " SELECT * FROM feDocumentosFE where ID='" + Ctr_AyuDocumento.Codigo + "'";
             Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
             vTipoDoc = (string)Dtx.Rows[0]["ID"];
@@ -1220,11 +1281,6 @@ namespace  OpenInvoicePeru.WinApp
         }
 
         #endregion textBox
-
-        private void FrmEnviosSunat_Load(object sender, EventArgs e)
-        {
-
-        }
 
     }
 }

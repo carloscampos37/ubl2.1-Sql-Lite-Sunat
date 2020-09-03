@@ -196,13 +196,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\FacturasElectronicasWeb\OpenInvoicePeru.Comun.Dto\OpenInvoicePeru.Comun.Dto.csproj">
+    <ProjectReference Include="..\OpenInvoicePeru.Comun.Dto\OpenInvoicePeru.Comun.Dto.csproj">
       <Project>{a265a65a-c2a9-4f9e-b272-bed5ed04df98}</Project>
       <Name>OpenInvoicePeru.Comun.Dto</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\FacturasElectronicasWeb\OpenInvoicePeru.Firmado\OpenInvoicePeru.Firmado.csproj">
-      <Project>{1cfd1d28-d342-413d-a6e1-7616cb9708e2}</Project>
-      <Name>OpenInvoicePeru.Firmado</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

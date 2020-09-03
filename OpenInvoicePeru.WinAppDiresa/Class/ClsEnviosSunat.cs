@@ -23,12 +23,12 @@ namespace OpenInvoicePeru.Class
                     break;
 
                 case "RC":
-                    vSql = " SELECT  Item=IdentificadorEnvio+1,EstablecimientoID,Fechadocumento,grupo=isnull(c.GrupodeEnvioSunat,0), c.*,Letras=[dbo].fn_NumeroEnLetra(c.TotalImporteVenta,'01') ";
+                    vSql = " SELECT  Item=IdentificadorEnvio+1,EstablecimientoID,Fechadocumento,grupo=b.GrupodeEnvioSunat, c.*,Letras=[dbo].fn_NumeroEnLetra(c.TotalImporteVenta,'01') ";
                     vSql += " FROM dbo.FEResumenDiarioDocumentosCab a ";
                     vSql += " INNER JOIN dbo.FEResumenDiarioDocumentosDet b ON a.ID = b.ResumendiarioCabID  ";
                     vSql += " INNER join FEResumenDiarioDocumentosDetItem c ON b.ID = c.ResumendiarioDetID ";
                     vSql += " WHERE a.EmpresaID='" + vEmpresa + "' AND fechadocumento = '" + vFecha + "'";
-                    vSql += " AND isnull(c.GrupodeEnvioSunat,0)=" + vGrupo + "  ";
+                    vSql += " AND b.GrupodeEnvioSunat=" + vGrupo + "  ";
 
                     break;
 
