@@ -25,7 +25,7 @@ namespace OpenInvoicePeru.WinAppSunat.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=servidor;database=colegio;User ID=sa;Password=12345")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=servidor;database=FacturasElectronicas;User ID=sa;Password=12345")]
         public string CadenaConexion {
             get {
                 return ((string)(this["CadenaConexion"]));

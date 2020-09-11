@@ -99,7 +99,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Global.asax" />
     <Content Include="index.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -123,16 +122,22 @@
     <Compile Include="Controllers\GenerarResumenDiarioController.cs" />
     <Compile Include="Controllers\GenerarComunicacionBajaController.cs" />
     <Compile Include="Controllers\GenerarRetencionController.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\jck.pubxml" />
     <None Include="Properties\PublishProfiles\OpenInvoicePeruWebApi - Web Deploy.pubxml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -156,13 +161,13 @@
       <Project>{1cfd1d28-d342-413d-a6e1-7616cb9708e2}</Project>
       <Name>OpenInvoicePeru.Firmado</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OpenInvoicePeru.ServicioOse.Soap\OpenInvoicePeru.ServicioOse.Soap.csproj">
-      <Project>{f608fea2-ec58-4df7-81d6-960f6e1daed2}</Project>
-      <Name>OpenInvoicePeru.ServicioOse.Soap</Name>
+    <ProjectReference Include="..\OpenInvoicePeru.ServicioSunat.Soap\OpenInvoicePeru.ServicioSunat.Soap.csproj">
+      <Project>{4a66b5b4-eafe-4ff1-a9d9-bbf4a2cb335a}</Project>
+      <Name>OpenInvoicePeru.ServicioSunat.Soap</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OpenInvoicePeru.ServicioOse\OpenInvoicePeru.ServicioOse.csproj">
-      <Project>{25d6b9af-55a6-4e7f-a061-52a492ccdb6e}</Project>
-      <Name>OpenInvoicePeru.ServicioOse</Name>
+    <ProjectReference Include="..\OpenInvoicePeru.ServicioSunat\OpenInvoicePeru.ServicioSunat.csproj">
+      <Project>{2f5e51a1-b071-452e-a8d3-b33e5dcd473a}</Project>
+      <Name>OpenInvoicePeru.ServicioSunat</Name>
     </ProjectReference>
     <ProjectReference Include="..\OpenInvoicePeru.Xml\OpenInvoicePeru.Xml.csproj">
       <Project>{eda74dc8-b11b-4c7c-b604-0763b210e7d4}</Project>

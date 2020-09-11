@@ -62,7 +62,7 @@
     <ApplicationIcon>openinvoiceperulogo.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>OpenInvoicePeru.WinApp.Program</StartupObject>
+    <StartupObject>OpenInvoicePeru.WinAppDiresa.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ctr_Ayuda">
