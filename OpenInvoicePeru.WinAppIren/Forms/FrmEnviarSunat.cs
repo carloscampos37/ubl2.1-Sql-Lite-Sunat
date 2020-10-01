@@ -387,8 +387,7 @@ namespace  OpenInvoicePeru.WinAppIren
 
                 _xDocumento.Moneda = "PEN";
                 _xDocumento.MontoEnLetras = vletras;
-                _xDocumento.CalculoIgv = 18m;
-                _xDocumento.CalculoIsc = Convert.ToDecimal(DtDocumentos.Rows[ii]["porcentajeIsc"]);
+                 _xDocumento.CalculoIsc = Convert.ToDecimal(DtDocumentos.Rows[ii]["porcentajeIsc"]);
                 _xDocumento.CalculoDetraccion = 0.00m;
                 _xDocumento.TipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["documentoID"]);
                 _xDocumento.TotalGravadas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGravado"]);

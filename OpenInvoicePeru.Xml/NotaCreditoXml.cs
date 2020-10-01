@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 using OpenInvoicePeru.Comun;
 using OpenInvoicePeru.Comun.Dto.Contratos;
 using OpenInvoicePeru.Comun.Dto.Modelos;
@@ -8,12 +10,11 @@ using OpenInvoicePeru.Estructuras.CommonBasicComponents;
 using OpenInvoicePeru.Estructuras.CommonExtensionComponents;
 using OpenInvoicePeru.Estructuras.EstandarUbl;
 using OpenInvoicePeru.Estructuras.SunatAggregateComponents;
-using System.Linq;
-using System.Windows.Forms;
 
 namespace OpenInvoicePeru.Xml
 {
     public class NotaCreditoXml : IDocumentoXml
+
     {
         IEstructuraXml IDocumentoXml.Generar(IDocumentoElectronico request)
         {
@@ -21,9 +22,67 @@ namespace OpenInvoicePeru.Xml
             {
                 var documento = (DocumentoElectronico)request;
                 documento.MontoEnLetras = documento.MontoEnLetras;
-                var creditNote = new CreditNote
+                var invoice = new CreditNote()
                 {
-
+                    UblExtensions = new UblExtensions
+                    {
+                        Extension2 = new UblExtension
+                        {
+                            ExtensionContent = new ExtensionContent
+                            {
+                                AdditionalInformation = new AdditionalInformation
+                                {
+                                    AdditionalMonetaryTotals = new List<AdditionalMonetaryTotal>()
+                                {
+                                    new AdditionalMonetaryTotal()
+                                    {
+                                        Id = "1001",
+                                        PayableAmount = new PayableAmount()
+                                        {
+                                            CurrencyId = documento.Moneda,
+                                            Value = documento.TotalGravadas
+                                        }
+                                    },
+                                    new AdditionalMonetaryTotal
+                                    {
+                                        Id = "1002",
+                                        PayableAmount = new PayableAmount
+                                        {
+                                            CurrencyId = documento.Moneda,
+                                            Value = documento.TotalInafectas
+                                        }
+                                    },
+                                    new AdditionalMonetaryTotal
+                                    {
+                                        Id = "1003",
+                                        PayableAmount = new PayableAmount
+                                        {
+                                            CurrencyId = documento.Moneda,
+                                            Value = documento.TotalExoneradas
+                                        }
+                                    },
+                                    new AdditionalMonetaryTotal
+                                    {
+                                        Id = "1004",
+                                        PayableAmount = new PayableAmount
+                                        {
+                                            CurrencyId = documento.Moneda,
+                                            Value = documento.TotalGratuitas
+                                        }
+                                    }
+                                },
+                                    AdditionalProperties = new List<AdditionalProperty>()
+                                {
+                                    new AdditionalProperty
+                                    {
+                                        Id = "1000",
+                                        Value = documento.MontoEnLetras
+                                    }
+                                }
+                                }
+                            }
+                        }
+                    },
                     Id = documento.IdDocumento,
                     IssueDate = DateTime.Parse(documento.FechaEmision),
                     IssueHora = DateTime.Parse(documento.FechaRegistro),
@@ -133,58 +192,56 @@ namespace OpenInvoicePeru.Xml
                         },
                     },
 
-
                     // datos de cabecera documento 
 
                     TaxTotals = new List<TaxTotal>
-                    {
+                {
                         #region TotalGravadas
 
                         new TaxTotal
+                    {
+                        Moneda=documento.Moneda ,
+                        TaxableAmount =new PayableAmount
                         {
-                            Moneda = documento.Moneda,
-                            TaxableAmount = new PayableAmount
-                            {
-                                CurrencyId = "S",
-                                Value = documento.TotalGravadas
-                            },
+                            CurrencyId="S",
+                            Value =documento.TotalGravadas
+                        },
+                        TaxAmount = new PayableAmount
+                        {
+                            CurrencyId = "IGV",
+                            Value = documento.TotalIgv
+                        },
+                        TaxSubtotal = new TaxSubtotal
+                        {
+                            Percent=documento.PorcentajeIgv,
                             TaxAmount = new PayableAmount
                             {
                                 CurrencyId = "IGV",
-                                Value = documento.TotalIgv
+                                Value = documento.TotalIgv,
                             },
-                            TaxSubtotal = new TaxSubtotal
+                            TaxCategory = new TaxCategory
                             {
-                                Percent = documento.PorcentajeIgv,
-                                TaxAmount = new PayableAmount
+                                TaxExemptionReasonCode="10",
+                                TaxScheme = new TaxScheme
                                 {
-                                    CurrencyId = "IGV",
-                                    Value = documento.TotalIgv,
-                                },
-                                TaxCategory = new TaxCategory
-                                {
-                                    TaxExemptionReasonCode = "10",
-                                    TaxScheme = new TaxScheme
-                                    {
-                                        Id = "1000",
-                                        Name = "IGV",
-                                        TaxTypeCode = "VAT"
-                                    }
+                                    Id = "1000",
+                                    Name = "IGV",
+                                    TaxTypeCode = "VAT"
                                 }
                             }
                         }
-                        #endregion TotalGravadas
-
                     }
-            };
-            if (!string.IsNullOrEmpty(documento.NroOrdenCompra))
+                        #endregion TotalGravadas
+                    }
+                };
+                if (!string.IsNullOrEmpty(documento.NroOrdenCompra))
                 {
-                    creditNote.OrderReference = documento.NroOrdenCompra;
+                    invoice.OrderReference = documento.NroOrdenCompra;
                 }
 
                 if (documento.TotalIsc > 0)
                 {
-                    creditNote.TaxTotals.Add(new TaxTotal
+                    invoice.TaxTotals.Add(new TaxTotal
                     {
                         Moneda = documento.Moneda,
                         TaxAmount = new PayableAmount
@@ -211,28 +268,28 @@ namespace OpenInvoicePeru.Xml
                         }
                     });
                 }
-                if (documento.TotalInafectas > 0)
+                if (documento.TotalInafectas  > 0)
                 {
-
-                    creditNote.TaxTotals.Add(new TaxTotal
+                    
+                    invoice.TaxTotals.Add(new TaxTotal
                     {
-                        Moneda = documento.Moneda,
+                        Moneda=documento.Moneda ,
                         TaxableAmount = new PayableAmount
                         {
                             CurrencyId = "O",
-                            Value = documento.TotalInafectas
+                            Value = documento.TotalInafectas 
                         },
                         TaxAmount = new PayableAmount
                         {
                             CurrencyId = documento.Moneda,
-                            Value = 0,
+                            Value = 0 ,
                         },
                         TaxSubtotal = new TaxSubtotal
                         {
                             TaxAmount = new PayableAmount
                             {
                                 CurrencyId = documento.Moneda,
-                                Value = documento.TotalInafectas
+                                Value = documento.TotalInafectas 
                             },
                             TaxCategory = new TaxCategory
                             {
@@ -246,15 +303,15 @@ namespace OpenInvoicePeru.Xml
                         }
                     });
                 }
-                if (documento.TotalExoneradas > 0)
+                if (documento.TotalExoneradas  > 0)
                 {
-                    creditNote.TaxTotals.Add(new TaxTotal
+                    invoice.TaxTotals.Add(new TaxTotal
                     {
-                        Moneda = documento.Moneda,
+                        Moneda=documento.Moneda ,
                         TaxableAmount = new PayableAmount
                         {
                             CurrencyId = "E",
-                            Value = documento.TotalExoneradas
+                            Value = documento.TotalExoneradas 
                         },
                         TaxAmount = new PayableAmount
                         {
@@ -266,7 +323,7 @@ namespace OpenInvoicePeru.Xml
                             TaxAmount = new PayableAmount
                             {
                                 CurrencyId = documento.Moneda,
-                                Value = documento.TotalExoneradas
+                                Value = documento.TotalExoneradas 
                             },
                             TaxCategory = new TaxCategory
                             {
@@ -280,16 +337,16 @@ namespace OpenInvoicePeru.Xml
                         }
                     });
                 }
-                if (documento.TotalGratuitas > 0)
+                if (documento.TotalGratuitas  > 0)
                 {
-                    creditNote.TaxTotals.Add(new TaxTotal
+                    invoice.TaxTotals.Add(new TaxTotal
                     {
-                        Moneda = documento.Moneda,
+                        Moneda=documento.Moneda ,
                         TaxableAmount = new PayableAmount
                         {
-
+                           
                             CurrencyId = "I",
-                            Value = documento.TotalGratuitas
+                            Value = documento.TotalGratuitas 
                         },
                         TaxAmount = new PayableAmount
                         {
@@ -316,42 +373,42 @@ namespace OpenInvoicePeru.Xml
                     });
                 }
                 if (documento.TotalOtrosTributos > 0)
-                {
-                    creditNote.TaxTotals.Add(new TaxTotal
                     {
-                        Moneda = documento.Moneda,
-                        TaxableAmount = new PayableAmount
+                        invoice.TaxTotals.Add(new TaxTotal
                         {
-                            CurrencyId = "O",
-                            Value = documento.TotalOtrosTributos
-                        },
-                        TaxAmount = new PayableAmount
-                        {
-                            CurrencyId = documento.Moneda,
-                            Value = documento.TotalOtrosTributos,
-                        },
-                        TaxSubtotal = new TaxSubtotal
-                        {
+                            Moneda=documento.Moneda ,
+                            TaxableAmount = new PayableAmount
+                            {
+                                CurrencyId = "O",
+                                Value = documento.TotalOtrosTributos
+                            },
                             TaxAmount = new PayableAmount
                             {
                                 CurrencyId = documento.Moneda,
-                                Value = documento.TotalOtrosTributos
+                                Value = documento.TotalOtrosTributos,
                             },
-                            TaxCategory = new TaxCategory
+                            TaxSubtotal = new TaxSubtotal
                             {
-                                TaxScheme = new TaxScheme
+                                TaxAmount = new PayableAmount
                                 {
-                                    Id = "9999",
-                                    Name = "OTROS",
-                                    TaxTypeCode = "OTH"
+                                    CurrencyId = documento.Moneda,
+                                    Value = documento.TotalOtrosTributos
+                                },
+                                TaxCategory = new TaxCategory
+                                {
+                                    TaxScheme = new TaxScheme
+                                    {
+                                        Id = "9999",
+                                        Name = "OTROS",
+                                        TaxTypeCode = "OTH"
+                                    }
                                 }
                             }
-                        }
-                    });
-                }
-
+                        });
+                    }
+               
                 {
-                    creditNote.UblExtensions.Extension2.ExtensionContent
+                    invoice.UblExtensions.Extension2.ExtensionContent
                             .AdditionalInformation.AdditionalProperties.Add(new AdditionalProperty
                             {
                                 Id = "1002",
@@ -362,7 +419,7 @@ namespace OpenInvoicePeru.Xml
                 /* Numero de Placa del Vehiculo - Gastos art.37° Renta */
                 if (!string.IsNullOrEmpty(documento.PlacaVehiculo))
                 {
-                    creditNote.UblExtensions.Extension2.ExtensionContent
+                    invoice.UblExtensions.Extension2.ExtensionContent
                         .AdditionalInformation.SunatCosts.RoadTransport
                         .LicensePlateId = documento.PlacaVehiculo;
                 }
@@ -371,23 +428,23 @@ namespace OpenInvoicePeru.Xml
                 if (!string.IsNullOrEmpty(documento.TipoOperacion)
                     && documento.DatosGuiaTransportista == null)
                 {
-                    creditNote.UblExtensions.Extension2.ExtensionContent
+                    invoice.UblExtensions.Extension2.ExtensionContent
                         .AdditionalInformation.SunatTransaction.Id = documento.TipoOperacion;
                     // Si es Emisor Itinerante.
                     if (documento.TipoOperacion == "05")
                     {
-                        creditNote.UblExtensions.Extension2.ExtensionContent
+                        invoice.UblExtensions.Extension2.ExtensionContent
                             .AdditionalInformation.AdditionalProperties.Add(new AdditionalProperty
                             {
                                 Id = "3000", // En el catalogo aparece como 2005 pero es 3000
-                                Value = "Venta realizada por emisor itinerante"
+                            Value = "Venta realizada por emisor itinerante"
                             });
                     }
                 }
 
                 foreach (var relacionado in documento.Relacionados)
                 {
-                    creditNote.DespatchDocumentReferences.Add(new InvoiceDocumentReference
+                    invoice.DespatchDocumentReferences.Add(new InvoiceDocumentReference
                     {
                         DocumentTypeCode = relacionado.TipoDocumento,
                         Id = relacionado.NroDocumento
@@ -396,7 +453,7 @@ namespace OpenInvoicePeru.Xml
 
                 foreach (var relacionado in documento.OtrosDocumentosRelacionados)
                 {
-                    creditNote.AdditionalDocumentReferences.Add(new InvoiceDocumentReference
+                    invoice.AdditionalDocumentReferences.Add(new InvoiceDocumentReference
                     {
                         DocumentTypeCode = relacionado.TipoDocumento,
                         Id = relacionado.NroDocumento
@@ -406,7 +463,7 @@ namespace OpenInvoicePeru.Xml
                 var dctosPorItem = documento.Items.Sum(d => d.Descuento);
                 if (documento.DescuentoGlobal > 0 || dctosPorItem > 0)
                 {
-                    creditNote.UblExtensions.Extension2.ExtensionContent
+                    invoice.UblExtensions.Extension2.ExtensionContent
                         .AdditionalInformation.AdditionalMonetaryTotals.Add(new AdditionalMonetaryTotal
                         {
                             Id = "2005",
@@ -419,7 +476,7 @@ namespace OpenInvoicePeru.Xml
                 }
                 if (documento.MontoPercepcion > 0)
                 {
-                    creditNote.UblExtensions.Extension2.ExtensionContent
+                    invoice.UblExtensions.Extension2.ExtensionContent
                         .AdditionalInformation.AdditionalMonetaryTotals.Add(new AdditionalMonetaryTotal
                         {
                             Id = "2001",
@@ -442,7 +499,7 @@ namespace OpenInvoicePeru.Xml
                 }
                 if (documento.MontoAnticipo > 0)
                 {
-                    creditNote.PrepaidPayment = new BillingPayment
+                    invoice.PrepaidPayment = new BillingPayment
                     {
                         Id = new PartyIdentificationId
                         {
@@ -456,7 +513,7 @@ namespace OpenInvoicePeru.Xml
                         },
                         InstructionId = documento.Emisor.NroDocumento
                     };
-                    creditNote.LegalMonetaryTotal.PrepaidAmount = new PayableAmount
+                    invoice.LegalMonetaryTotal.PrepaidAmount = new PayableAmount
                     {
                         CurrencyId = documento.MonedaAnticipo,
                         Value = documento.MontoAnticipo
@@ -466,7 +523,7 @@ namespace OpenInvoicePeru.Xml
                 // Datos Adicionales a la Factura.
                 foreach (var adicional in documento.DatoAdicionales)
                 {
-                    creditNote.UblExtensions.Extension2.ExtensionContent
+                    invoice.UblExtensions.Extension2.ExtensionContent
                         .AdditionalInformation.AdditionalProperties.Add(new AdditionalProperty
                         {
                             Id = adicional.Codigo,
@@ -476,7 +533,7 @@ namespace OpenInvoicePeru.Xml
 
                 if (documento.MontoDetraccion > 0)
                 {
-                    creditNote.UblExtensions.Extension2.ExtensionContent
+                    invoice.UblExtensions.Extension2.ExtensionContent
                         .AdditionalInformation.AdditionalMonetaryTotals.Add(new AdditionalMonetaryTotal
                         {
                             Id = "2003",
@@ -492,7 +549,7 @@ namespace OpenInvoicePeru.Xml
                 // Para datos de Guia de Remision Transportista.
                 if (!string.IsNullOrEmpty(documento.DatosGuiaTransportista?.RucTransportista))
                 {
-                    creditNote.UblExtensions.Extension2.ExtensionContent
+                    invoice.UblExtensions.Extension2.ExtensionContent
                         .AdditionalInformation.SunatEmbededDespatchAdvice = new SunatEmbededDespatchAdvice
                         {
                             DeliveryAddress = new PostalAddress
@@ -598,14 +655,18 @@ namespace OpenInvoicePeru.Xml
                             }
                         },
                     };
-
+                    decimal Valor = detalleDocumento.ItemGravado;
+              if (detalleDocumento.ItemExonerado + detalleDocumento.ItemInafecto > 0)
+                            {
+                        Valor = detalleDocumento.ItemExonerado + detalleDocumento.ItemInafecto;
+                    }
                     /* 16 - Afectación al IGV por ítem */
                     linea.TaxTotals.Add(new TaxTotal
                     {
-                        TaxableAmount = new PayableAmount
+                        TaxableAmount=new PayableAmount
                         {
-                            CurrencyId = documento.Moneda,
-                            Value = detalleDocumento.ItemGravado,
+                            CurrencyId=documento.Moneda,
+                            Value= Valor
                         },
                         TaxAmount = new PayableAmount
                         {
@@ -614,7 +675,7 @@ namespace OpenInvoicePeru.Xml
                         },
                         TaxSubtotal = new TaxSubtotal
                         {
-
+                            
                             TaxAmount = new PayableAmount
                             {
                                 CurrencyId = documento.Moneda,
@@ -625,7 +686,7 @@ namespace OpenInvoicePeru.Xml
                                 TaxExemptionReasonCode = detalleDocumento.TipoImpuesto,
                                 TaxScheme = new TaxScheme()
                                 {
-                                    Id= detalleDocumento.AfectacionIgv.Id,
+                                    Id = detalleDocumento.AfectacionIgv.Id,
                                     Codigo = detalleDocumento.AfectacionIgv.Codigo,
                                     Name = detalleDocumento.AfectacionIgv.Nombre,
                                     TaxTypeCode = detalleDocumento.AfectacionIgv.Nemotecnico
@@ -686,7 +747,7 @@ namespace OpenInvoicePeru.Xml
                             PriceTypeCode = "02"
                         });
 
-                    /* 51 - Descuentos por ítem */
+                        /* 51 - Descuentos por ítem */
                     if (detalleDocumento.Descuento > 0)
                     {
                         linea.AllowanceCharge.ChargeIndicator = false;
@@ -697,15 +758,15 @@ namespace OpenInvoicePeru.Xml
                         };
                     }
 
-                    creditNote.InvoiceLines.Add(linea);
+                    invoice.InvoiceLines.Add(linea);
                 }
-                return creditNote;
+
+                return invoice;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 return null;
-
             }
         }
     }

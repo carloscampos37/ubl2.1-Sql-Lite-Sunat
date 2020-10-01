@@ -25,7 +25,7 @@ namespace OpenInvoicePeru.WinAppDiresa.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=190.119.219.134;database=fe21;User ID=diresa;Password=12345")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=facturase.geresall.com;database=fe21;User ID=sa;Password=Aa12345*")]
         public string CadenaConexion {
             get {
                 return ((string)(this["CadenaConexion"]));

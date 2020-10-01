@@ -573,6 +573,7 @@ namespace  OpenInvoicePeru.WinAppSunat
                 MessageBox.Show(ex.Message);
                 txtResult.Text = txtResult.Text + ex.Message + Environment.NewLine;
             }
+
         }
 
         private async void CrearXmlBajas()
