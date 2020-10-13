@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OpenInvoicePeru.WinAppDiresa.Properties {
+namespace OpenInvoicePeru.WinAppFE.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace OpenInvoicePeru.WinAppDiresa.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("OpenInvoicePeru.WinAppDiresa.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("OpenInvoicePeru.WinAppFE.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

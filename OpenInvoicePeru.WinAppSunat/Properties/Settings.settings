@@ -1,9 +1,9 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="OpenInvoicePeru.WinAppSunat.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="OpenInvoicePeru.WinApp.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="CadenaConexion" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Server=servidor;database=FacturasElectronicas;User ID=sa;Password=12345</Value>
+      <Value Profile="(Default)">Server=asus;database=facturaselectronicasrodiscar;User ID=sa;Password=12345</Value>
     </Setting>
   </Settings>
 </SettingsFile>

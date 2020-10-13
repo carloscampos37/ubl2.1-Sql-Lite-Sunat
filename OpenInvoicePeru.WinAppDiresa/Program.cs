@@ -1,9 +1,8 @@
-﻿
-using System;
+﻿using System;
 using System.IO;
 using System.Windows.Forms;
 
-namespace OpenInvoicePeru.WinAppDiresa
+namespace OpenInvoicePeru.WinApp
 {
     public static class Program
     {
@@ -29,7 +28,6 @@ namespace OpenInvoicePeru.WinAppDiresa
                 MessageBox.Show(ex.Message + ex.InnerException?.Message, Application.ProductName);
             }
             Application.Run(new FrmEnviosSunat());
-        }
-
+                    }
     }
 }

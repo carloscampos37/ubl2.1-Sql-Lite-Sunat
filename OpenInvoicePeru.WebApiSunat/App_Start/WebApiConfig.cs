@@ -2,7 +2,7 @@
 using Microsoft.Practices.Unity.WebApi;
 using OpenInvoicePeru.WebApiSunat;
 
-namespace OpenInvoicePeru.WebApiSunat
+namespace OpenInvoicePeru.WebApi
 {
     public static class WebApiConfig
     {

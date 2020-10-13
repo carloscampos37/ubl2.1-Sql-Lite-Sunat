@@ -4,7 +4,7 @@ using System.Web.Http;
 using OpenInvoicePeru.Comun.Dto.Intercambio;
 using OpenInvoicePeru.Firmado;
 
-namespace OpenInvoicePeru.WebApiSunat.Controllers
+namespace OpenInvoicePeru.WebApi.Controllers
 {
     public class FirmarController : ApiController
     {

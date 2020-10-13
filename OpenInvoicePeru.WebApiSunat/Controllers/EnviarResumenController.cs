@@ -5,7 +5,7 @@ using OpenInvoicePeru.Comun.Dto.Intercambio;
 using OpenInvoicePeru.Firmado;
 using OpenInvoicePeru.ServicioSunat;
 
-namespace OpenInvoicePeru.WebApiSunat.Controllers
+namespace OpenInvoicePeru.WebApi.Controllers
 {
     public class EnviarResumenController : ApiController
     {

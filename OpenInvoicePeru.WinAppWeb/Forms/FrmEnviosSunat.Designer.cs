@@ -1,4 +1,6 @@
-﻿namespace OpenInvoicePeru.WinApp
+﻿using Ctr_Ayuda;
+
+namespace OpenInvoicePeru.WinApp
 {
     partial class FrmEnviosSunat
     {
@@ -771,7 +773,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox TxtRuc;
-        internal Ctr_Ayuda.Ctr_Ayuda Ctr_AyuEmpresas;
+        private Ctr_Ayuda.Ctr_Ayuda Ctr_AyuEmpresas;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtNroTicket;
         private System.Windows.Forms.Button BntXml;

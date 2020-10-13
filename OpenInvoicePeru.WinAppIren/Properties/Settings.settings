@@ -1,11 +1,8 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="OpenInvoicePeru.WinAppIren.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="OpenInvoicePeru.WinApp.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="CadenaConexion" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Server=172.16.44.41;database=iren;User ID=sa;Password=12345</Value>
-    </Setting>
-    <Setting Name="CadenaConexionA" Type="System.String" Scope="User">
       <Value Profile="(Default)">Server=(local);database=iren;User ID=sa;Password=12345</Value>
     </Setting>
   </Settings>

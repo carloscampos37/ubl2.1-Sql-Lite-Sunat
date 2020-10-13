@@ -7,8 +7,8 @@
     <ProjectGuid>{FD3A2BEF-C895-4AB8-9B2D-DD8EB0831DD2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OpenInvoicePeru.WinAppSunat</RootNamespace>
-    <AssemblyName>WinAppSunat</AssemblyName>
+    <RootNamespace>OpenInvoicePeru.WinApp</RootNamespace>
+    <AssemblyName>WinApp</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>

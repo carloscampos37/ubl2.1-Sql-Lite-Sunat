@@ -7,8 +7,8 @@
     <ProjectGuid>{73F6E878-099D-4DB3-9AC9-6DF243CD7BBD}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OpenInvoicePeru.WinAppIren</RootNamespace>
-    <AssemblyName>WinAppIren</AssemblyName>
+    <RootNamespace>OpenInvoicePeru.WinApp</RootNamespace>
+    <AssemblyName>WinAppFacturasElectronicas</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -62,7 +62,7 @@
     <ApplicationIcon>openinvoiceperulogo.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>OpenInvoicePeru.WinAppIren.Program</StartupObject>
+    <StartupObject>OpenInvoicePeru.WinApp.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -196,9 +196,13 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenInvoicePeru.Comun.Dto\OpenInvoicePeru.Comun.Dto.csproj">
+    <ProjectReference Include="..\..\FacturasElectronicasWeb\OpenInvoicePeru.Comun.Dto\OpenInvoicePeru.Comun.Dto.csproj">
       <Project>{a265a65a-c2a9-4f9e-b272-bed5ed04df98}</Project>
       <Name>OpenInvoicePeru.Comun.Dto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FacturasElectronicasWeb\OpenInvoicePeru.Firmado\OpenInvoicePeru.Firmado.csproj">
+      <Project>{1cfd1d28-d342-413d-a6e1-7616cb9708e2}</Project>
+      <Name>OpenInvoicePeru.Firmado</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -43,7 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonAggregateComponents\AccountingSupplierParty.cs" />
-    <Compile Include="EstandarUbl\Invoice.cs" />
     <Compile Include="EstandarUbl\Perception.cs" />
     <Compile Include="SunatAggregateComponents\AdditionalInformation.cs" />
     <Compile Include="SunatAggregateComponents\AdditionalMonetaryTotal.cs" />
@@ -65,6 +64,7 @@
     <Compile Include="CommonAggregateComponents\ExchangeRate.cs" />
     <Compile Include="CommonExtensionComponents\ExtensionContent.cs" />
     <Compile Include="CommonAggregateComponents\ExternalReference.cs" />
+    <Compile Include="EstandarUbl\Invoice.cs" />
     <Compile Include="CommonAggregateComponents\InvoiceDocumentReference.cs" />
     <Compile Include="CommonBasicComponents\InvoicedQuantity.cs" />
     <Compile Include="CommonAggregateComponents\InvoiceLine.cs" />

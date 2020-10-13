@@ -66,7 +66,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ctr_Ayuda">
-      <HintPath>..\..\..\..\..\comunNET\c#\DLL\Ctr_Ayuda.dll</HintPath>
+      <HintPath>..\exe\Ctr_Ayuda.dll</HintPath>
     </Reference>
     <Reference Include="DotNetZip, Version=1.13.2.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.13.2\lib\net40\DotNetZip.dll</HintPath>

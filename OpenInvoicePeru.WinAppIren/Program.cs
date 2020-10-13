@@ -3,7 +3,7 @@ using System.IO;
 using System.Windows.Forms;
 
 
-namespace OpenInvoicePeru.WinAppIren
+namespace OpenInvoicePeru.WinApp
 {
     public static class Program
     {

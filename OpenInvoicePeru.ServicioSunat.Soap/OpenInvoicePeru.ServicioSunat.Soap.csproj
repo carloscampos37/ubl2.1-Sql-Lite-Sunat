@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4A66B5B4-EAFE-4FF1-A9D9-BBF4A2CB335A}</ProjectGuid>
+    <ProjectGuid>{F608FEA2-EC58-4DF7-81D6-960F6E1DAED2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OpenInvoicePeru.ServicioSunat.Soap</RootNamespace>

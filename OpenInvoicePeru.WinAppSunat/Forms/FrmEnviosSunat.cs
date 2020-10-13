@@ -10,8 +10,9 @@ using System.IO;
 using System.Speech.Synthesis;
 
 using System.Text.RegularExpressions;
-using OpenInvoicePeru.WinAppSunat.Properties;
+
 using OpenInvoicePeru.Class;
+using OpenInvoicePeru.WinApp.Properties;
 
 namespace  OpenInvoicePeru.WinAppSunat
 {
@@ -101,7 +102,7 @@ namespace  OpenInvoicePeru.WinAppSunat
                     Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
                     if (Dtx.Rows.Count == 1)
                     {
-                        Ctr_AyuUrlDoc.Codigo = Convert.ToString(Dtx.Rows[0]["DireccionSunatid"]);
+                        Ctr_AyuUrlDoc.Codigo = Convert.ToString(Dtx.Rows[0]["id"]);
                         Ctr_AyuUrlDoc.EjecAyuda();
                     }
 
@@ -573,7 +574,6 @@ namespace  OpenInvoicePeru.WinAppSunat
                 MessageBox.Show(ex.Message);
                 txtResult.Text = txtResult.Text + ex.Message + Environment.NewLine;
             }
-
         }
 
         private async void CrearXmlBajas()
@@ -794,8 +794,8 @@ namespace  OpenInvoicePeru.WinAppSunat
         {
             try
             {
-                SQL = " SELECT b.* FROM dbo.FEResumenDiarioDocumentosCab a ";
-                SQL += " INNER JOIN dbo.FEResumenDiarioDocumentosDet b ON a.Id = b.ResumendiarioCabID  ";
+                SQL = " SELECT b.* FROM dbo.FEDocumentosElectronicosCab a ";
+                SQL += " INNER JOIN dbo.FEDocumentosElectronicosDet b ON a.Id = b.DocumentosElectronicosCabID  ";
                 SQL += " WHERE a.EmpresaID='" + Ctr_AyuEmpresas.Codigo + "' AND fechadocumento = '" + DtpFechaDoc.Text + "'";
                 SQL += " AND a.EstadoAnulado=0 AND b.EstadoAnulado=0 Order by Establecimientoid ";
                 DtAceptados = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
@@ -1134,5 +1134,6 @@ namespace  OpenInvoicePeru.WinAppSunat
             BntGeneraEnvios.Visible = true;
 
         }
+
     }
 }

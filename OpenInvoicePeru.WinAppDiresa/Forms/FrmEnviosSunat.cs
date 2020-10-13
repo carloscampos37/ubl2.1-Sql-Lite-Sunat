@@ -5,18 +5,15 @@ using System.Net.Http;
 using System.Windows.Forms;
 using OpenInvoicePeru.Comun.Dto.Intercambio;
 using OpenInvoicePeru.Comun.Dto.Modelos;
-
 using System.Configuration;
 using System.IO;
 using System.Speech.Synthesis;
 
 using System.Text.RegularExpressions;
+using OpenInvoicePeru.WinAppFE.Properties;
 using OpenInvoicePeru.Class;
-using OpenInvoicePeru.WinAppDiresa.Properties;
 
-
-namespace OpenInvoicePeru.WinAppDiresa
-
+namespace  OpenInvoicePeru.WinApp
 {
     public partial class FrmEnviosSunat : Form
     {
@@ -29,6 +26,11 @@ namespace OpenInvoicePeru.WinAppDiresa
 
         public readonly HttpClient _client;
         public string vArchivoXML;
+        public string vArchivoXML1;
+        public string vRutaArchivoXML;
+        public string vArchivoCDR;
+        public string vArchivoCDR1;
+        public string vRutaArchivoCDR;
         public string vRutaXml = "";
         public string vRutaCdr = "";
         public Int32 vRegistros = 0;
@@ -62,6 +64,7 @@ namespace OpenInvoicePeru.WinAppDiresa
         public int vtipoEnvio = 0;
         public string SQL = "";
         public int vMaximoIItem = 400;
+
 
         #endregion Variables Privadas
 
@@ -98,7 +101,7 @@ namespace OpenInvoicePeru.WinAppDiresa
                     Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
                     if (Dtx.Rows.Count == 1)
                     {
-                        Ctr_AyuUrlDoc.Codigo = Convert.ToString(Dtx.Rows[0]["DireccionSunatid"]);
+                        Ctr_AyuUrlDoc.Codigo = Convert.ToString(Dtx.Rows[0]["ID"]);
                         Ctr_AyuUrlDoc.EjecAyuda();
                     }
 
@@ -124,47 +127,26 @@ namespace OpenInvoicePeru.WinAppDiresa
         {
             string idDoc = Convert.ToString(DtDocumentos.Rows[ii]["Seriedocumento"] + "-" + DtDocumentos.Rows[ii]["NumeroDocumento"]);
 
-            vArchivoXML = Path.Combine(vRutaXml, $"{idDoc}.xml");
+            vArchivoXML1 = TxtRuc.Text + "-" + vTipoDoc + "-" + idDoc;
+          vArchivoXML1 = Path.Combine(vRutaXml, $"{vArchivoXML}");
 
-            if (string.IsNullOrEmpty(idDoc))
-                throw new InvalidOperationException("La Serie y el Correlativo no pueden estar vacíos");
-
-            var tramaXmlSinFirma = Convert.ToBase64String(File.ReadAllBytes(vArchivoXML));
-            String vRutaCertificado = Convert.ToString(DtEmpresa.Rows[0]["CarpetaCertificadoDigital"]) +
-                                                    Convert.ToString(DtEmpresa.Rows[0]["NombreCertificadoDigital"]);
-            try
+       try
             {
-                var firmadoRequest = new FirmadoRequest
-                {
-                    Ruc=TxtRuc.Text,
-                    TramaXmlSinFirma = tramaXmlSinFirma,
-                    CertificadoDigital = Convert.ToBase64String(File.ReadAllBytes(vRutaCertificado)),
-                    PasswordCertificado = Convert.ToString(DtEmpresa.Rows[0]["PasswCertificadoDigital"]),
-                    UnSoloNodoExtension = true
-                };
 
-                var jsonFirmado = await _client.PostAsJsonAsync("api/Firmar", firmadoRequest);
-                var respuestaFirmado = await jsonFirmado.Content.ReadAsAsync<FirmadoResponse>();
-                if (!respuestaFirmado.Exito)
-                    throw new ApplicationException(respuestaFirmado.MensajeError);
 
-                File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado));
+                var TramaXML = Convert.ToBase64String(File.ReadAllBytes(vArchivoXML1));
 
-                ReemplaCaracteres(Convert.ToString(vArchivoXML));
+                var enviarDocumentoRequest = new EnviarDocumentoRequest();
 
-                var TramaXML = Convert.ToBase64String(File.ReadAllBytes(vArchivoXML));
-
-                var enviarDocumentoRequest = new EnviarDocumentoRequest
-                {
-                    Ruc = TxtRuc.Text,
-                   UsuarioSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaUsuarioSol"]),
-                    ClaveSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaClaveSol"]),
-                    EndPointUrl = vUrlSunat,
-                    IdDocumento = idDoc,
-                    TipoDocumento = vTipoDoc,
+                enviarDocumentoRequest.Ruc = TxtRuc.Text;
+                enviarDocumentoRequest.UsuarioSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaUsuarioSol"]);
+                enviarDocumentoRequest.ClaveSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaClaveSol"]);
+                    enviarDocumentoRequest.EndPointUrl = vUrlSunat;
+                    enviarDocumentoRequest.IdDocumento = idDoc;
+                    enviarDocumentoRequest.TipoDocumento = vTipoDoc;
                     //   TramaXmlFirmado = respuestaFirmado.TramaXmlFirmado
-                    TramaXmlFirmado = TramaXML
-                };
+                    enviarDocumentoRequest.TramaXmlFirmado = TramaXML;
+      
 
                 var apiMetodo = "api/EnviarDocumento";
                 var jsonEnvioDocumento = await _client.PostAsJsonAsync(apiMetodo, enviarDocumentoRequest);
@@ -179,15 +161,12 @@ namespace OpenInvoicePeru.WinAppDiresa
                     {
                         if (rpta.Exito && !string.IsNullOrEmpty(rpta.TramaZipCdr))
                         {
-                            vArchivoXML = $"{respuestaEnvio.NombreArchivo}";
-                            vArchivoXML = Path.Combine(vRutaCdr, vArchivoXML);
+                           
+       
+                            vArchivoCDR1 = "R-" + $"{respuestaEnvio.NombreArchivo}";
+                            vArchivoCDR1 = Path.Combine(vRutaCdr, $"{vArchivoCDR1}.zip");
 
-                            File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado));
-
-                            vArchivoXML = "R-" + $"{respuestaEnvio.NombreArchivo}";
-                            vArchivoXML = Path.Combine(vRutaCdr, vArchivoXML);
-
-                            File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(rpta.TramaZipCdr));
+                            File.WriteAllBytes(vArchivoCDR1, Convert.FromBase64String(rpta.TramaZipCdr));
                         }
                     }
                     catch (Exception ex)
@@ -199,7 +178,7 @@ namespace OpenInvoicePeru.WinAppDiresa
                 {
                     respuestaEnvio = await jsonEnvioDocumento.Content.ReadAsAsync<EnviarResumenResponse>();
                     var rpta = (EnviarResumenResponse)respuestaEnvio;
-                    txtResult.Text +=  $@"{Resources.procesoCorrecto}{Environment.NewLine}{rpta.NroTicket}{Environment.NewLine}";
+                    txtResult.Text = txtResult.Text + $@"{Resources.procesoCorrecto}{Environment.NewLine}{rpta.NroTicket}{Environment.NewLine}";
                 }
 
                 if (!respuestaEnvio.Exito)
@@ -223,7 +202,7 @@ namespace OpenInvoicePeru.WinAppDiresa
                 if (string.IsNullOrEmpty(vFechaXml))
                     throw new InvalidOperationException("La Serie y el Correlativo no pueden estar vacíos");
 
-                var tramaXmlSinFirma = Convert.ToBase64String(File.ReadAllBytes(vArchivoXML));
+                var tramaXmlSinFirma = Convert.ToBase64String(File.ReadAllBytes(vRutaArchivoXML));
                 String vRutaCertificado = Convert.ToString(DtEmpresa.Rows[0]["CarpetaCertificadoDigital"]) +
                                                         Convert.ToString(DtEmpresa.Rows[0]["NombreCertificadoDigital"]);
                 string vCertificado = Convert.ToBase64String(File.ReadAllBytes(vRutaCertificado));
@@ -231,8 +210,7 @@ namespace OpenInvoicePeru.WinAppDiresa
 
                 var firmadoRequest = new FirmadoRequest
                 {
-                    Ruc = Convert.ToString(DtEmpresa.Rows[0]["EmpresaRuc"]),
-                TramaXmlSinFirma = tramaXmlSinFirma,
+                    TramaXmlSinFirma = tramaXmlSinFirma,
                     CertificadoDigital = vCertificado,
                     PasswordCertificado = vPassword,
                     UnSoloNodoExtension = true
@@ -241,18 +219,18 @@ namespace OpenInvoicePeru.WinAppDiresa
                 var jsonFirmado = await _client.PostAsJsonAsync("api/Firmar", firmadoRequest);
                 var respuestaFirmado = await jsonFirmado.Content.ReadAsAsync<FirmadoResponse>();
 
-                File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado));
+                File.WriteAllBytes(vRutaArchivoXML, Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado));
 
-                ReemplaCaracteres(Convert.ToString(vArchivoXML));
+                ReemplaCaracteres(Convert.ToString(vRutaArchivoXML));
 
                 if (!respuestaFirmado.Exito)
                     throw new ApplicationException(respuestaFirmado.MensajeError);
 
-                var TramaXML = Convert.ToBase64String(File.ReadAllBytes(vArchivoXML));
+                var TramaXML = Convert.ToBase64String(File.ReadAllBytes(vRutaArchivoXML));
 
                 var enviarDocumentoRequest = new EnviarDocumentoRequest
                 {
-                    Ruc=TxtRuc.Text,
+                    Ruc = Convert.ToString(DtEmpresa.Rows[0]["EmpresaRuc"]),
                     UsuarioSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaUsuarioSol"]),
                     ClaveSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaClaveSol"]),
                     EndPointUrl = vUrlSunat,
@@ -270,7 +248,7 @@ namespace OpenInvoicePeru.WinAppDiresa
 
                 txtResult.Text = txtResult.Text + "  " + $@"{Resources.procesoCorrecto}{Environment.NewLine}{rpta.NroTicket}{Environment.NewLine}";
                 txtNroTicket.Text = rpta.NroTicket;
-                TxtXml.Text = vArchivoXML;
+                TxtXml.Text = vRutaArchivoXML;
 
                 if (!string.IsNullOrEmpty(txtNroTicket.Text))
                 {
@@ -304,8 +282,7 @@ namespace OpenInvoicePeru.WinAppDiresa
 
                 var firmadoRequest = new FirmadoRequest
                 {
-                   Ruc=  Convert.ToString(DtEmpresa.Rows[0]["EmpresaRuc"]),
-                TramaXmlSinFirma = tramaXmlSinFirma,
+                    TramaXmlSinFirma = tramaXmlSinFirma,
                     CertificadoDigital = Convert.ToBase64String(File.ReadAllBytes(vRutaCertificado)),
                     PasswordCertificado = Convert.ToString(DtEmpresa.Rows[0]["PasswCertificadoDigital"]),
                     UnSoloNodoExtension = true
@@ -325,7 +302,6 @@ namespace OpenInvoicePeru.WinAppDiresa
 
                 var enviarDocumentoRequest = new EnviarDocumentoRequest
                 {
-                    Ruc=TxtRuc.Text,
                     UsuarioSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaUsuarioSol"]),
                     ClaveSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaClaveSol"]),
                     EndPointUrl = vUrlSunat,
@@ -365,59 +341,7 @@ namespace OpenInvoicePeru.WinAppDiresa
 
         #region Generacion XML
 
- 
-        private async void CrearXmlBajas()
-        {
-            try
-            {
-                vFechaXml = "RA-" + Convert.ToString(DtpFechaEnvioDoc.Value.Year);
-                vFechaXml += ModFunc.Derecha("0" + Convert.ToString(DtpFechaEnvioDoc.Value.Month), 2);
-                vFechaXml += ModFunc.Derecha("0" + Convert.ToString(DtpFechaEnvioDoc.Value.Day), 2);
-                vFechaXml += "-012";
-
-                 Comun.Dto.Modelos.ComunicacionBaja ComunicacionBaja = new Comun.Dto.Modelos.ComunicacionBaja
-                {
-                    IdDocumento = vFechaXml,
-                    FechaEmision = DtpFechaEnvioDoc.Value.ToString(FormatoFecha),
-                    FechaReferencia = DtpFechaEnvioDoc.Value.ToString(FormatoFecha),
-                    Emisor = CrearEmisor(DtEmpresa),
-                    Bajas = new List< Comun.Dto.Modelos.DocumentoBaja>()
-                };
-
-                for (int i3 = 0; i3 <= DtDocumentos.Rows.Count - 1; i3++)
-                {
-                     Comun.Dto.Modelos.DocumentoBaja DocumentoBajasItem = new  Comun.Dto.Modelos.DocumentoBaja
-                    {
-                        Id = i3 + 1,
-                        Correlativo = Convert.ToString(DtDocumentos.Rows[i3]["NumeroDocumento"]),
-                        TipoDocumento = Convert.ToString(DtDocumentos.Rows[i3]["TipoDocumento"]),
-                        Serie = Convert.ToString(DtDocumentos.Rows[i3]["SerieDocumento"]),
-                        MotivoBaja = "Anulación por otro tipo de documento"
-                    };
-
-                    ComunicacionBaja.Bajas.Add(DocumentoBajasItem);
-                }
-
-                string _metodoApi = "api/GenerarComunicacionBaja";
-                var response = await _client.PostAsJsonAsync(_metodoApi, ComunicacionBaja);
-
-                var respuesta = await response.Content.ReadAsAsync<DocumentoResponse>();
-
-                if (!respuesta.Exito)
-                    throw new ApplicationException(respuesta.MensajeError);
-
-                vArchivoXML = ComunicacionBaja.IdDocumento;
-                vArchivoXML = Path.Combine(vRutaXml, $"{vArchivoXML}.xml");
-
-                File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(respuesta.TramaXmlSinFirma));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-             private async void CrearXmlResumen2()
+        private async void CrearXmlResumen2()
         {
             try
             {
@@ -440,7 +364,7 @@ namespace OpenInvoicePeru.WinAppDiresa
                 {
                     decimal vDscto = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteDsctoGlobal"]);
                     string vNroDocumento = Convert.ToString(DtDocumentos.Rows[ii]["clienteID"]);
-                    string vTipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["IdentidadID"]);
+                    string vTipoIdentidad = Convert.ToString(DtDocumentos.Rows[ii]["IdentidadID"]);
                     string vNombreLegal = Convert.ToString(DtDocumentos.Rows[ii]["ClienterazonSocial"]);
 
                     GrupoResumenNuevo DocumentoResumenItem = new GrupoResumenNuevo();
@@ -451,7 +375,7 @@ namespace OpenInvoicePeru.WinAppDiresa
                     DocumentoResumenItem.TipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["DocumentoID"]);
                     DocumentoResumenItem.IdDocumento = vIdDocumento;
                     DocumentoResumenItem.NroDocumentoReceptor = vNroDocumento;
-                    DocumentoResumenItem.TipoDocumentoReceptor = vTipoDocumento;
+                    DocumentoResumenItem.TipoDocumentoReceptor = vTipoIdentidad;
                     DocumentoResumenItem.CodigoEstadoItem = 1;
 
                     string vNroModifica = Convert.ToString(DtDocumentos.Rows[ii]["SeriedocumentoModifica"]) + "-" + Convert.ToString(DtDocumentos.Rows[ii]["NumeroDocumentoModifica"]);
@@ -485,10 +409,10 @@ namespace OpenInvoicePeru.WinAppDiresa
                 if (!respuesta.Exito)
                     throw new ApplicationException(respuesta.MensajeError);
 
-                vArchivoXML =Convert.ToString(DtEmpresa.Rows[0]["empresaruc"])+'-'+vFechaXml;
-                vArchivoXML = Path.Combine(vRutaXml, $"{vArchivoXML}.xml");
+                vRutaArchivoXML = vFechaXml;
+                vRutaArchivoXML = Path.Combine(vRutaXml, $"{vRutaArchivoXML}.xml");
 
-                File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(respuesta.TramaXmlSinFirma));
+                File.WriteAllBytes(vRutaArchivoXML, Convert.FromBase64String(respuesta.TramaXmlSinFirma));
                 ModFunc.ActualizaItemDia(Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, VGCnxSqlE);
             }
             catch (Exception ex)
@@ -649,10 +573,127 @@ namespace OpenInvoicePeru.WinAppDiresa
                 MessageBox.Show(ex.Message);
                 txtResult.Text = txtResult.Text + ex.Message + Environment.NewLine;
             }
-
         }
 
-        #endregion Generacion XML
+        private async void CrearXmlBajas()
+        {
+            try
+            {
+                vFechaXml = "RA-" + Convert.ToString(DtpFechaEnvioDoc.Value.Year);
+                vFechaXml += ModFunc.Derecha("0" + Convert.ToString(DtpFechaEnvioDoc.Value.Month), 2);
+                vFechaXml += ModFunc.Derecha("0" + Convert.ToString(DtpFechaEnvioDoc.Value.Day), 2);
+                vFechaXml += "-012";
+
+                ComunicacionBaja ComunicacionBaja = new ComunicacionBaja
+                {
+                    IdDocumento = vFechaXml,
+                    FechaEmision = DtpFechaEnvioDoc.Value.ToString(FormatoFecha),
+                    FechaReferencia = DtpFechaEnvioDoc.Value.ToString(FormatoFecha),
+                    Emisor = CrearEmisor(DtEmpresa),
+                    Bajas = new List<DocumentoBaja>()
+                };
+
+                for (int i3 = 0; i3 <= DtDocumentos.Rows.Count - 1; i3++)
+                {
+                    DocumentoBaja DocumentoBajasItem = new DocumentoBaja
+                    {
+                        Id = i3 + 1,
+                        Correlativo = Convert.ToString(DtDocumentos.Rows[i3]["NumeroDocumento"]),
+                        TipoDocumento = Convert.ToString(DtDocumentos.Rows[i3]["TipoDocumento"]),
+                        Serie = Convert.ToString(DtDocumentos.Rows[i3]["SerieDocumento"]),
+                        MotivoBaja = "Anulación por otro tipo de documento"
+                    };
+
+                    ComunicacionBaja.Bajas.Add(DocumentoBajasItem);
+                }
+
+                string _metodoApi = "api/GenerarComunicacionBaja";
+                var response = await _client.PostAsJsonAsync(_metodoApi, ComunicacionBaja);
+
+                var respuesta = await response.Content.ReadAsAsync<DocumentoResponse>();
+
+                if (!respuesta.Exito)
+                    throw new ApplicationException(respuesta.MensajeError);
+
+                vArchivoXML = ComunicacionBaja.IdDocumento;
+                vArchivoXML = Path.Combine(vRutaXml, $"{vArchivoXML}.xml");
+
+                File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(respuesta.TramaXmlSinFirma));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private async void CrearXmlResumen1()
+        {
+            try
+            {
+                vFechaXml = "RC-" + Convert.ToString(DtpFechaEnvioDoc.Value.Year);
+                vFechaXml += ModFunc.Derecha("0" + Convert.ToString(DtpFechaEnvioDoc.Value.Month), 2);
+                vFechaXml += ModFunc.Derecha("0" + Convert.ToString(DtpFechaEnvioDoc.Value.Day), 2);
+                vFechaXml += "-00" + Convert.ToString(DtDocumentos.Rows[0]["item"]);
+
+                ResumenDiario ResumenDiario = new ResumenDiario
+                {
+                    IdDocumento = vFechaXml,
+                    //       ResumenDiario.IdDocumento = TxtRuc.Text;
+                    FechaEmision = Convert.ToString(DtpFechaEnvioDoc.Text),
+                    FechaReferencia = Convert.ToString(DtpFechaDoc.Text),
+                    Emisor = CrearEmisor(DtEmpresa),
+
+                    Resumenes = new List<GrupoResumen>()
+                };
+
+                for (int ii = 0; ii <= DtDocumentos.Rows.Count - 1; ii++)
+                {
+                    decimal vDscto = 0;
+
+                    GrupoResumen DocumentoResumenItem = new GrupoResumen();
+
+                    string vIdDocumento = DocumentoResumenItem.Serie = Convert.ToString(DtDocumentos.Rows[ii]["SerieDocumento"]) + "-";
+                    vIdDocumento += DtDocumentos.Rows[ii]["NumeroDocumento"];
+
+                    DocumentoResumenItem.Id = ii + 1;
+                    DocumentoResumenItem.TipoDocumento = Convert.ToString(DtDocumentos.Rows[ii]["TipoDocumento"]);
+                    DocumentoResumenItem.Serie = Convert.ToString(DtDocumentos.Rows[ii]["serieDocumento"]);
+                    DocumentoResumenItem.CorrelativoInicio = Convert.ToInt32(DtDocumentos.Rows[ii]["numeroDocumento"]);
+                    DocumentoResumenItem.CorrelativoFin = Convert.ToInt32(DtDocumentos.Rows[ii]["numeroDocumentofinal"]);
+                    DocumentoResumenItem.Moneda = "PEN";
+
+                    DocumentoResumenItem.Gravadas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGravado"]);
+                    DocumentoResumenItem.Inafectas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteinafecto"]);
+                    DocumentoResumenItem.Exoneradas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteexonerado"]);
+                    DocumentoResumenItem.TotalIgv = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteIgv"]);
+                    DocumentoResumenItem.TotalDescuentos = vDscto;
+                    DocumentoResumenItem.TotalIsc = 0;
+                    DocumentoResumenItem.Gratuitas = 0;
+                    DocumentoResumenItem.TotalVenta = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteventa"]);
+
+                    ResumenDiario.Resumenes.Add(DocumentoResumenItem);
+                }
+                string _metodoApi = "api/GenerarResumenDiario/v1";
+                var response = await _client.PostAsJsonAsync(_metodoApi, ResumenDiario);
+
+                var respuesta = await response.Content.ReadAsAsync<DocumentoResponse>();
+
+                if (!respuesta.Exito)
+                    throw new ApplicationException(respuesta.MensajeError);
+
+                vArchivoXML = vFechaXml;
+                vArchivoXML = Path.Combine(vRutaXml, $"{vArchivoXML}.xml");
+
+                File.WriteAllBytes(vArchivoXML, Convert.FromBase64String(respuesta.TramaXmlSinFirma));
+                ModFunc.ActualizaItemDia(Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, VGCnxSqlE);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+       #endregion Generacion XML
 
         #region Metodos Privados
 
@@ -682,7 +723,7 @@ namespace OpenInvoicePeru.WinAppDiresa
             }
         }
 
-        private  Contribuyente CrearEmisor(DataTable DtEmpresa)
+        private Contribuyente CrearEmisor(DataTable DtEmpresa)
 
         {
             try
@@ -711,7 +752,7 @@ namespace OpenInvoicePeru.WinAppDiresa
 
         public static DetalleDocumento DetalleItem(DataTable DtArticulos, int i)
         {
-            decimal vPrecioUnitario ;
+            decimal vPrecioUnitario = 0;
 
             try
             {
@@ -800,9 +841,9 @@ namespace OpenInvoicePeru.WinAppDiresa
             }
         }
 
-        public void LlenaCombo(ComboBox Combo, string dato)
+        public void LlenaCombo(ComboBox Combo, string dato, string cnn)
         {
-            DataTable rsql;
+            DataTable rsql = new DataTable();
             Combo.Items.Clear();
             rsql = ModFunc.ConsultarTabla(dato, VGCnxSqlE);
             if (rsql.Rows.Count > 0)
@@ -851,7 +892,7 @@ namespace OpenInvoicePeru.WinAppDiresa
             if (vTipoDoc == "RC")
             {
                 SQL = FuncEnvios.CadenaDatos("RC", Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, TxtGrupo.Text);
-          }
+            }
             else
                         if (vTipoDoc == "RA")
             {
@@ -885,16 +926,16 @@ namespace OpenInvoicePeru.WinAppDiresa
                     }
                     else
                     {
-                        MessageBox.Show(" EXISTE MAS DE "+Convert.ToString(vMaximoIItem)+" DOCUMENTOS ,FAVOR DE PROCESAR GENERACION DE GRUPOS ");
+                        MessageBox.Show(" EXISTE MAS DE " + Convert.ToString(vMaximoIItem) + " DOCUMENTOS ,FAVOR DE PROCESAR GENERACION DE GRUPOS ");
                         txtVtas.Text = Convert.ToString(ModFunc.Totalventas(DtDocumentos));
                         BntGrupos.Visible = true;
                         BntEnvioSunat.Visible = false;
                         return;
                     }
 
-                    vArchivoXML= FuncEnvios.CrearDirectorios(DtEmpresa, Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Value);
+                    vArchivoXML = FuncEnvios.CrearDirectorios(DtEmpresa, Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Value);
 
-                   // Creacion de directorio XML
+                    // Creacion de directorio XML
 
                     vRutaXml = vArchivoXML;
                     vRutaCdr = vRutaXml;
@@ -928,44 +969,7 @@ namespace OpenInvoicePeru.WinAppDiresa
             }
         }
 
-        private void BntGrupos_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                SQL = " SELECT b.* FROM dbo.FEResumenDiarioDocumentosCab a ";
-                SQL += " INNER JOIN dbo.FEResumenDiarioDocumentosDet b ON a.id = b.ResumendiarioCabid  ";
-                SQL += " WHERE a.EmpresaID='" + Ctr_AyuEmpresas.Codigo + "' AND fechadocumento = '" + DtpFechaDoc.Text + "'";
-                SQL += " AND a.EstadoAnulado=0 AND b.EstadoAnulado=0 Order by EstablecimientoID ";
-                DtAceptados = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
-                int vNumReg = 0;
-                int vcontador = 1;
-                BntGrupos.Visible = false;
-                if (DtAceptados.Rows.Count > 0)
-                {
-                    for (int ii = 0; ii <= DtAceptados.Rows.Count - 1; ii++)
-                    {
-                        vNumReg += (int)DtAceptados.Rows[ii]["NumerodeDocumentos"];
-                        if (!(vNumReg <= vMaximoIItem))
-                        {
-                            vcontador += 1;
-                            vNumReg = (int)DtAceptados.Rows[ii]["NumerodeDocumentos"];
-                        }
-                        SQL = " UPDATE FEResumenDiarioDocumentosDet SET GrupodeEnvioSunat=" + vcontador;
-                        SQL += " WHERE ID =" + (int)DtAceptados.Rows[ii]["ID"];
-   
-                        ModFunc.GrabarTabla(SQL, VGCnxSqlE);
-                    }
-                    txtGenerados.Text = Convert.ToString(vcontador);
-                    TxtGrupo.Text = "1";
-                    MessageBox.Show("Proceso concluido ");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
+ 
         private void BntEnvioSunat_Click(object sender, EventArgs e)
         {
             try
@@ -1000,15 +1004,16 @@ namespace OpenInvoicePeru.WinAppDiresa
 
         private async void BtnConsultaTicket_Click(object sender, EventArgs e)
         {
-            string vPath ;
-            string vNro ;
+            string vPath = "";
+            string vNro = "";
             try
             {
                 Cursor = Cursors.WaitCursor;
                 vNro = txtNroTicket.Text;
                 var consultaTicketRequest = new ConsultaTicketRequest
                 {
-                     UsuarioSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaUsuarioSol"]),
+                    Ruc = TxtRuc.Text,
+                    UsuarioSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaUsuarioSol"]),
                     ClaveSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaclaveSol"]),
                     EndPointUrl = vUrlSunat,
                     IdDocumento = TxtXml.Text,
@@ -1092,7 +1097,14 @@ namespace OpenInvoicePeru.WinAppDiresa
 
         #region textBox
 
- 
+        private void Ctr_AyuUrlDoc_AlDevolverDato(object Sender, DataRow e)
+        {
+            DataTable Dtx = new DataTable();
+            SQL = " SELECT DireccionSunatUrl FROM fedireccionesSunat where ID='" + Ctr_AyuUrlDoc.Codigo + "'";
+            Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
+            vUrlSunat = (string)Dtx.Rows[0][0];
+        }
+
         private void DtpFechaDoc_ValueChanged(object sender, EventArgs e)
         {
             BntEnvioSunat.Visible = false;
@@ -1107,31 +1119,13 @@ namespace OpenInvoicePeru.WinAppDiresa
             BntGeneraEnvios.Visible = true;
         }
 
-         #endregion textBox
-
-
-
-        private void Ctr_AyuEmpresas_AlDevolverDato(object Sender, DataRow e)
+        private void Ctr_AyuDocumento_AlDevolverDato(object Sender, DataRow e)
         {
-            SQL = "SELECT  * FROM [v_FeDatosGeneralesEmpresas] WHERE ID='" + Ctr_AyuEmpresas.Codigo + "'";
-
-            DtEmpresa = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
-            if (DtEmpresa.Rows.Count > 0)
-            {
-                TxtRuc.Text = (string)DtEmpresa.Rows[0]["Empresaruc"];
-                TxtDireccion.Text = (string)DtEmpresa.Rows[0]["EmpresaDireccion"];
-            }
-        }
-
-  
-
-        private void Ctr_AyuDocumento_AlDevolverDato_1(object Sender, DataRow e)
-        {
-            DataTable Dtx ;
+            DataTable Dtx = new DataTable();
             SQL = " SELECT * FROM feDocumentosFE where ID='" + Ctr_AyuDocumento.Codigo + "'";
             Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
             vTipoDoc = (string)Dtx.Rows[0]["ID"];
-            vtipoEnvio = (int)Dtx.Rows[0]["tipoenvioid"];
+            vtipoEnvio = (int)Dtx.Rows[0]["tipoenvioID"];
             BntEnvioSunat.Visible = false;
             BntGeneraEnvios.Visible = true;
             if (vtipoEnvio == 1)
@@ -1151,19 +1145,61 @@ namespace OpenInvoicePeru.WinAppDiresa
             }
         }
 
+        #endregion textBox
+
+
+        private void Ctr_AyuEmpresas_AlDevolverDato(object Sender, DataRow e)
+        {
+            SQL = "SELECT  * FROM [v_FEDatosGeneralesEmpresas] WHERE ID='" + Ctr_AyuEmpresas.Codigo + "'";
+
+            DtEmpresa = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
+            if (DtEmpresa.Rows.Count > 0)
+            {
+                TxtRuc.Text = (string)DtEmpresa.Rows[0]["Empresaruc"];
+                TxtDireccion.Text = (string)DtEmpresa.Rows[0]["DireccionCompleta"];
+            }
+
+        }
+
+        private void BntGrupos_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int vNumReg = 0;
+                int vcontador = 1;
+                BntGrupos.Visible = false;
+                if (DtDocumentos.Rows.Count > 0)
+                {
+                    for (int ii = 0; ii <= DtDocumentos.Rows.Count - 1; ii++)
+                    {
+                        vNumReg += 1;
+                        if (!(vNumReg <= vMaximoIItem))
+                        {
+                            vcontador += 1;
+                            vNumReg = 1;
+                        }
+                        SQL = " UPDATE FEResumenDiarioDocumentosDetItem SET GrupodeEnvioSunat=" + vcontador;
+                        SQL += " WHERE ID =" + (int)DtDocumentos.Rows[ii]["ID"];
+
+                        ModFunc.GrabarTabla(SQL, VGCnxSqlE);
+                    }
+                    txtGenerados.Text = Convert.ToString(vcontador);
+                    TxtGrupo.Text = "1";
+                    MessageBox.Show("Proceso concluido ");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
         private void TxtGrupo_TextChanged(object sender, EventArgs e)
         {
             BntGeneraEnvios.Visible = true;
+
         }
 
-        private void Ctr_AyuUrlDoc_AlDevolverDato(object Sender, DataRow e)
-        {
-            {
-                DataTable Dtx;
-                SQL = " SELECT DireccionSunatUrl FROM fedireccionesSunat where ID='" + Ctr_AyuUrlDoc.Codigo + "'";
-                Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
-                vUrlSunat = (string)Dtx.Rows[0][0];
-            }
-        }
     }
 }

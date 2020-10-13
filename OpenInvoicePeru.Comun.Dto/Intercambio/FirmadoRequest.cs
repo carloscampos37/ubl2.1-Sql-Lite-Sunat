@@ -5,9 +5,6 @@ namespace OpenInvoicePeru.Comun.Dto.Intercambio
     public class FirmadoRequest
     {
         [JsonProperty(Required = Required.Always)]
-        public string Ruc { get; set; }
-
-        [JsonProperty(Required = Required.Always)]
         public string CertificadoDigital { get; set; }
 
         [JsonProperty(Required = Required.Always)]

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OpenInvoicePeru.WinAppDiresa.Properties {
+namespace OpenInvoicePeru.WinAppFE.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -25,7 +25,7 @@ namespace OpenInvoicePeru.WinAppDiresa.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=facturase.geresall.com;database=fe21;User ID=sa;Password=Aa12345*")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=asus;database=FacturasElectronicasRodiscar;User ID=sa;Password=12345")]
         public string CadenaConexion {
             get {
                 return ((string)(this["CadenaConexion"]));
