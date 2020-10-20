@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OpenInvoicePeru.WinAppFE.Properties {
+namespace OpenInvoicePeru.WebApiSunat.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -20,18 +20,6 @@ namespace OpenInvoicePeru.WinAppFE.Properties {
         public static Settings Default {
             get {
                 return defaultInstance;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=asus;database=colegio;User ID=sa;Password=12345")]
-        public string CadenaConexion {
-            get {
-                return ((string)(this["CadenaConexion"]));
-            }
-            set {
-                this["CadenaConexion"] = value;
             }
         }
     }

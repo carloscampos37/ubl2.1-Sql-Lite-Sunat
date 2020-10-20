@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="CadenaConexion" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Server=asus;database=FacturasElectronicasRodiscar;User ID=sa;Password=12345</Value>
+      <Value Profile="(Default)">Server=asus;database=colegio;User ID=sa;Password=12345</Value>
     </Setting>
   </Settings>
 </SettingsFile>
