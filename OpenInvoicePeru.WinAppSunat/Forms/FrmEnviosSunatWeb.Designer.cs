@@ -1,6 +1,6 @@
 ﻿namespace OpenInvoicePeru.WinAppSunat
 {
-    partial class FrmEnviosSunat
+    partial class FrmEnviosSunatWeb
     {
         /// <summary>
         /// Required designer variable.
@@ -341,7 +341,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.panel1.BackColor = System.Drawing.Color.DarkOliveGreen;
             this.panel1.Controls.Add(this.Ctr_AyuEmpresas);
             this.panel1.Controls.Add(this.label13);
             this.panel1.Controls.Add(this.TxtGrupo);
@@ -386,7 +386,7 @@
             this.Ctr_AyuEmpresas.LongCod = "3";
             this.Ctr_AyuEmpresas.LongDesc = "50";
             this.Ctr_AyuEmpresas.Name = "Ctr_AyuEmpresas";
-            this.Ctr_AyuEmpresas.NombreTabla = "feEmpresas";
+            this.Ctr_AyuEmpresas.NombreTabla = "fe_Empresas";
             this.Ctr_AyuEmpresas.Requerido = true;
             this.Ctr_AyuEmpresas.Size = new System.Drawing.Size(235, 17);
             this.Ctr_AyuEmpresas.TabIndex = 122;
@@ -418,18 +418,18 @@
             // 
             // Ctr_AyuDocumento
             // 
-            this.Ctr_AyuDocumento.CampoDevCod = "ID";
+            this.Ctr_AyuDocumento.CampoDevCod = "documentocodigo";
             this.Ctr_AyuDocumento.CampoDevDesc = "DocumentoDescripcion";
             this.Ctr_AyuDocumento.Codigo = "";
             this.Ctr_AyuDocumento.Descripcion = "";
             this.Ctr_AyuDocumento.Filtro = "";
             this.Ctr_AyuDocumento.ListaAlias = "Codigo,Descripcion";
-            this.Ctr_AyuDocumento.ListaCampos = "ID,DocumentoDescripcion";
+            this.Ctr_AyuDocumento.ListaCampos = "documentocodigo,DocumentoDescripcion";
             this.Ctr_AyuDocumento.Location = new System.Drawing.Point(822, 36);
             this.Ctr_AyuDocumento.LongCod = "2";
             this.Ctr_AyuDocumento.LongDesc = "50";
             this.Ctr_AyuDocumento.Name = "Ctr_AyuDocumento";
-            this.Ctr_AyuDocumento.NombreTabla = "FeDocumentosFE";
+            this.Ctr_AyuDocumento.NombreTabla = "fe_DocumentosFE";
             this.Ctr_AyuDocumento.Requerido = true;
             this.Ctr_AyuDocumento.Size = new System.Drawing.Size(202, 16);
             this.Ctr_AyuDocumento.TabIndex = 117;
@@ -438,18 +438,18 @@
             // 
             // Ctr_AyuUrlDoc
             // 
-            this.Ctr_AyuUrlDoc.CampoDevCod = "id";
-            this.Ctr_AyuUrlDoc.CampoDevDesc = "DireccionSunat";
+            this.Ctr_AyuUrlDoc.CampoDevCod = "direccionsunat_id";
+            this.Ctr_AyuUrlDoc.CampoDevDesc = "DireccionSunatTipo";
             this.Ctr_AyuUrlDoc.Codigo = "";
             this.Ctr_AyuUrlDoc.Descripcion = "";
             this.Ctr_AyuUrlDoc.Filtro = "";
             this.Ctr_AyuUrlDoc.ListaAlias = "Codigo,Direccion,Url";
-            this.Ctr_AyuUrlDoc.ListaCampos = "ID,Direccionsunat,DireccionSunatUrl";
+            this.Ctr_AyuUrlDoc.ListaCampos = "direccionsunat_ID,DireccionsunatTipo,DireccionSunatUrl";
             this.Ctr_AyuUrlDoc.Location = new System.Drawing.Point(616, 36);
             this.Ctr_AyuUrlDoc.LongCod = "3";
             this.Ctr_AyuUrlDoc.LongDesc = "50";
             this.Ctr_AyuUrlDoc.Name = "Ctr_AyuUrlDoc";
-            this.Ctr_AyuUrlDoc.NombreTabla = "feDireccionesSunat";
+            this.Ctr_AyuUrlDoc.NombreTabla = "fe_DireccionesSunat";
             this.Ctr_AyuUrlDoc.Requerido = true;
             this.Ctr_AyuUrlDoc.Size = new System.Drawing.Size(219, 17);
             this.Ctr_AyuUrlDoc.TabIndex = 115;
@@ -732,16 +732,16 @@
             this.tabPage2.Text = "DOCUMENTOS";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // FrmEnviosSunat
+            // FrmEnviosSunatWeb
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1062, 566);
             this.Controls.Add(this.tabControl1);
-            this.Name = "FrmEnviosSunat";
+            this.Name = "FrmEnviosSunatWeb";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmEnviosSunat";
+            this.Text = "FrmEnviosSunatWeb";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);

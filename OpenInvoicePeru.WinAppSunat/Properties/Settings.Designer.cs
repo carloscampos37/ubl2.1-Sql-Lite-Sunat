@@ -12,7 +12,7 @@ namespace OpenInvoicePeru.WinApp.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.7.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,13 +25,39 @@ namespace OpenInvoicePeru.WinApp.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=asus;database=facturaselectronicasrodiscar;User ID=sa;Password=12345")]
-        public string CadenaConexion {
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=jck.hostbsd.com;database=FacturasElectronicasBruno;User ID=sa;Password=Aa1" +
+            "2345*")]
+        public string CadenaConexionBruno {
             get {
-                return ((string)(this["CadenaConexion"]));
+                return ((string)(this["CadenaConexionBruno"]));
             }
             set {
-                this["CadenaConexion"] = value;
+                this["CadenaConexionBruno"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=190.119.219.134;database=PacasmayoFE;User ID=Diresa;Password=12345")]
+        public string CadenaConexionGuadalupe {
+            get {
+                return ((string)(this["CadenaConexionGuadalupe"]));
+            }
+            set {
+                this["CadenaConexionGuadalupe"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=jck.hostbsd.com;database=FacturasElectronicasWeb;User ID=sa;Password=Aa123" +
+            "45*")]
+        public string CadenaConexionWeb {
+            get {
+                return ((string)(this["CadenaConexionWeb"]));
+            }
+            set {
+                this["CadenaConexionWeb"] = value;
             }
         }
     }

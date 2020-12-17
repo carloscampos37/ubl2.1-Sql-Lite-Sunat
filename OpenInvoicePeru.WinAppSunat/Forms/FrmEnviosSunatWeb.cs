@@ -16,7 +16,7 @@ using OpenInvoicePeru.WinApp.Properties;
 
 namespace  OpenInvoicePeru.WinAppSunat
 {
-    public partial class FrmEnviosSunat : Form
+    public partial class FrmEnviosSunatWeb : Form
     {
         #region Variables Privadas
 
@@ -57,7 +57,7 @@ namespace  OpenInvoicePeru.WinAppSunat
         //   private string VGCnxSqlE = "Server=jck;database=facturaselectronicas;User ID=sa;Password=12345";
 
         //private string VGCnxSqlE = "Server=servidor;database=facturaselectronicas;User ID=sa;Password=Aa12345";
-        private string VGCnxSqlE = Settings.Default.CadenaConexionBruno;
+        private string VGCnxSqlE = Settings.Default.CadenaConexionWeb;
 
         public string vFechaXml;
         public string vUrlSunat ;
@@ -71,7 +71,7 @@ namespace  OpenInvoicePeru.WinAppSunat
 
         #region Constructor
 
-        public FrmEnviosSunat()
+        public FrmEnviosSunatWeb()
         {
             InitializeComponent();
 
@@ -88,7 +88,7 @@ namespace  OpenInvoicePeru.WinAppSunat
                     Ctr_AyuEmpresas.CadenaCone = VGCnxSqlE;
 
                     Ctr_AyuEmpresas.Filtro = " EstadoAnulado=0 ";
-                    SQL = " Select * from feEmpresas where " + Ctr_AyuEmpresas.Filtro;
+                    SQL = " Select * from fe_Empresas where " + Ctr_AyuEmpresas.Filtro;
                     Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
                     if (Dtx.Rows.Count == 1)
                     {
@@ -98,7 +98,7 @@ namespace  OpenInvoicePeru.WinAppSunat
                     }
 
                     Ctr_AyuUrlDoc.Filtro = " EstadoAnulado=0 ";
-                    SQL = " Select * from feDireccionesSunat where " + Ctr_AyuUrlDoc.Filtro;
+                    SQL = " Select * from fe_DireccionesSunat where " + Ctr_AyuUrlDoc.Filtro;
                     Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
                     if (Dtx.Rows.Count == 1)
                     {
@@ -124,14 +124,19 @@ namespace  OpenInvoicePeru.WinAppSunat
 
         #region CrearDocumentos
 
-        private async void CrearFacturas(int ii)
+
+
+        private async void CrearFacturas(DataTable DtDocumentos, int ii)
         {
             string idDoc = Convert.ToString(DtDocumentos.Rows[ii]["Seriedocumento"] + "-" + DtDocumentos.Rows[ii]["NumeroDocumento"]);
+            vTipoDoc = Convert.ToString(DtDocumentos.Rows[ii]["DocumentoID"]);
 
             vArchivoXML1 = TxtRuc.Text + "-" + vTipoDoc + "-" + idDoc;
-          vArchivoXML1 = Path.Combine(vRutaXml, $"{vArchivoXML}");
+          vArchivoXML1 = Path.Combine(vRutaXml, $"{vArchivoXML1}");
+            vArchivoXML1 = vArchivoXML1 + ".xml";
 
-       try
+
+            try
             {
 
 
@@ -794,8 +799,8 @@ namespace  OpenInvoicePeru.WinAppSunat
         {
             try
             {
-                SQL = " SELECT b.* FROM dbo.FEDocumentosElectronicosCab a ";
-                SQL += " INNER JOIN dbo.FEDocumentosElectronicosDet b ON a.Id = b.DocumentosElectronicosCabID  ";
+                SQL = " SELECT b.* FROM dbo.FE_DocumentosElectronicosCab a ";
+                SQL += " INNER JOIN dbo.FE_DocumentosElectronicosDet b ON a.Id = b.DocumentosElectronicosCabID  ";
                 SQL += " WHERE a.EmpresaID='" + Ctr_AyuEmpresas.Codigo + "' AND fechadocumento = '" + DtpFechaDoc.Text + "'";
                 SQL += " AND a.EstadoAnulado=0 AND b.EstadoAnulado=0 Order by Establecimientoid ";
                 DtAceptados = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
@@ -819,18 +824,18 @@ namespace  OpenInvoicePeru.WinAppSunat
         private void BntGenera_Click(object sender, EventArgs e)
         {
             txtResult.Text = "";
-            SQL = FuncEnvios.CadenaDatos("", Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, Ctr_AyuDocumento.Codigo);
+            SQL = FuncEnvios.CadenaDatosWeb("", Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, Ctr_AyuDocumento.Codigo);
 
 
 
             if (vTipoDoc == "RC")
             {
-                SQL = FuncEnvios.CadenaDatos("RC", Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, TxtGrupo.Text);
+                SQL = FuncEnvios.CadenaDatosWeb("RC", Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, TxtGrupo.Text);
             }
             else
                         if (vTipoDoc == "RA")
             {
-                SQL = FuncEnvios.CadenaDatos("RA", Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, Ctr_AyuDocumento.Codigo);
+                SQL = FuncEnvios.CadenaDatosWeb("RA", Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, Ctr_AyuDocumento.Codigo);
 
             }
             else
@@ -922,7 +927,7 @@ namespace  OpenInvoicePeru.WinAppSunat
                 {
                     for (int ii = 0; ii <= DtDocumentos.Rows.Count - 1; ii++)
                     {
-                        CrearFacturas(ii);
+                        CrearFacturas(DtDocumentos, ii);
                     }
                 }
 
@@ -1034,7 +1039,7 @@ namespace  OpenInvoicePeru.WinAppSunat
         private void Ctr_AyuUrlDoc_AlDevolverDato(object Sender, DataRow e)
         {
             DataTable Dtx ;
-            SQL = " SELECT DireccionSunatUrl FROM fedireccionesSunat where ID='" + Ctr_AyuUrlDoc.Codigo + "'";
+            SQL = " SELECT DireccionSunatUrl FROM fe_direccionesSunat where direccionsunat_ID='" + Ctr_AyuUrlDoc.Codigo + "'";
             Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
             vUrlSunat = (string)Dtx.Rows[0][0];
         }
@@ -1056,9 +1061,9 @@ namespace  OpenInvoicePeru.WinAppSunat
         private void Ctr_AyuDocumento_AlDevolverDato(object Sender, DataRow e)
         {
             DataTable Dtx ;
-            SQL = " SELECT * FROM feDocumentosFE where ID='" + Ctr_AyuDocumento.Codigo + "'";
+            SQL = " SELECT * FROM fe_DocumentosFE where documentocodigo='" + Ctr_AyuDocumento.Codigo + "'";
             Dtx = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
-            vTipoDoc = (string)Dtx.Rows[0]["ID"];
+            vTipoDoc = (string)Dtx.Rows[0]["Documentocodigo"];
             vtipoEnvio = (int)Dtx.Rows[0]["tipoenvioID"];
             BntEnvioSunat.Visible = false;
             BntGeneraEnvios.Visible = true;
@@ -1084,7 +1089,7 @@ namespace  OpenInvoicePeru.WinAppSunat
 
         private void Ctr_AyuEmpresas_AlDevolverDato(object Sender, DataRow e)
         {
-            SQL = "SELECT  * FROM [v_FEDatosGeneralesEmpresas] WHERE ID='" + Ctr_AyuEmpresas.Codigo + "'";
+            SQL = "SELECT  * FROM [v_FE_DatosGeneralesEmpresas] WHERE empresacodigo='" + Ctr_AyuEmpresas.Codigo + "'";
 
             DtEmpresa = ModFunc.ConsultarTabla(SQL, VGCnxSqlE);
             if (DtEmpresa.Rows.Count > 0)
@@ -1134,5 +1139,6 @@ namespace  OpenInvoicePeru.WinAppSunat
             BntGeneraEnvios.Visible = true;
 
         }
+
     }
 }

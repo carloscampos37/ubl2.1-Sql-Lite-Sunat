@@ -175,7 +175,7 @@ namespace OpenInvoicePeru.Class
         //    sql+="WHERE a.ResumenDiario_id=b.resumenDiario_id";
         // }
 
-        public DataTable ConsultarTabla(string vSQL, string vCadConex, int vCommandTimeOut = 800)
+        public DataTable ConsultarTabla(string vSQL, string vCadConex)
         {
             string cError ;
             try
@@ -198,7 +198,7 @@ namespace OpenInvoicePeru.Class
 
         public bool GrabarTabla(string vSQL, string vCadConex)
         {
-            string cError ;
+            string cError="" ;
             try
             {
                 SqlConnection oConn = new SqlConnection(vCadConex);
@@ -216,7 +216,7 @@ namespace OpenInvoicePeru.Class
             }
         }
 
-        public void ActualizaEnviosDia(DataTable dtx, string vItemEnvio, string vNroticket, string Vgcnx)
+        public void ActualizaEnviosDia(DataTable dtx, string vItemEnvio, string vNroticket)
         {
             string Sql ;
             for (int ii = 0; ii <= dtx.Rows.Count - 1; ii++)

@@ -16,7 +16,7 @@ using OpenInvoicePeru.WinApp.Properties;
 
 namespace  OpenInvoicePeru.WinAppSunat
 {
-    public partial class FrmEnviosSunat : Form
+    public partial class FrmEnviosSunatGuadalupe : Form
     {
         #region Variables Privadas
 
@@ -57,7 +57,7 @@ namespace  OpenInvoicePeru.WinAppSunat
         //   private string VGCnxSqlE = "Server=jck;database=facturaselectronicas;User ID=sa;Password=12345";
 
         //private string VGCnxSqlE = "Server=servidor;database=facturaselectronicas;User ID=sa;Password=Aa12345";
-        private string VGCnxSqlE = Settings.Default.CadenaConexionBruno;
+        private string VGCnxSqlE = Settings.Default.CadenaConexionGuadalupe;
 
         public string vFechaXml;
         public string vUrlSunat ;
@@ -71,7 +71,8 @@ namespace  OpenInvoicePeru.WinAppSunat
 
         #region Constructor
 
-        public FrmEnviosSunat()
+        public FrmEnviosSunatGuadalupe()
+
         {
             InitializeComponent();
 
@@ -819,18 +820,18 @@ namespace  OpenInvoicePeru.WinAppSunat
         private void BntGenera_Click(object sender, EventArgs e)
         {
             txtResult.Text = "";
-            SQL = FuncEnvios.CadenaDatos("", Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, Ctr_AyuDocumento.Codigo);
+            SQL = FuncEnvios.CadenaDatosWeb("", Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, Ctr_AyuDocumento.Codigo);
 
 
 
             if (vTipoDoc == "RC")
             {
-                SQL = FuncEnvios.CadenaDatos("RC", Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, TxtGrupo.Text);
+                SQL = FuncEnvios.CadenaDatosWeb("RC", Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, TxtGrupo.Text);
             }
             else
                         if (vTipoDoc == "RA")
             {
-                SQL = FuncEnvios.CadenaDatos("RA", Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, Ctr_AyuDocumento.Codigo);
+                SQL = FuncEnvios.CadenaDatosWeb("RA", Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, Ctr_AyuDocumento.Codigo);
 
             }
             else
@@ -1134,5 +1135,6 @@ namespace  OpenInvoicePeru.WinAppSunat
             BntGeneraEnvios.Visible = true;
 
         }
+
     }
 }
