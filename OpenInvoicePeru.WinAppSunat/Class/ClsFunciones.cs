@@ -147,6 +147,19 @@ namespace OpenInvoicePeru.Class
 
             return DescriMes;
         }
+        public Object Esnulo(object Expresion, object Valor)
+        {
+
+            if ((Expresion==null ))
+            {
+                return Valor;
+                    }
+        else
+          {
+                return Expresion;
+        }
+    }
+
 
         public void ActualizaItemDia(string vEmpresa, string vFecha, string vCadenaConex)
         {

@@ -101,9 +101,9 @@ namespace OpenInvoicePeru.Class
             {
                 case "":
                     vSql = " SELECT a.empresaID, a.EstablecimientoID,Fechadocumento,b.SerieDocumento,b.DocumentoID, b.*,Letras=[dbo].fn_NumeroEnLetra(TotalImporteVenta,'01'),AnexoSunat ";
-                    vSql += " FROM dbo.FE_DocumentosElectronicosCab a ";
-                    vSql += "  INNER join FE_DocumentosElectronicosDet b ON a.ID = b.DocumentosElectronicosCabID ";
-                    vSql += "  INNER join Fe_Establecimientos c ON a.EstablecimientoID = c.ID ";
+                    vSql += " FROM dbo.FEDocumentosElectronicosCab a ";
+                    vSql += "  INNER join FEDocumentosElectronicosDet b ON a.ID = b.DocumentosElectronicosCabID ";
+                    vSql += "  INNER join FeEstablecimientos c ON a.EstablecimientoID = c.ID ";
                     vSql += " WHERE a.EmpresaID='" + vEmpresa + "' AND fechadocumento = '" + vFecha + "'";
 
                     break;

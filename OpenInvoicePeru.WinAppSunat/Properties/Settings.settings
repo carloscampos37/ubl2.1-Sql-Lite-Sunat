@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="CadenaConexionBruno" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Server=jck.hostbsd.com;database=FacturasElectronicasBruno;User ID=sa;Password=Aa12345*</Value>
+      <Value Profile="(Default)">Server=jck.hostbsd.com;database=FacturasElectronicas;User ID=sa;Password=Aa12345*</Value>
     </Setting>
     <Setting Name="CadenaConexionGuadalupe" Type="System.String" Scope="User">
       <Value Profile="(Default)">Server=190.119.219.134;database=PacasmayoFE;User ID=Diresa;Password=12345</Value>
