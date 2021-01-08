@@ -25,8 +25,8 @@ namespace OpenInvoicePeru.WinApp.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=jck.hostbsd.com;database=FacturasElectronicas;User ID=sa;Password=Aa12345*" +
-            "")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=jck.hostbsd.com;database=FacturasElectronicasBruno;User ID=sa;Password=Aa1" +
+            "2345*")]
         public string CadenaConexionBruno {
             get {
                 return ((string)(this["CadenaConexionBruno"]));

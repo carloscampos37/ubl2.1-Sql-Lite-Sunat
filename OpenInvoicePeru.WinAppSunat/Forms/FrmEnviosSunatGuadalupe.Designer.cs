@@ -741,7 +741,7 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "FrmEnviosSunatGuadalupe";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmEnviosSunatGuadalupe";
+            this.Text = "FrmEnviosSunatWSeb";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);

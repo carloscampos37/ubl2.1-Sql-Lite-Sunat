@@ -124,17 +124,14 @@ namespace  OpenInvoicePeru.WinAppSunat
 
         #region CrearDocumentos
 
-        private async void CrearFacturas(DataTable DtDocumentos, int ii)
+        private async void CrearFacturas(int ii)
         {
             string idDoc = Convert.ToString(DtDocumentos.Rows[ii]["Seriedocumento"] + "-" + DtDocumentos.Rows[ii]["NumeroDocumento"]);
-            vTipoDoc = Convert.ToString(DtDocumentos.Rows[ii]["DocumentoID"]);
 
             vArchivoXML1 = TxtRuc.Text + "-" + vTipoDoc + "-" + idDoc;
-            vArchivoXML1 = Path.Combine(vRutaXml, $"{vArchivoXML1}");
-            vArchivoXML1 = vArchivoXML1 + ".xml";
+          vArchivoXML1 = Path.Combine(vRutaXml, $"{vArchivoXML}");
 
-
-            try
+       try
             {
 
 
@@ -145,12 +142,12 @@ namespace  OpenInvoicePeru.WinAppSunat
                 enviarDocumentoRequest.Ruc = TxtRuc.Text;
                 enviarDocumentoRequest.UsuarioSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaUsuarioSol"]);
                 enviarDocumentoRequest.ClaveSol = Convert.ToString(DtEmpresa.Rows[0]["EmpresaClaveSol"]);
-                enviarDocumentoRequest.EndPointUrl = vUrlSunat;
-                enviarDocumentoRequest.IdDocumento = idDoc;
-                enviarDocumentoRequest.TipoDocumento = vTipoDoc;
-                //   TramaXmlFirmado = respuestaFirmado.TramaXmlFirmado
-                enviarDocumentoRequest.TramaXmlFirmado = TramaXML;
-
+                    enviarDocumentoRequest.EndPointUrl = vUrlSunat;
+                    enviarDocumentoRequest.IdDocumento = idDoc;
+                    enviarDocumentoRequest.TipoDocumento = vTipoDoc;
+                    //   TramaXmlFirmado = respuestaFirmado.TramaXmlFirmado
+                    enviarDocumentoRequest.TramaXmlFirmado = TramaXML;
+      
 
                 var apiMetodo = "api/EnviarDocumento";
                 var jsonEnvioDocumento = await _client.PostAsJsonAsync(apiMetodo, enviarDocumentoRequest);
@@ -165,8 +162,8 @@ namespace  OpenInvoicePeru.WinAppSunat
                     {
                         if (rpta.Exito && !string.IsNullOrEmpty(rpta.TramaZipCdr))
                         {
-
-
+                           
+       
                             vArchivoCDR1 = "R-" + $"{respuestaEnvio.NombreArchivo}";
                             vArchivoCDR1 = Path.Combine(vRutaCdr, $"{vArchivoCDR1}.zip");
 
@@ -182,7 +179,7 @@ namespace  OpenInvoicePeru.WinAppSunat
                 {
                     respuestaEnvio = await jsonEnvioDocumento.Content.ReadAsAsync<EnviarResumenResponse>();
                     var rpta = (EnviarResumenResponse)respuestaEnvio;
-                    txtResult.Text += $@"{Resources.procesoCorrecto}{Environment.NewLine}{rpta.NroTicket}{Environment.NewLine}";
+                    txtResult.Text +=  $@"{Resources.procesoCorrecto}{Environment.NewLine}{rpta.NroTicket}{Environment.NewLine}";
                 }
 
                 if (!respuestaEnvio.Exito)
@@ -644,8 +641,8 @@ namespace  OpenInvoicePeru.WinAppSunat
                 string vCorrelDoc = Convert.ToString(dt.Rows[iii]["ID"]);
 
                 SQL = " SELECT ProductodescripcionP=isnull(c.ProductoDescripcion,''''),Producto=ProductoID,UnidadMedidaId='''',b.*, c.*,e.* FROM ";
-                SQL += " dbo.FEDocumentosElectronicosCab a INNER join .dbo.FEDocumentosElectronicosDet b ON a.ID = b.documentoselectronicoscabID ";
-                SQL += " INNER join .dbo.FEDocumentosElectronicosDetItem c ON b.ID  = c.documentoselectronicosDetID ";
+                SQL += " dbo.FE_DocumentosElectronicosCab a INNER join .dbo.FE_DocumentosElectronicosDet b ON a.ID = b.documentoselectronicoscabID ";
+                SQL += " INNER join .dbo.FE_DocumentosElectronicosDetItem c ON b.ID  = c.documentoselectronicosDetID ";
                 //SQL += " LEFT join .dbo.FEProductos d ON c.ProductoID= d.ID ";
                 SQL += " INNER JOIN .dbo.FeAfectacionIgv e ON c.AfectacionIgv=e.ID";
                 SQL += " WHERE a.empresaID='" + vEmpresa + "' AND fechadocumento ='" + DtpFechaDoc.Text + "' AND c.documentoselectronicosDetID=" + vCorrelDoc + "";
@@ -925,7 +922,7 @@ namespace  OpenInvoicePeru.WinAppSunat
                 {
                     for (int ii = 0; ii <= DtDocumentos.Rows.Count - 1; ii++)
                     {
-                        CrearFacturas(DtDocumentos, ii);
+                        CrearFacturas(ii);
                     }
                 }
 
