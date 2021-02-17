@@ -742,6 +742,7 @@
             this.Name = "FrmEnviosSunat";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmEnviosSunat";
+            this.Load += new System.EventHandler(this.FrmEnviosSunat_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);

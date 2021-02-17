@@ -60,5 +60,29 @@ namespace OpenInvoicePeru.WinApp.Properties {
                 this["CadenaConexionWeb"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=(local);database=FacturasElectronicasRodiscar;User ID=sa;Password=12345")]
+        public string CadenaConexionLocal {
+            get {
+                return ((string)(this["CadenaConexionLocal"]));
+            }
+            set {
+                this["CadenaConexionLocal"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=campos.hostbsd.com;database=colegio;User ID=sa;Password=Aa12345*")]
+        public string CadenaConexionColegio {
+            get {
+                return ((string)(this["CadenaConexionColegio"]));
+            }
+            set {
+                this["CadenaConexionColegio"] = value;
+            }
+        }
     }
 }

@@ -388,7 +388,7 @@
             this.Ctr_AyuEmpresas.Name = "Ctr_AyuEmpresas";
             this.Ctr_AyuEmpresas.NombreTabla = "feEmpresas";
             this.Ctr_AyuEmpresas.Requerido = true;
-            this.Ctr_AyuEmpresas.Size = new System.Drawing.Size(235, 17);
+            this.Ctr_AyuEmpresas.Size = new System.Drawing.Size(230, 17);
             this.Ctr_AyuEmpresas.TabIndex = 122;
             this.Ctr_AyuEmpresas.Titulo = null;
             this.Ctr_AyuEmpresas.AlDevolverDato += new Ctr_Ayuda.Ctr_Ayuda.AlDevolverDatoEventHandler(this.Ctr_AyuEmpresas_AlDevolverDato);
@@ -742,6 +742,7 @@
             this.Name = "FrmEnviosSunatGuadalupe";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmEnviosSunatWSeb";
+            this.Load += new System.EventHandler(this.FrmEnviosSunatGuadalupe_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);

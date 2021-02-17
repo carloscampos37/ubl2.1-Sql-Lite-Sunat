@@ -364,7 +364,7 @@ namespace  OpenInvoicePeru.WinAppSunat
 
                 for (int ii = 0; ii <= DtDocumentos.Rows.Count - 1; ii++)
                 {
-                    decimal vDscto =Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteDsctoGlobal"]);
+                    decimal vDscto = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteDsctoGlobal"]);
                     string vNroDocumento = Convert.ToString(DtDocumentos.Rows[ii]["clienteID"]);
                     string vTipoIdentidad = Convert.ToString(DtDocumentos.Rows[ii]["IdentidadID"]);
                     string vNombreLegal = Convert.ToString(DtDocumentos.Rows[ii]["ClienterazonSocial"]);
@@ -392,10 +392,10 @@ namespace  OpenInvoicePeru.WinAppSunat
                     DocumentoResumenItem.Gravadas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGravado"]);
                     DocumentoResumenItem.Inafectas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteinafecto"]);
                     DocumentoResumenItem.Exoneradas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteexonerado"]);
-                    DocumentoResumenItem.Gratuitas =  Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGratuitas"]);
-                    DocumentoResumenItem.TotalIsc =  Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteisc"]);
+                    DocumentoResumenItem.Gratuitas = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteGratuitas"]);
+                    DocumentoResumenItem.TotalIsc = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteisc"]);
                     DocumentoResumenItem.TotalIgv = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteIgv"]);
-                    DocumentoResumenItem.TotalDescuentos =  vDscto;
+                    DocumentoResumenItem.TotalDescuentos = vDscto;
                     DocumentoResumenItem.TotalVenta = Convert.ToDecimal(DtDocumentos.Rows[ii]["TotalImporteventa"]);
                     DocumentoResumenItem.TotalOtrosImpuestos = 0;
                     DocumentoResumenItem.CodigoEstadoItem = 1;
@@ -663,19 +663,21 @@ namespace  OpenInvoicePeru.WinAppSunat
         {
             try
             {
-                Contribuyente Dtx = new Contribuyente
-                {
-                    NroDocumento = Convert.ToString(DtEmpresa.Rows[0]["EmpresaRuc"]),
-                    TipoDocumento = "6",
-                    Direccion = Convert.ToString(DtEmpresa.Rows[0]["EmpresaDIRECCION"]),
-                    Urbanizacion = Convert.ToString(DtEmpresa.Rows[0]["Empresaurbanizacion"]),
-                    Departamento = Convert.ToString(DtEmpresa.Rows[0]["EmpresaRegion"]),
-                    Provincia = Convert.ToString(DtEmpresa.Rows[0]["EmpresaProvincia"]),
-                    Distrito = Convert.ToString(DtEmpresa.Rows[0]["Empresadistrito"]),
-                    NombreComercial = Convert.ToString(DtEmpresa.Rows[0]["EmpresaRazonComercial"]),
-                    NombreLegal = Convert.ToString(DtEmpresa.Rows[0]["EmpresaRazonSocial"]),
-                    Ubigeo = Convert.ToString(DtEmpresa.Rows[0]["Ubigeo_id"])
-                };
+                Contribuyente Dtx = new Contribuyente();
+
+                
+                    Dtx.NroDocumento = Convert.ToString(DtEmpresa.Rows[0]["EmpresaRuc"]);
+                    Dtx.TipoDocumento = "6";
+                Dtx.Direccion = Convert.ToString(DtEmpresa.Rows[0]["EmpresaDIRECCION"]);
+                Dtx.Urbanizacion = Convert.ToString(DtEmpresa.Rows[0]["Empresaurbanizacion"]);
+                Dtx.Departamento = Convert.ToString(DtEmpresa.Rows[0]["EmpresaRegion"]);
+                Dtx.Provincia = Convert.ToString(DtEmpresa.Rows[0]["EmpresaProvincia"]);
+                Dtx.Distrito = Convert.ToString(DtEmpresa.Rows[0]["Empresadistrito"]);
+                Dtx.NombreComercial = Convert.ToString(DtEmpresa.Rows[0]["EmpresaRazonComercial"]);
+                Dtx.NombreLegal = Convert.ToString(DtEmpresa.Rows[0]["EmpresaRazonSocial"]);
+                Dtx.Ubigeo = Convert.ToString(DtEmpresa.Rows[0]["UbigeoId"]);
+
+
                 return Dtx;
             }
             catch
@@ -820,18 +822,18 @@ namespace  OpenInvoicePeru.WinAppSunat
         private void BntGenera_Click(object sender, EventArgs e)
         {
             txtResult.Text = "";
-            SQL = FuncEnvios.CadenaDatosWeb("", Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, Ctr_AyuDocumento.Codigo);
+            SQL = FuncEnvios.CadenaDatosGuadalupe("", Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, Ctr_AyuDocumento.Codigo);
 
 
 
             if (vTipoDoc == "RC")
             {
-                SQL = FuncEnvios.CadenaDatosWeb("RC", Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, TxtGrupo.Text);
+                SQL = FuncEnvios.CadenaDatosGuadalupe("RC", Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, TxtGrupo.Text);
             }
             else
                         if (vTipoDoc == "RA")
             {
-                SQL = FuncEnvios.CadenaDatosWeb("RA", Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, Ctr_AyuDocumento.Codigo);
+                SQL = FuncEnvios.CadenaDatosGuadalupe("RA", Ctr_AyuEmpresas.Codigo, DtpFechaDoc.Text, Ctr_AyuDocumento.Codigo);
 
             }
             else
@@ -1136,5 +1138,9 @@ namespace  OpenInvoicePeru.WinAppSunat
 
         }
 
+        private void FrmEnviosSunatGuadalupe_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

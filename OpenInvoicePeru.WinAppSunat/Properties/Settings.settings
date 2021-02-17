@@ -11,5 +11,11 @@
     <Setting Name="CadenaConexionWeb" Type="System.String" Scope="User">
       <Value Profile="(Default)">Server=jck.hostbsd.com;database=FacturasElectronicasWeb;User ID=sa;Password=Aa12345*</Value>
     </Setting>
+    <Setting Name="CadenaConexionLocal" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Server=(local);database=FacturasElectronicasRodiscar;User ID=sa;Password=12345</Value>
+    </Setting>
+    <Setting Name="CadenaConexionColegio" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Server=campos.hostbsd.com;database=colegio;User ID=sa;Password=Aa12345*</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

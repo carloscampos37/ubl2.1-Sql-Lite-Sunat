@@ -24,7 +24,7 @@ namespace OpenInvoicePeru.Class
                     break;
 
                 case "RC":
-                           vSql = " SELECT  Item=IdentificadorEnvio+1,EstablecimientoID,seriedocumento,documentoID,Fechadocumento,grupo=isnull(b.GrupodeEnvioSunat,0), b.*,Letras=[dbo].fn_NumeroEnLetra(b.TotalImporteVenta,'01') ";
+                           vSql = " SELECT  Item=IdentificadorEnvio+1,EstablecimientoID,a.seriedocumento,a.documentoID,Fechadocumento,grupo=isnull(b.GrupodeEnvioSunat,0), b.*,Letras=[dbo].fn_NumeroEnLetra(b.TotalImporteVenta,'01') ";
                            vSql += " FROM dbo.FEDocumentosElectronicosCab a ";
                             vSql += " INNER JOIN dbo.FEDocumentosElectronicosDet b ON a.ID = b.DocumentosElectronicosCabID  ";
                            vSql += "  INNER join FeEstablecimientos c ON a.EstablecimientoID = c.ID ";
@@ -111,9 +111,9 @@ namespace OpenInvoicePeru.Class
                 case "RC":
 
                     vSql = " SELECT  Item=IdentificadorEnvio+1,EstablecimientoID,c.seriedocumento,c.documentoID,Fechadocumento,grupo=isnull(b.GrupodeEnvioSunat,0), c.*,Letras=[dbo].fn_NumeroEnLetra(c.TotalImporteVenta,'01') ";
-                    vSql += " FROM dbo.FEResumenDiarioDocumentosCab a ";
-                    vSql += " INNER JOIN dbo.FEResumenDiarioDocumentosDet b ON a.ID = b.ResumenDiarioCabID  ";
-                    vSql += " INNER JOIN dbo.FEResumenDiarioDocumentosDetItem c ON b.ID = c.ResumenDiarioDetID  ";
+                    vSql += " FROM dbo.FeResumenDiarioDocumentosCab a ";
+                    vSql += " INNER JOIN dbo.FeResumenDiarioDocumentosDet b ON a.ID = b.ResumenDiarioCabID  ";
+                    vSql += " INNER JOIN dbo.FeResumenDiarioDocumentosDetItem c ON b.ID = c.ResumenDiarioDetID  ";
                     vSql += "  INNER join FeEstablecimientos d ON a.EstablecimientoID = d.ID ";
                     vSql += " WHERE a.EmpresaID='" + vEmpresa + "' AND fechadocumento = '" + vFecha + "'";
                     vSql += " AND isnull(b.GrupodeEnvioSunat,0)=" + vGrupo + "";
@@ -135,6 +135,7 @@ namespace OpenInvoicePeru.Class
             vSql += " AND a.EstadoAnulado=0 AND b.EstadoAnulado=0 Order by a.EstablecimientoID  ";
             return vSql;
         }
+
 
 
         public string CrearDirectorios(DataTable Dtempresa,string vEmpresa , DateTime vFecha)
