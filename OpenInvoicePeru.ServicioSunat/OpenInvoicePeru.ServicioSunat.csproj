@@ -48,6 +48,11 @@
     <Compile Include="IServicioSunatDocumentos.cs" />
     <Compile Include="ParametrosConexion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="RespuestaAsincrono.cs" />
     <Compile Include="RespuestaSincrono.cs" />
   </ItemGroup>
@@ -56,6 +61,12 @@
       <Project>{c6d3447f-6aed-4da5-b28c-7c0356f2f4a8}</Project>
       <Name>OpenInvoicePeru.Comun</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
